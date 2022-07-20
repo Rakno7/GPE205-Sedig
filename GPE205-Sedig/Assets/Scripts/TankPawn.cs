@@ -21,22 +21,26 @@ public class TankPawn : Pawn
     //we will override the base class method and define how we want tanks to move specifically.
     public override void MoveForward()
     {
-        Debug.Log("Move Forward");
+        mover.Move(transform.forward,moveSpeed);
+       // Debug.Log("Move Forward");
     }
 
     public override void MoveBackwards()
     {
-        Debug.Log("Move Backward");
+        mover.Move(transform.forward, -moveSpeed);
+        //Debug.Log("Move Backward");
     }
 
     public override void RotateClockwise()
     {
-        Debug.Log("Rotate Clockwise");
+        mover.Rotate(turnSpeed);
+        //Debug.Log("Rotate Clockwise");
     }
 
     public override void RotateCounterClockwise()
     {
-        Debug.Log("Rotate Counter Clockwise");
+        mover.Rotate(-turnSpeed);
+       // Debug.Log("Rotate Counter Clockwise");
     }
 
 }

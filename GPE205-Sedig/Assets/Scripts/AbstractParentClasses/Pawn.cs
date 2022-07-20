@@ -8,14 +8,14 @@ using UnityEngine;
 //in other words the abstract class acts as a template for subclasses to inherit from, 
 //and is not able to be instanced itself. 
 public abstract class Pawn : MonoBehaviour
-{
+{  public Mover mover;
    public float moveSpeed;
    public float turnSpeed;
    //A virtual method can be overridden by subclasses. 
-   //Virtual methods can be overridden when subclasses use methods of the same name declared with overide. 
+   //Virtual methods can be overridden when subclasses use methods of the same name declared as overides. 
     public virtual void Start()
     {
-        
+        mover = GetComponent<Mover>();
     }
 
     
