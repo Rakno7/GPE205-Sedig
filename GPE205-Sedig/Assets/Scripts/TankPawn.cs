@@ -11,7 +11,6 @@ public class TankPawn : Pawn
         base.Start();
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Start();
@@ -21,24 +20,48 @@ public class TankPawn : Pawn
     //we will override the base class method and define how we want tanks to move specifically.
     public override void MoveForward()
     {
+       if(mover == null)
+        {
+            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            return;
+        }
+
         mover.Move(transform.forward,moveSpeed);
        // Debug.Log("Move Forward");
     }
 
     public override void MoveBackwards()
     {
+        if(mover == null)
+        {
+            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            return;
+        }
+
         mover.Move(transform.forward, -moveSpeed);
         //Debug.Log("Move Backward");
     }
 
     public override void RotateClockwise()
     {
+        if(mover == null)
+        {
+            Debug.LogWarning("Warning: No Mover in TankPawn!");
+            return;
+        }
+
         mover.Rotate(turnSpeed);
         //Debug.Log("Rotate Clockwise");
     }
 
     public override void RotateCounterClockwise()
     {
+       if(mover == null)
+        {
+            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            return;
+        }
+
         mover.Rotate(-turnSpeed);
        // Debug.Log("Rotate Counter Clockwise");
     }

@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mover: {fileID: 0}
-  moveSpeed: 10
-  turnSpeed: 5
+  moveSpeed: 5
+  turnSpeed: 50
 --- !u!114 &573611773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,8 +239,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.64672166
-  m_Center: {x: 0.0078088045, y: 0.6282782, z: 0.111234784}
+  m_Radius: 0.55636823
+  m_Center: {x: 0.0078088045, y: 0.48272717, z: 0.093536854}
 --- !u!1 &684349597
 GameObject:
   m_ObjectHideFlags: 0
