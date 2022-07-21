@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankPawn : Pawn
+public class TankPawn : Pawn 
 {
     // Start is called before the first frame update
     public override void Start()
@@ -64,6 +64,16 @@ public class TankPawn : Pawn
 
         mover.Rotate(-turnSpeed);
        // Debug.Log("Rotate Counter Clockwise");
+    }
+    public override void DoAttack()
+    {
+         if(attacker == null)
+        {
+            Debug.LogWarning("Warning: No Attacker in TankPawn()!");
+            return;
+        }
+        
+        attacker.Attack(transform.forward, AttackSpeed);
     }
 
 }
