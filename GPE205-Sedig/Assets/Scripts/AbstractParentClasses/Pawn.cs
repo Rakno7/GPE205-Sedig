@@ -19,7 +19,7 @@ public abstract class Pawn : MonoBehaviour
     public virtual void Start()
     {
         mover = GetComponent<Mover>();
-        attacker = GetComponent<Attacker>();
+        attacker = GetComponentInChildren<Attacker>();
     }
 
     

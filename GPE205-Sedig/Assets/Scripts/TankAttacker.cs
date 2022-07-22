@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankAttacker : Attacker
 {
     public Transform Firepoint;
+    public Rigidbody ParentRb;
     public GameObject CannonShot;
     public GameObject ShotParticles;
     public bool isShotDelay = false;
@@ -25,7 +26,7 @@ public class TankAttacker : Attacker
         GameObject Cannonball = Instantiate(CannonShot,pos,rotation);
         Cannonball.GetComponent<Rigidbody>().AddForce(movementVector, ForceMode.Impulse);
         //gameObject.GetComponent<Rigidbody>().AddForceAtPosition(-transform.forward,Firepoint.transform.position,ForceMode.Impulse);
-        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * speed / 10 ,ForceMode.Impulse);
+        ParentRb.AddForce(-transform.forward * speed / 10 ,ForceMode.Impulse);
 
         //Debug.Log("attacked");
 
