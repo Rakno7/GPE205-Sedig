@@ -141,22 +141,6 @@ MonoBehaviour:
   ShotParticles: {fileID: 4874913359879127163, guid: 1526631b468ad304fba03b638fe22386, type: 3}
   isShotDelay: 0
   AttackCooldown: 1
---- !u!54 &35378905
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9145105659625378438}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &282041364
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,10 +432,10 @@ GameObject:
   m_Component:
   - component: {fileID: 808798520}
   - component: {fileID: 808798519}
-  - component: {fileID: 808798518}
   - component: {fileID: 808798521}
+  - component: {fileID: 808798518}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: CameraController
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808798517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.73, z: -7.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1174066843}
@@ -531,13 +515,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 808798517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1938c8421b9d4e45b594e5b14c4837e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d42f7abea99edc449d224b110fd8b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SensitivityX: 100
-  SensitivityY: 100
+  cameraFollower: {fileID: 1174066844}
+  horizontalInput: 0
+  verticalInput: 0
+  SensitivityX: 200
+  SensitivityY: 200
+  RotationX: 0
+  RotationY: 0
+  rotationSpeed: 1
   orientation: {fileID: 581807018}
   camHolder: {fileID: 1174066843}
+  camController: {fileID: 808798521}
+  ChangeCamPositionKey: 9
 --- !u!1 &881858718
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 881858719}
   m_Layer: 0
-  m_Name: CameraPos
+  m_Name: CameraPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,7 +554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881858718}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.10000038, y: 1.75, z: -9.98}
+  m_LocalPosition: {x: -0.10000038, y: 1.75, z: -3.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8230219472428462558}
@@ -840,7 +832,7 @@ GameObject:
   - component: {fileID: 1174066843}
   - component: {fileID: 1174066844}
   m_Layer: 0
-  m_Name: CamHolder
+  m_Name: CamFollower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -854,7 +846,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174066842}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.764604, y: 3.32, z: -10.70332}
+  m_LocalPosition: {x: -7.764604, y: 3.32, z: -7.58}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 808798520}
@@ -873,7 +865,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ce2dd55ddb2694abd2325b86ee2bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPos: {fileID: 881858719}
+  Setting: 1
+  cameraSetting1: {fileID: 881858719}
+  cameraSetting2: {fileID: 2065222350}
+  cameraSetting3: {fileID: 1830907445}
 --- !u!1 &1194802813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,6 +1351,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1830907444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1830907445}
+  m_Layer: 0
+  m_Name: CameraPos3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1830907445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830907444}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.10000038, y: 7.32, z: -8.67}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8230219472428462558}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1950906795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,7 +1587,7 @@ Rigidbody:
   m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &2047694542
@@ -1578,6 +1603,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.8237257, y: 3.1507232, z: 6.1811123}
   m_Center: {x: -0.04920721, y: 0.6901721, z: 2.1195202}
+--- !u!1 &2065222349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2065222350}
+  m_Layer: 0
+  m_Name: CameraPos2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2065222350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065222349}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.10000038, y: -1.48, z: -3.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8230219472428462558}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2138765775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,6 +1863,8 @@ Transform:
   m_Children:
   - {fileID: 608548805}
   - {fileID: 881858719}
+  - {fileID: 2065222350}
+  - {fileID: 1830907445}
   m_Father: {fileID: 581807018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1822,7 +1879,6 @@ GameObject:
   - component: {fileID: 8230219472428462558}
   - component: {fileID: 7945026985434073430}
   - component: {fileID: 1180134767751705050}
-  - component: {fileID: 35378905}
   - component: {fileID: 35378904}
   m_Layer: 0
   m_Name: TankTopGun

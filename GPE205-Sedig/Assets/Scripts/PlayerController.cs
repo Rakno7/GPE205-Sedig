@@ -9,6 +9,8 @@ public class PlayerController : Controller
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode AttackKey;
+    
+    
     public override void Start()
     {
         base.Start();
@@ -44,6 +46,7 @@ public class PlayerController : Controller
       {
           pawn.DoAttack();
       }
+     
     }
    
 }

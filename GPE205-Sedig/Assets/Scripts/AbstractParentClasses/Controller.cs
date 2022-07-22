@@ -6,7 +6,10 @@ public abstract class Controller : MonoBehaviour
 {
     //We allow which pawn we want the controller to control to be set in the inspector. 
     public Pawn pawn;
+    
     public Attacker attacker;
+
+    
     public virtual void Start()
     {
 
