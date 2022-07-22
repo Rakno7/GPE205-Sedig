@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
+    //CAMERASTUFF-------------------------
+    public  CameraFollowPlayer cameraFollowerScript;
+    public Transform camFollowerTransform; 
+    public Transform orientation;
+   // public CameraController camController;
+   
+    public float horizontalInput,verticalInput;
+    public float SensitivityX, SensitivityY;
+    public float RotationX, RotationY;
+    public float rotationSpeed = 1f;
+    
+
+    //MOVEMENT-----------------------
+    public GameObject playerCamera;
     public KeyCode moveForwardKey;
     public KeyCode moveBackwardKey;
     public KeyCode moveLeftKey;
@@ -21,12 +35,21 @@ public class PlayerController : Controller
     
     public override void Update()
     {
+         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * SensitivityX;
+         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * SensitivityY;
+
+         RotationY += mouseX;
+         RotationX -= mouseY;
         ProcessInputs();
         base.Update();
     }
+    
 
     public override void ProcessInputs()
     {
+       horizontalInput = Input.GetAxisRaw("Horizontal");
+       verticalInput = Input.GetAxisRaw("Vertical");
+
       if(Input.GetKey(moveForwardKey))
        {
            pawn.MoveForward();
