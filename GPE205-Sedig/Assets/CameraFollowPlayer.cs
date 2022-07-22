@@ -11,8 +11,11 @@ public class CameraFollowPlayer : MonoBehaviour
     public Transform CameraSetting2;
     public Transform CameraSetting3;
     
-   // public bool isHuman;
-    
+   
+    private void Start()
+    {
+        
+    }
     void LateUpdate()
     {
         

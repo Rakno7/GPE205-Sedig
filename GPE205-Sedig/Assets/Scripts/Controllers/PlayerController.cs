@@ -14,10 +14,14 @@ public class PlayerController : Controller
     public float SensitivityX, SensitivityY;
     public float RotationX, RotationY;
     public float rotationSpeed = 1f;
-    
+    public GameObject TankCamera;
+    public Transform TankOrientation;
+    public GameObject HumanCamera;
+    public Transform HumanOrientation;
+    public bool isControllingHuman;
+    public bool isControllingTank;
 
     //MOVEMENT-----------------------
-    public GameObject playerCamera;
     public KeyCode moveForwardKey;
     public KeyCode moveBackwardKey;
     public KeyCode moveLeftKey;
@@ -26,7 +30,26 @@ public class PlayerController : Controller
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode AttackKey;
     
-    
+    private void Awake()
+    {
+        if(isControllingTank)
+        {
+        TankCamera = Instantiate(TankCamera);
+        TankCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
+        TankCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
+        TankCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
+        TankCamera.GetComponentInChildren<CameraMovement1>().orientation = TankOrientation;
+        }
+        if(isControllingHuman)
+        {
+        HumanCamera = Instantiate(HumanCamera);
+        HumanCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
+        HumanCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
+        HumanCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
+        HumanCamera.GetComponentInChildren<CameraMovement1>().orientation = HumanOrientation;
+        }
+
+    }
     public override void Start()
     {
         base.Start();

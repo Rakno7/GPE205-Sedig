@@ -8,11 +8,15 @@ using UnityEngine;
 //and is not able to be instanced itself. 
 public abstract class Pawn : MonoBehaviour
 {  
-    public Mover mover;
-    public Attacker attacker;
+   public Mover mover;
+   public Attacker attacker;
    public float moveSpeed;
    public float turnSpeed;
    public float AttackSpeed;
+
+   public Transform CameraSetting1;
+   public Transform CameraSetting2;
+   public Transform CameraSetting3;
   
    //A virtual method can be overridden by subclasses. 
    //Virtual methods can be overridden when subclasses use methods of the same name declared as overides. 
