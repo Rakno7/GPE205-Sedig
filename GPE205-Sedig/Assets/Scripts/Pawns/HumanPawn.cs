@@ -21,7 +21,7 @@ public class HumanPawn : Pawn
     {
        if(mover == null)
         {
-            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            Debug.LogWarning("Warning: No Mover in HumanPawn()!");
             return;
         }
 
@@ -33,7 +33,7 @@ public class HumanPawn : Pawn
     {
         if(mover == null)
         {
-            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            Debug.LogWarning("Warning: No Mover in HumanPawn()!");
             return;
         }
 
@@ -44,7 +44,7 @@ public class HumanPawn : Pawn
     {
         if(mover == null)
         {
-            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            Debug.LogWarning("Warning: No Mover in HumanPawn()!");
             return;
         }
         mover.Move(transform.right, -moveSpeed);
@@ -53,10 +53,22 @@ public class HumanPawn : Pawn
     {
        if(mover == null)
         {
-            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            Debug.LogWarning("Warning: No Mover in HumanPawn()!");
             return;
         }
         mover.Move(transform.right, moveSpeed);
+    }
+
+    public override void MouseRotate()
+    {
+       if(mover == null)
+        {
+            Debug.LogWarning("Warning: No Mover in HumanPawn()!");
+            return;
+        }
+        //Debug.Log("trying to rotate");
+        mover.MouseRotate(turnSpeed);
+       // Debug.Log("Rotate Counter Clockwise");
     }
 
     public override void RotateClockwise()
@@ -72,7 +84,7 @@ public class HumanPawn : Pawn
     {
          if(attacker == null)
         {
-            Debug.LogWarning("Warning: No Attacker in TankPawn()!");
+            Debug.LogWarning("Warning: No Attacker in HumanPawn()!");
             return;
         }
         

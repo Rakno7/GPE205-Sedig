@@ -103,7 +103,10 @@ public class PlayerController : Controller
       {
           pawn.DoAttack();
       }
-     
+     if(isControllingHuman)
+     {
+        pawn.MouseRotate();
+     }
     }
    
 }

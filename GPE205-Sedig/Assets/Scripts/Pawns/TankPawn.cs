@@ -64,6 +64,10 @@ public class TankPawn : Pawn
         mover.Rotate(-turnSpeed);
        // Debug.Log("Rotate Counter Clockwise");
     }
+    public override void MouseRotate()
+    {
+            return;
+    }
     public override void DoAttack()
     {
          if(attacker == null)
