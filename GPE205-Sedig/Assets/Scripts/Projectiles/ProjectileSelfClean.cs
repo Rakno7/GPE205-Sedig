@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileSelfClean : MonoBehaviour
 {
-    private float delay = 1;
+    public float delay = 0.2f;
     private bool isPrepDestroy = false;
     
     
