@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TankPawn : Pawn 
 {
-    // Start is called before the first frame update
     public override void Start()
     {
         //base refers to the base class, this will run the start function on the base class.
@@ -74,6 +73,14 @@ public class TankPawn : Pawn
         }
         
         attacker.Attack(transform.forward, AttackSpeed);
+    }
+    public override void MoveLeft()
+    {
+        return;
+    }
+    public override void MoveRight()
+    {
+        return;
     }
 
 }

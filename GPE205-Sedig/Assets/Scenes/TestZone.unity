@@ -405,6 +405,8 @@ MonoBehaviour:
   attacker: {fileID: 35378904}
   moveForwardKey: 119
   moveBackwardKey: 115
+  moveLeftKey: 97
+  moveRightKey: 100
   rotateClockwiseKey: 100
   rotateCounterClockwiseKey: 97
   AttackKey: 101

@@ -6,6 +6,8 @@ public class PlayerController : Controller
 {
     public KeyCode moveForwardKey;
     public KeyCode moveBackwardKey;
+    public KeyCode moveLeftKey;
+    public KeyCode moveRightKey;
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode AttackKey;
@@ -33,6 +35,15 @@ public class PlayerController : Controller
       if (Input.GetKey(moveBackwardKey)) 
       {
           pawn.MoveBackwards();
+      }  
+      if(Input.GetKey(moveLeftKey))
+       {
+           pawn.MoveLeft();
+       }
+
+      if (Input.GetKey(moveRightKey)) 
+      {
+          pawn.MoveRight();
       }  
       if (Input.GetKey(rotateClockwiseKey)) 
       {

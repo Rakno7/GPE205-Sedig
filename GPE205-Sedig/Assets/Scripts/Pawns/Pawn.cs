@@ -30,6 +30,8 @@ public abstract class Pawn : MonoBehaviour
 
     public abstract void MoveForward();
     public abstract void MoveBackwards();
+    public abstract void MoveLeft();
+    public abstract void MoveRight();
     public abstract void RotateClockwise();
     public abstract void RotateCounterClockwise();
     public abstract void DoAttack();
