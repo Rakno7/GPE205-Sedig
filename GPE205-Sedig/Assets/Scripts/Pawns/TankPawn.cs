@@ -98,7 +98,10 @@ public class TankPawn : Pawn
          
            
            //TODO:for some reason the transform rotation of the human driver gets messed up upon exit.
-           Driver.transform.position = transform.position;
+           Vector3 ExitLocation = new Vector3(transform.position.x - 3,transform.position.y,transform.position.z);
+           
+           Driver.transform.position = ExitLocation;
+
            //Driver.transform.rotation = gameObject.GetComponentInChildren<Attacker>().gameObject.transform.rotation;
            Driver.SetActive(true);
 
