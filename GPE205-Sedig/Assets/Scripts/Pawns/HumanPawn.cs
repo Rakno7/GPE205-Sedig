@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HumanPawn : Pawn
 {
+    public bool canEnterVehicle = false;
+    public GameObject VehicleToEnter;
        public override void Start()
     {
         //base refers to the base class, this will run the start function on the base class.
@@ -89,5 +91,22 @@ public class HumanPawn : Pawn
         }
         
         attacker.Attack(transform.forward, AttackSpeed);
+    }
+
+    public override void EnterVehicle()
+    {
+        if(!canEnterVehicle)
+        {
+            return;
+        }
+        controller.pawn = VehicleToEnter.GetComponentInParent<Pawn>();
+        controller.GetComponent<PlayerController>().orientation = VehicleToEnter.GetComponentInParent<Pawn>().Orientation.transform;
+        VehicleToEnter.GetComponentInParent<Pawn>().controller = controller;
+        //set the driver so we can reenable the human player later;
+        VehicleToEnter.GetComponentInParent<TankPawn>().Driver = gameObject;
+        controller.GetComponent<PlayerController>().SetCameraSettings();
+        controller.GetComponent<PlayerController>().isControllingHuman = false;
+        controller.GetComponent<PlayerController>().isControllingTank = true;
+        gameObject.SetActive(false);
     }
 }

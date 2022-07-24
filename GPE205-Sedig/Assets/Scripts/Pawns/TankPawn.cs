@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TankPawn : Pawn 
 {
+    public GameObject Driver;
     public override void Start()
     {
         //base refers to the base class, this will run the start function on the base class.
@@ -85,6 +86,31 @@ public class TankPawn : Pawn
     public override void MoveRight()
     {
         return;
+    }
+
+    public override void EnterVehicle()
+    {
+        //if(controller.pawn != gameObject.GetComponent<TankPawn>())
+        //{
+        //    return;
+        //}
+         //for vehicles this command will exit the vehicle and reactivate the human.
+         
+           
+           //TODO:for some reason the transform rotation of the human driver gets messed up upon exit.
+           Driver.transform.position = transform.position;
+           //Driver.transform.rotation = gameObject.GetComponentInChildren<Attacker>().gameObject.transform.rotation;
+           Driver.SetActive(true);
+
+           controller.pawn = Driver.GetComponent<HumanPawn>();
+           controller.GetComponent<PlayerController>().orientation = Driver.GetComponent<Pawn>().Orientation.transform;
+           controller.GetComponent<PlayerController>().SetCameraSettings();
+           controller.GetComponent<PlayerController>().isControllingTank = false;
+           controller.GetComponent<PlayerController>().isControllingHuman = true;
+           Driver = null;
+           
+           
+       
     }
 
 }

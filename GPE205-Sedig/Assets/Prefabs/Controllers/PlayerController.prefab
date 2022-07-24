@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1550728075878128562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550728075878128560}
+  - component: {fileID: 1550728075878128561}
+  m_Layer: 0
+  m_Name: PlayerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1550728075878128560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550728075878128562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.859434, y: 0, z: 16.51045}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1550728075878128561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550728075878128562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531c2b25c0417034fbef5a4c6b9cd571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawn: {fileID: 0}
+  attacker: {fileID: 0}
+  CurrentCamera: {fileID: 0}
+  cameraFollowerScript: {fileID: 0}
+  camFollowerTransform: {fileID: 0}
+  orientation: {fileID: 0}
+  horizontalInput: 0
+  verticalInput: 0
+  SensitivityX: 0
+  SensitivityY: 0
+  RotationX: 0
+  RotationY: 0
+  rotationSpeed: 1
+  PlayerCamera: {fileID: 4041748430851388800, guid: f353ed23666320343aad4a04f2f8788c, type: 3}
+  isControllingHuman: 0
+  isControllingTank: 0
+  moveForwardKey: 119
+  moveBackwardKey: 115
+  moveLeftKey: 97
+  moveRightKey: 100
+  rotateClockwiseKey: 100
+  rotateCounterClockwiseKey: 97
+  AttackKey: 32
+  EnterVehicleKey: 101

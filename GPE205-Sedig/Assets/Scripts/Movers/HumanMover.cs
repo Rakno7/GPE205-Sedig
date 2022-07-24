@@ -19,8 +19,7 @@ public class HumanMover : Mover
         rb.AddForce(movementVector,ForceMode.Impulse);  
     }
     public override void Rotate(float speed)
-    {
-        
+    {   
         transform.Rotate(new Vector3(0,speed * Time.deltaTime,0));
     }
     public override void MouseRotate(float speed)

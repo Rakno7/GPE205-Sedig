@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : Controller
 {
     //CAMERASTUFF-------------------------
+    public GameObject CurrentCamera;
     public  CameraFollowPlayer cameraFollowerScript;
     public Transform camFollowerTransform; 
     public Transform orientation;
@@ -14,10 +15,7 @@ public class PlayerController : Controller
     public float SensitivityX, SensitivityY;
     public float RotationX, RotationY;
     public float rotationSpeed = 1f;
-    public GameObject TankCamera;
-    public Transform TankOrientation;
-    public GameObject HumanCamera;
-    public Transform HumanOrientation;
+    public GameObject PlayerCamera;
     public bool isControllingHuman;
     public bool isControllingTank;
 
@@ -29,29 +27,31 @@ public class PlayerController : Controller
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode AttackKey;
+    public KeyCode EnterVehicleKey;
     
     private void Awake()
     {
-        if(isControllingTank)
-        {
-        TankCamera = Instantiate(TankCamera);
-        TankCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
-        TankCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
-        TankCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
-        TankCamera.GetComponentInChildren<CameraMovement1>().orientation = TankOrientation;
-        }
-        if(isControllingHuman)
-        {
-        HumanCamera = Instantiate(HumanCamera);
-        HumanCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
-        HumanCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
-        HumanCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
-        HumanCamera.GetComponentInChildren<CameraMovement1>().orientation = HumanOrientation;
-        }
+        
 
     }
     public override void Start()
     {
+        if(isControllingTank)
+        {
+         CurrentCamera = PlayerCamera = Instantiate(PlayerCamera);
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
+        CurrentCamera.GetComponentInChildren<CameraMovement1>().orientation = orientation;
+        }
+        if(isControllingHuman)
+        {
+        CurrentCamera = PlayerCamera = Instantiate(PlayerCamera);
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
+        CurrentCamera.GetComponentInChildren<CameraMovement1>().orientation = orientation;
+        }
         base.Start();
     }
 
@@ -103,10 +103,23 @@ public class PlayerController : Controller
       {
           pawn.DoAttack();
       }
+      if(Input.GetKeyDown(EnterVehicleKey))
+      {
+          pawn.EnterVehicle();
+      }
      if(isControllingHuman)
      {
         pawn.MouseRotate();
      }
     }
+
+    public void SetCameraSettings()
+    {
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
+        CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
+        CurrentCamera.GetComponentInChildren<CameraMovement1>().orientation = orientation;
+    }
+
    
 }
