@@ -23,12 +23,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752801535312116346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 752801535933788814}
-  m_RootOrder: 0
+  m_Father: {fileID: 752801537171181091}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &752801535933788815
 GameObject:
@@ -56,8 +56,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 752801535312116345}
+  m_Children: []
   m_Father: {fileID: 752801537171181091}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,6 +95,7 @@ Transform:
   m_Children:
   - {fileID: 752801535933788814}
   - {fileID: 8995797072242321920}
+  - {fileID: 752801535312116345}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -177,7 +177,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &752801537171181272
 MonoBehaviour:
@@ -197,7 +197,7 @@ MonoBehaviour:
   moveSpeed: 10
   turnSpeed: 200
   AttackSpeed: 10
-  Orientation: {fileID: 752801535933788815}
+  Orientation: {fileID: 752801537171181274}
   CameraSetting1: {fileID: 752801535312116345}
   CameraSetting2: {fileID: 752801535312116345}
   CameraSetting3: {fileID: 752801535312116345}

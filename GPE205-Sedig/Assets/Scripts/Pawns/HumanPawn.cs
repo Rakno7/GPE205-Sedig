@@ -61,18 +61,6 @@ public class HumanPawn : Pawn
         mover.Move(transform.right, moveSpeed);
     }
 
-    public override void MouseRotate()
-    {
-       if(mover == null)
-        {
-            Debug.LogWarning("Warning: No Mover in HumanPawn()!");
-            return;
-        }
-        //Debug.Log("trying to rotate");
-        mover.MouseRotate(turnSpeed);
-       // Debug.Log("Rotate Counter Clockwise");
-    }
-
     public override void RotateClockwise()
     {
         return;

@@ -21,8 +21,4 @@ public class TankMover : Mover
     {
         transform.Rotate(new Vector3(0,speed * Time.deltaTime,0));
     }
-    public override void MouseRotate(float speed)
-    {
-        transform.Rotate(new Vector3(0,speed * Time.deltaTime,0));
-    }
 }

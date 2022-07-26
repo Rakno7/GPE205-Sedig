@@ -9,7 +9,7 @@ public class CameraMovement1 : PlayerController
     {
         //cameraFollower = gameObject.GetComponentInParent<CameraFollowPlayer>();
         Cursor.lockState = CursorLockMode.Locked;
-        base.Start();
+        
     }
 
     
@@ -31,7 +31,14 @@ public class CameraMovement1 : PlayerController
          //apply rotation to camera
          camFollowerTransform.rotation = Quaternion.Euler(RotationX, RotationY, 0);
          //Slerp the current position and desired position overtime
+         if(isControllingTank)
+         {
          orientation.rotation = Quaternion.Slerp(from, to, rotationSpeed * Time.deltaTime);
+         }
+         if(isControllingHuman)
+         {
+          orientation.rotation = Quaternion.Euler(RotationX, RotationY, 0);
+         }
 
          //--------FOR:Instant movement along with camera-----------------
         // orientation.rotation = Quaternion.Euler(RotationX, RotationY, 0);

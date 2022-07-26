@@ -22,11 +22,5 @@ public class HumanMover : Mover
     {   
         transform.Rotate(new Vector3(0,speed * Time.deltaTime,0));
     }
-    public override void MouseRotate(float speed)
-    {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * speed;
-        RotationY += mouseX;
-        Debug.Log("trying to rotate");
-        transform.rotation = Quaternion.Euler(0, RotationY, 0);
-    }
+    
 }

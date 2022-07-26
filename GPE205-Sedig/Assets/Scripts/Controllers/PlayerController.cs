@@ -39,6 +39,7 @@ public class PlayerController : Controller
         if(isControllingTank)
         {
          CurrentCamera = PlayerCamera = Instantiate(PlayerCamera);
+         CurrentCamera.GetComponentInChildren<CameraMovement1>().isControllingTank = true;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
@@ -47,6 +48,7 @@ public class PlayerController : Controller
         if(isControllingHuman)
         {
         CurrentCamera = PlayerCamera = Instantiate(PlayerCamera);
+        CurrentCamera.GetComponentInChildren<CameraMovement1>().isControllingHuman = true;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting1 = pawn.CameraSetting1;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
@@ -58,9 +60,13 @@ public class PlayerController : Controller
     
     public override void Update()
     {
+         CurrentCamera.GetComponentInChildren<CameraMovement1>().PlayerCamera = this.PlayerCamera;
+         CurrentCamera.GetComponentInChildren<CameraMovement1>().CurrentCamera = CurrentCamera;
+         CurrentCamera.GetComponentInChildren<CameraMovement1>().isControllingHuman = this.isControllingHuman;
+         CurrentCamera.GetComponentInChildren<CameraMovement1>().isControllingTank = this.isControllingTank;
          float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * SensitivityX;
          float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * SensitivityY;
-
+         
          RotationY += mouseX;
          RotationX -= mouseY;
         ProcessInputs();
@@ -107,10 +113,7 @@ public class PlayerController : Controller
       {
           pawn.EnterVehicle();
       }
-     if(isControllingHuman)
-     {
-        pawn.MouseRotate();
-     }
+     
     }
 
     public void SetCameraSettings()

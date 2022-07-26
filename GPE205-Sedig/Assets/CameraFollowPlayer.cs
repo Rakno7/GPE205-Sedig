@@ -21,8 +21,6 @@ public class CameraFollowPlayer : MonoBehaviour
         
         //cameraPos points to an empty gameobject on the player Pawn
         // which represents where the camera should place itself in the gameworld.
-        //if(!isHuman)
-        //{
           if(Setting == 1)
           {
           transform.position = CameraSetting1.position;
@@ -35,11 +33,7 @@ public class CameraFollowPlayer : MonoBehaviour
           {
           transform.position = CameraSetting3.position;
           }
-       //}
+      
 
-       // if(isHuman)
-       // {
-       // transform.position = HumanCameraSetting1.position;
-       // }
     }   
 }

@@ -65,10 +65,6 @@ public class TankPawn : Pawn
         mover.Rotate(-turnSpeed);
        // Debug.Log("Rotate Counter Clockwise");
     }
-    public override void MouseRotate()
-    {
-            return;
-    }
     public override void DoAttack()
     {
          if(attacker == null)
@@ -106,10 +102,12 @@ public class TankPawn : Pawn
            Driver.SetActive(true);
 
            controller.pawn = Driver.GetComponent<HumanPawn>();
+           
            controller.GetComponent<PlayerController>().orientation = Driver.GetComponent<Pawn>().Orientation.transform;
-           controller.GetComponent<PlayerController>().SetCameraSettings();
+           
            controller.GetComponent<PlayerController>().isControllingTank = false;
            controller.GetComponent<PlayerController>().isControllingHuman = true;
+           controller.GetComponent<PlayerController>().SetCameraSettings();
            Driver = null;
            
            
