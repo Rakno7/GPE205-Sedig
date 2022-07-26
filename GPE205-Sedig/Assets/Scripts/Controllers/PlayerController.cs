@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerController : Controller
 {
     //CAMERASTUFF-------------------------
@@ -36,6 +37,17 @@ public class PlayerController : Controller
     }
     public override void Start()
     {
+       if (GameManager.instance != null)
+        {
+
+         if (GameManager.instance.players != null)
+          {
+             
+             GameManager.instance.players.Add(this);
+          }
+        }
+
+
         if(isControllingTank)
         {
          CurrentCamera = PlayerCamera = Instantiate(PlayerCamera);
@@ -122,6 +134,17 @@ public class PlayerController : Controller
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting2 = pawn.CameraSetting2;
         CurrentCamera.GetComponent<CameraFollowPlayer>().CameraSetting3 = pawn.CameraSetting3;
         CurrentCamera.GetComponentInChildren<CameraMovement1>().orientation = orientation;
+    }
+
+    public void OnDestroy()
+    { 
+        if (GameManager.instance != null) 
+        {   
+            if (GameManager.instance.players != null) 
+            {
+                GameManager.instance.players.Remove(this);
+            }
+        }
     }
 
    

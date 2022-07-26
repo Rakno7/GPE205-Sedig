@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Transform UatTankSpawnPoint;
     public Transform EnemyTankSpawnPoint;
     public static GameManager instance;
+    public List<PlayerController> players;
     private void Awake()
     {
         //if there isnt already a gamemanager, 
