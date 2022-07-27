@@ -70,6 +70,12 @@ public class HumanPawn : Pawn
     {
          return;
     }
+    public override void RotateTowards(Vector3 targetPosition)
+    {
+        Vector3 vectorToTarget = targetPosition - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+    }
     public override void DoAttack()
     {
          if(attacker == null)
