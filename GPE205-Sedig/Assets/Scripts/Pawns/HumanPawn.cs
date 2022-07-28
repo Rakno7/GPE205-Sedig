@@ -76,7 +76,7 @@ public class HumanPawn : Pawn
         Quaternion targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
-    public override void DoAttack()
+    public override void Attack()
     {
          if(attacker == null)
         {

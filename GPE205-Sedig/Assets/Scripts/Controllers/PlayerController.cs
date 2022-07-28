@@ -119,7 +119,7 @@ public class PlayerController : Controller
       }
       if(Input.GetKey(AttackKey))
       {
-          pawn.DoAttack();
+          pawn.Attack();
       }
       if(Input.GetKeyDown(EnterVehicleKey))
       {
