@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1733381b550fff548aad101ff5918ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   mover: {fileID: 0}
   attacker: {fileID: 0}
   moveSpeed: 50
@@ -210,6 +211,7 @@ MonoBehaviour:
   CameraSetting1: {fileID: 5617040488551147613}
   CameraSetting2: {fileID: 5617040487704377868}
   CameraSetting3: {fileID: 5617040487872634615}
+  Driver: {fileID: 0}
 --- !u!1 &5617040487128429291
 GameObject:
   m_ObjectHideFlags: 0

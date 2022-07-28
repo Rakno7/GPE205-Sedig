@@ -111,7 +111,6 @@ public class TankPawn : Pawn
            
            controller.GetComponent<PlayerController>().orientation = Driver.GetComponent<Pawn>().Orientation.transform;
            
-           controller.GetComponent<PlayerController>().isControllingTank = false;
            controller.GetComponent<PlayerController>().isControllingHuman = true;
            controller.GetComponent<PlayerController>().SetCameraSettings();
            Driver = null;

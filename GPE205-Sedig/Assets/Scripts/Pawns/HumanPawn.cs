@@ -88,11 +88,13 @@ public class HumanPawn : Pawn
     }
 
     public override void EnterVehicle()
-    {
+    {   //only do this if pawn is actually in range.
         if(!canEnterVehicle)
         {
             return;
         }
+        if(controller.GetComponent<PlayerController>())
+        {
         controller.pawn = VehicleToEnter.GetComponentInParent<Pawn>();
         controller.GetComponent<PlayerController>().orientation = VehicleToEnter.GetComponentInParent<Pawn>().Orientation.transform;
         VehicleToEnter.GetComponentInParent<Pawn>().controller = controller;
@@ -102,5 +104,19 @@ public class HumanPawn : Pawn
         controller.GetComponent<PlayerController>().isControllingHuman = false;
         controller.GetComponent<PlayerController>().isControllingTank = true;
         gameObject.SetActive(false);
+        }
+
+        if(controller.GetComponent<AiController>())
+        {
+        controller.pawn = VehicleToEnter.GetComponentInParent<Pawn>();
+        
+        VehicleToEnter.GetComponentInParent<Pawn>().controller = controller;
+        //set the driver so we can reenable the human player later;
+        VehicleToEnter.GetComponentInParent<TankPawn>().Driver = gameObject;
+        
+        controller.GetComponent<AiController>().isControllingHuman = false;
+        controller.GetComponent<AiController>().isControllingTank = true;
+        gameObject.SetActive(false);
+        }
     }
 }
