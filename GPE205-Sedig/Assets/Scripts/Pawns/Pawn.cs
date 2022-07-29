@@ -11,6 +11,7 @@ public abstract class Pawn : MonoBehaviour
    public Controller controller;
    public Mover mover;
    public Attacker attacker;
+   public NoiseMaker noiseMaker;
    public float moveSpeed;
    public float turnSpeed;
    public float AttackSpeed;
@@ -29,6 +30,11 @@ public abstract class Pawn : MonoBehaviour
     {
         mover = GetComponent<Mover>();
         attacker = GetComponentInChildren<Attacker>();
+        //Not all pawns will make noise so check this first. *This may not be nessisarry
+        if(GetComponent<NoiseMaker>()!=null)
+        {
+            noiseMaker = GetComponent<NoiseMaker>();
+        }
     }
 
     
@@ -46,6 +52,8 @@ public abstract class Pawn : MonoBehaviour
     public abstract void RotateTowards(Vector3 targetPosition);
     public abstract void Attack();
     public abstract void EnterVehicle();
+
+    public abstract void MakeNoise(float Amount);
 
 
 }

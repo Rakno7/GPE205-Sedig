@@ -6,6 +6,11 @@ public class HumanPawn : Pawn
 {
     public bool canEnterVehicle = false;
     public GameObject VehicleToEnter;
+
+    public float AttackVolume = 20;
+
+    //Movement volume could be multiplied by velocity of the pawn
+    public float MovementVolume = 2;
        public override void Start()
     {
         //base refers to the base class, this will run the start function on the base class.
@@ -28,6 +33,7 @@ public class HumanPawn : Pawn
         }
 
         mover.Move(transform.forward,moveSpeed);
+        MakeNoise(MovementVolume);
        // Debug.Log("Move Forward");
     }
 
@@ -40,6 +46,7 @@ public class HumanPawn : Pawn
         }
 
         mover.Move(transform.forward, -moveSpeed);
+        MakeNoise(MovementVolume);
         //Debug.Log("Move Backward");
     }
     public override void MoveLeft()
@@ -50,6 +57,7 @@ public class HumanPawn : Pawn
             return;
         }
         mover.Move(transform.right, -moveSpeed);
+        MakeNoise(MovementVolume);
     }
     public override void MoveRight()
     {
@@ -59,6 +67,7 @@ public class HumanPawn : Pawn
             return;
         }
         mover.Move(transform.right, moveSpeed);
+        MakeNoise(MovementVolume);
     }
 
     public override void RotateClockwise()
@@ -87,6 +96,11 @@ public class HumanPawn : Pawn
         attacker.Attack(transform.forward, AttackSpeed);
     }
 
+    public override void MakeNoise(float Amount)
+    {
+        noiseMaker.volumeDistance = Amount;
+    }
+
     public override void EnterVehicle()
     {   //only do this if pawn is actually in range.
         if(!canEnterVehicle)
@@ -98,7 +112,7 @@ public class HumanPawn : Pawn
         controller.pawn = VehicleToEnter.GetComponentInParent<Pawn>();
         controller.GetComponent<PlayerController>().orientation = VehicleToEnter.GetComponentInParent<Pawn>().Orientation.transform;
         VehicleToEnter.GetComponentInParent<Pawn>().controller = controller;
-        //set the driver so we can reenable the human player later;
+        //set the driver so we can re-enable the human pawn when they exit the vehicle
         VehicleToEnter.GetComponentInParent<TankPawn>().Driver = gameObject;
         controller.GetComponent<PlayerController>().SetCameraSettings();
         controller.GetComponent<PlayerController>().isControllingHuman = false;

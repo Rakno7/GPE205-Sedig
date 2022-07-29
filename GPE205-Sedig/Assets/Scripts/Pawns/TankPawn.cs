@@ -5,6 +5,10 @@ using UnityEngine;
 public class TankPawn : Pawn 
 {
     public GameObject Driver;
+    public float CannonShotVolume = 40;
+
+    //Movement volume could be multiplied by velocity of the pawn
+    public float MovementVolume = 5;
     public override void Start()
     {
         //base refers to the base class, this will run the start function on the base class.
@@ -27,6 +31,7 @@ public class TankPawn : Pawn
         }
 
         mover.Move(transform.forward,moveSpeed);
+        MakeNoise(MovementVolume);
        // Debug.Log("Move Forward");
     }
 
@@ -39,6 +44,7 @@ public class TankPawn : Pawn
         }
 
         mover.Move(transform.forward, -moveSpeed);
+        MakeNoise(MovementVolume);
         //Debug.Log("Move Backward");
     }
 
@@ -80,6 +86,7 @@ public class TankPawn : Pawn
         }
         
         attacker.Attack(transform.forward, AttackSpeed);
+        MakeNoise(CannonShotVolume);
     }
     public override void MoveLeft()
     {
@@ -90,21 +97,18 @@ public class TankPawn : Pawn
         return;
     }
 
+    public override void MakeNoise(float Amount)
+    {
+        noiseMaker.volumeDistance = Amount;
+    }
+
     public override void EnterVehicle()
     {
-        //if(controller.pawn != gameObject.GetComponent<TankPawn>())
-        //{
-        //    return;
-        //}
          //for vehicles this command will exit the vehicle and reactivate the human.
-         
-           
-           //TODO:for some reason the transform rotation of the human driver gets messed up upon exit.
            Vector3 ExitLocation = new Vector3(transform.position.x - 3,transform.position.y,transform.position.z);
            
            Driver.transform.position = ExitLocation;
 
-           //Driver.transform.rotation = gameObject.GetComponentInChildren<Attacker>().gameObject.transform.rotation;
            Driver.SetActive(true);
 
            controller.pawn = Driver.GetComponent<HumanPawn>();
@@ -114,9 +118,6 @@ public class TankPawn : Pawn
            controller.GetComponent<PlayerController>().isControllingHuman = true;
            controller.GetComponent<PlayerController>().SetCameraSettings();
            Driver = null;
-           
-           
-       
     }
 
 }

@@ -41,6 +41,34 @@ public class AiController : Controller
         
     }
 
+   
+   public bool CanHear(GameObject target)
+    {
+        // Get target's NoiseMaker
+        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
+        // If they don't have one, return false
+        if (noiseMaker == null) 
+        {
+            return false;
+        }
+        // If they arent making noise return false
+        if (noiseMaker.volumeDistance <= 0) 
+        {
+            return false;
+        }
+        // If they are making noise, add the volumeDistance to this AI's hearingDistance
+        float totalDistance = noiseMaker.volumeDistance + hearingDistance;
+        // If the distance betweenthis AI's pawn and the target is closer then the total distance, the AI hears it. 
+        if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance) 
+        {
+            return true;
+            
+        }
+        else 
+        {
+            return false;
+        }
+    }
     public List<PlayerController> players;
     public List<TankPawn> Vehicles;
 
@@ -60,7 +88,7 @@ public class AiController : Controller
     public float vehicleVisRange = 80;
     public float targetVisRange = 50;
     public float targetAttackRange = 20;
-
+    public float hearingDistance = 10;
    public AIStates currentState;
    
    private void Awake()
@@ -80,6 +108,14 @@ public class AiController : Controller
     
     public override void Update()
     {
+        //for testing. be to make sure AI has a target and its pawn hasnt been destroyed.
+        if(target != null && pawn != null)
+        {
+           if(CanHear(target))
+           {
+              Debug.Log("Heard Noise");
+           }
+        }
         MakeDecisions();
         base.Update();
     }
@@ -192,7 +228,7 @@ public class AiController : Controller
                 case AIStates.Attack:
 
                 DoAttackState();
-                
+
                 if (!isDistanceLessThanTarget(target, targetVisRange)) 
                 {
                     ChangeState(AIStates.GaurdPost);

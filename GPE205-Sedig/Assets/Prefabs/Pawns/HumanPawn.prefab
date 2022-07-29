@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 752801537171181095}
   - component: {fileID: 752801537171181272}
   - component: {fileID: 752801537171181273}
+  - component: {fileID: 7402284294850904923}
   m_Layer: 0
   m_Name: HumanPawn
   m_TagString: Human
@@ -194,6 +195,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   mover: {fileID: 0}
   attacker: {fileID: 0}
+  noiseMaker: {fileID: 0}
   moveSpeed: 10
   turnSpeed: 200
   AttackSpeed: 10
@@ -203,6 +205,8 @@ MonoBehaviour:
   CameraSetting3: {fileID: 752801535312116345}
   canEnterVehicle: 0
   VehicleToEnter: {fileID: 0}
+  AttackVolume: 20
+  MovementVolume: 2
 --- !u!114 &752801537171181273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +220,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationY: 0
+--- !u!114 &7402284294850904923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752801537171181274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb464fc533800c42ae49f4935de2ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeDistance: 0
 --- !u!1 &3205873415754525872
 GameObject:
   m_ObjectHideFlags: 0

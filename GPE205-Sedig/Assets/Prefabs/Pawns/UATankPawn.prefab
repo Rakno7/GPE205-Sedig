@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 1295755290441495459}
   - component: {fileID: 1295755290441495457}
   - component: {fileID: 2106274083510903090}
+  - component: {fileID: 4693869361469023048}
   m_Layer: 0
   m_Name: UATankPawn
   m_TagString: Untagged
@@ -228,6 +229,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   mover: {fileID: 0}
   attacker: {fileID: 0}
+  noiseMaker: {fileID: 0}
   moveSpeed: 50
   turnSpeed: 50
   AttackSpeed: 150
@@ -236,6 +238,8 @@ MonoBehaviour:
   CameraSetting2: {fileID: 3917804553741929745}
   CameraSetting3: {fileID: 3917804553741929745}
   Driver: {fileID: 0}
+  CannonShotVolume: 40
+  MovementVolume: 5
 --- !u!114 &1295755290441495459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +285,19 @@ MonoBehaviour:
   ShotParticles: {fileID: 4874913359879127163, guid: 1526631b468ad304fba03b638fe22386, type: 3}
   isShotDelay: 0
   AttackCooldown: 3
+--- !u!114 &4693869361469023048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106025753212442968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb464fc533800c42ae49f4935de2ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeDistance: 0
 --- !u!1 &3219946341085702006
 GameObject:
   m_ObjectHideFlags: 0
