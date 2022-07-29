@@ -57,8 +57,9 @@ public class AiController : Controller
     private float timeSinceLastStateChange;
 
     public float fleeDistance = 30;
-    public float vehicleVisRange = 100;
-    public float targetVisRange = 100;
+    public float vehicleVisRange = 80;
+    public float targetVisRange = 50;
+    public float targetAttackRange = 20;
 
    public AIStates currentState;
    
@@ -179,12 +180,29 @@ public class AiController : Controller
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-
+                //when the target is in range to attack// Maybe I can put the range on the tank pawn being controlled, as the other tank can aim up and shoot farther.
+                if (isDistanceLessThanTarget(target, targetAttackRange)) 
+                {
+                    ChangeState(AIStates.Attack);
+                }
 
                 break;
-
                  //-------------------------------------------------------------------------------------------------------------------------------------------------------------
                 
+                case AIStates.Attack:
+
+                DoAttackState();
+                
+                if (!isDistanceLessThanTarget(target, targetVisRange)) 
+                {
+                    ChangeState(AIStates.GaurdPost);
+                }
+                if (!isDistanceLessThanTarget(target, targetAttackRange)) 
+                {
+                    ChangeState(AIStates.VehicleChase);
+                }
+
+                break;
         }
     }
      public virtual void ChangeState (AIStates newState)
