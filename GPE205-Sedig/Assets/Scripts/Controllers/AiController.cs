@@ -37,7 +37,6 @@ public class AiController : Controller
         }
     }
     
-    
     protected bool isInVehicle()
     {
         // return the truth or falsity of this statement
@@ -56,6 +55,11 @@ public class AiController : Controller
 
     public List<PlayerController> players;
     public List<TankPawn> Vehicles;
+
+    public bool isPatrolLoop;
+    public Transform[] waypoints;
+    public float waypointStopDistance = 5;
+    private int currentWaypoint = 0;
     public GameObject target;
     public GameObject selftarget;
     public GameObject vehicletarget;
@@ -63,6 +67,10 @@ public class AiController : Controller
     public bool isControllingHuman = true;
     //Keep track of how long we spend in a state
     private float timeSinceLastStateChange;
+
+    public float fleeDistance = 30;
+    public float vehicleVisRange = 100;
+    public float targetVisRange = 100;
 
    public AIStates currentState;
    
@@ -104,18 +112,18 @@ public class AiController : Controller
             //Transition
 
             //when AI has a target in range, and vehicle, and not currently in a vehicle..
-            if (isDistanceLessThanTarget(target, 100) && isDistanceLessThanVehicleTarget(vehicletarget, 100) && !isInVehicle()) 
+            if (isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     Debug.Log("tried to switch states");
                     ChangeState(AIStates.MoveToVehicle);
                 }
                 //When Ai has a target in range, and is in vehicle..
-                if (isDistanceLessThanTarget(target, 100) && isInVehicle()) 
+                if (isDistanceLessThanTarget(target, targetVisRange) && isInVehicle()) 
                 {
                     ChangeState(AIStates.VehicleChase);
                 }  
                 //When AI has a target, not in a vehicle, and has no vehicle in range to get in..
-                if (isDistanceLessThanTarget(target, 500) && !isInVehicle() && !isDistanceLessThanVehicleTarget(vehicletarget, 100)) 
+                if (isDistanceLessThanTarget(target, targetVisRange) && !isInVehicle() && !isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange)) 
                 {
                     ChangeState(AIStates.HumanChase);
                 }   
@@ -132,17 +140,17 @@ public class AiController : Controller
                   ChangeState(AIStates.EnterVehicle);
                 }
                 //when some else takes the target vehicle and doesnt have a target in range
-                if(!isInVehicle() && !isDistanceLessThanVehicleTarget(vehicletarget, 100) && !isDistanceLessThanTarget(target, 100))
+                if(!isInVehicle() && !isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange) && !isDistanceLessThanTarget(target, targetVisRange))
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
                 //when some else takes the target vehicle but still has a target in range
-                if(!isInVehicle() && !isDistanceLessThanVehicleTarget(vehicletarget, 100) && isDistanceLessThanTarget(target, 500))
+                if(!isInVehicle() && !isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange) && isDistanceLessThanTarget(target, targetVisRange))
                 {
                     ChangeState(AIStates.HumanChase);
                 }
                 //when AI gets in vehicle and still has a target in range
-                if(isInVehicle() && isDistanceLessThanTarget(target, 500))
+                if(isInVehicle() && isDistanceLessThanTarget(target, targetVisRange))
                 {
                     ChangeState(AIStates.VehicleChase);
                 }
@@ -156,17 +164,17 @@ public class AiController : Controller
                 DoHumanChaseState();
                 
                 //When AI doesnt have a target or vehicle in range
-                if (!isDistanceLessThanTarget(target, 500) && !isDistanceLessThanVehicleTarget(vehicletarget, 100) && !isInVehicle()) 
+                if (!isDistanceLessThanTarget(target, targetVisRange) && !isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
                 //When AI doesnt have a target but found a vehicle in range
-                if (!isDistanceLessThanTarget(target, 500) && isDistanceLessThanVehicleTarget(vehicletarget, 100) && !isInVehicle()) 
+                if (!isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
                 //When AI has a target but found a vehicle in range (prioritise vehicle)
-                if (!isDistanceLessThanTarget(target, 500) && isDistanceLessThanVehicleTarget(vehicletarget, 100) && !isInVehicle()) 
+                if (!isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanVehicleTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
@@ -179,7 +187,7 @@ public class AiController : Controller
                 DoVehicleChaseState();
                 TargetNearestPlayer();
                 //When AI doesnt have a target
-                if (!isDistanceLessThanTarget(target, 500)) 
+                if (!isDistanceLessThanTarget(target, targetVisRange)) 
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
@@ -203,6 +211,11 @@ public class AiController : Controller
     protected virtual void DoGaurdPostState()
     {
         //Do what? //patrol here!
+        if(waypoints.Length > 0)
+        {
+            Debug.Log("Trying to patrol");
+            Patrol();
+        }
     }
     protected virtual void DoMoveToVehicleState()
     {
@@ -229,6 +242,12 @@ public class AiController : Controller
         //Do what?
         Chase(target);
         Attack();
+    }
+
+    protected virtual void DoFleeState()
+    {
+        //Do what?
+        Flee();
     }
     
 
@@ -274,6 +293,33 @@ public class AiController : Controller
         Chase(targetPawn.transform);
     }
     
+     protected void Patrol()
+    {
+             // If we have a enough waypoints in our list to move to a current waypoint
+        if (waypoints.Length > currentWaypoint) 
+        {
+            // Then chase that waypoint
+            Chase(waypoints[currentWaypoint]);
+            // If we are close enough, move to the next point
+            if (Vector3.Distance(pawn.transform.position, waypoints[currentWaypoint].position) < waypointStopDistance) 
+            {
+                currentWaypoint++;
+            }
+        }
+        else if(isPatrolLoop)
+        {
+           RestartPatrol();
+        }
+    }
+
+    protected void RestartPatrol()
+    {
+        // Set the index back to 0
+        currentWaypoint = 0;
+    }
+
+    
+    
     public void Attack()
     {
         pawn.Attack();
@@ -283,6 +329,27 @@ public class AiController : Controller
     {
         Debug.Log("Tried to Enter vehicle");
         pawn.EnterVehicle();
+    }
+
+    protected void Flee()
+    {
+        //Get the distance from the target
+        float targetDistance = Vector3.Distance( target.transform.position, pawn.transform.position );
+        //get the percentage from target
+        float percentOfFleeDistance = targetDistance / fleeDistance;
+        //clamp the distance to flee
+         percentOfFleeDistance = Mathf.Clamp01(percentOfFleeDistance);
+        //invert so the farther AI is from target the less they will flee.
+        float flippedPercentOfFleeDistance = 1 - percentOfFleeDistance;
+
+        // Find the vector to target
+        Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
+        // Find the vector away from target
+        Vector3 vectorAwayFromTarget = -vectorToTarget;
+        // Find flee vector
+        Vector3 fleeVector = vectorAwayFromTarget.normalized * flippedPercentOfFleeDistance;
+        // chase the flee Vector
+        Chase(pawn.transform.position + fleeVector);
     }
 
     public void TargetNearestPlayer()
@@ -314,6 +381,8 @@ public class AiController : Controller
             }
         }
     }
+
+
     public void TargetNearestVehicle()
     {
         //GameManager exists
