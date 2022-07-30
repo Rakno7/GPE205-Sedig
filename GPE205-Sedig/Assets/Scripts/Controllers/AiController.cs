@@ -217,11 +217,6 @@ public class AiController : Controller
             
                 case AIStates.MoveToVehicle:
                 DoMoveToVehicleState();
-                //if were close enough to the vehicle to enter it
-                if(isDistanceLessThanTarget(vehicletarget, 1) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
-                {
-                  ChangeState(AIStates.EnterVehicle);
-                }
                 //when some else takes the target vehicle and doesnt have a target in range
                 if(!isInVehicle() && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isDistanceLessThanTarget(target, targetVisRange) && vehicletarget.GetComponent<TankPawn>().Driver != null)
                 {
@@ -252,11 +247,7 @@ public class AiController : Controller
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-                //When AI doesnt have a target but found an empty vehicle in range
-                if (!isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null) 
-                {
-                    ChangeState(AIStates.MoveToVehicle);
-                }
+                
                 //When AI has a target but found an empty vehicle in range (prioritise vehicle)
                 if (isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
                 {
