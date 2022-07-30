@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
     public Transform UatTankSpawnPoint1;
     public Transform UatTankSpawnPoint2;
     
+    public Transform[] WayPointSpawnPoints;
     public static GameManager instance;
     public List<PlayerController> players;
     public List<TankPawn> Vehicles;
+    public List<WayPointCluster> Waypointcluster;
     private void Awake()
     {
         //if there isnt already a gamemanager, 
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
        SpawnPlayers();
        SpawnHumans();
        SpawnVehicles();
+       SpawnWaypoints();
     }
 
     private void SpawnPlayers()
@@ -92,7 +95,6 @@ public class GameManager : MonoBehaviour
         
     }
 
-
     private void SpawnVehicles()
     {
         GameObject newTankPawnObj = Instantiate(MyTankPawnPrefab, MyTankSpawnPoint.position, MyTankSpawnPoint.rotation) as GameObject;
@@ -104,11 +106,22 @@ public class GameManager : MonoBehaviour
         Vehicles.Add(newUatTankPawnObj2.GetComponent<TankPawn>());
     }
 
+    private void SpawnWaypoints()
+    {
+        //spawn as many waypoint clusters as we fill the list of spawnpoints with when creating the level, to each of their respective spawn point positions.
+         for (int i = 0; i < WayPointSpawnPoints.Length; i++) 
+         {
+             GameObject newWaypointcluster = Instantiate(WayPointClusterPrefab, WayPointSpawnPoints[i].position, WayPointSpawnPoints[i].rotation) as GameObject;
+              Waypointcluster.Add(newWaypointcluster.GetComponent<WayPointCluster>());
+         }
+    }
+
     public GameObject PlayerControllerPrefab;
     public GameObject AIControllerPrefab;
     public GameObject HumanPawnPrefab;
     public GameObject MyTankPawnPrefab;
     public GameObject UatTankPawnPrefab;
+    public GameObject WayPointClusterPrefab;
 
 
 

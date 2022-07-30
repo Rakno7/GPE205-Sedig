@@ -17,6 +17,16 @@ public class TankHealth : Health
         currentHealth -= Amount;
         if(currentHealth < 0)
         {
+            //TODO add a respawn function in the gamemanager and que up destroyed pawns in a list to be respawned in after an amount of time.
+            
+            TankPawn thisPawn = gameObject.GetComponent<TankPawn>();
+            GameManager.instance.Vehicles.Remove(thisPawn);
+            if(thisPawn.Driver != null)
+            {
+                Destroy(thisPawn.Driver.gameObject);
+            }
+            
+            Destroy(gameObject.GetComponentInParent<TankPawn>().controller.gameObject);
             Destroy(gameObject);
         }
     }

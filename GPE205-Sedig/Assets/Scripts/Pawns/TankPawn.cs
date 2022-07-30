@@ -73,6 +73,11 @@ public class TankPawn : Pawn
     }
     public override void RotateTowards(Vector3 targetPosition)
     {
+         if(mover == null)
+        {
+            Debug.LogWarning("Warning: No Mover in TankPawn()!");
+            return;
+        }
         Vector3 vectorToTarget = targetPosition - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
@@ -99,6 +104,11 @@ public class TankPawn : Pawn
 
     public override void MakeNoise(float Amount)
     {
+         if(noiseMaker == null)
+        {
+            Debug.LogWarning("Warning: noiseMaker in TankPawn()!");
+            return;
+        }
        // Vector3 velocity = GetComponent<Rigidbody>().velocity.normalized;
         float totalSpeed = GetComponent<Rigidbody>().velocity.magnitude;
         noiseMaker.volumeDistance = Amount * totalSpeed;

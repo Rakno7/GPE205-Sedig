@@ -19,6 +19,7 @@ public class AiController : Controller
     }
     protected bool isDistanceLessThanTarget(GameObject thisTarget, float distance)
     {
+        
         if (Vector3.Distance (pawn.transform.position, thisTarget.transform.position) < distance ) 
         {
             return true;
@@ -33,12 +34,12 @@ public class AiController : Controller
         // return the truth or falsity of this statement
         if(pawn.GetComponent<TankPawn>())
         {
-            Debug.Log("is in vehicle");
+           // Debug.Log("is in vehicle");
             return true;
         }
         else
         {
-            Debug.Log("is NOT in vehicle");
+            // Debug.Log("is NOT in vehicle");
             return false;
         }
         
@@ -114,14 +115,16 @@ public class AiController : Controller
     
     public List<PlayerController> players;
     public List<TankPawn> Vehicles;
+    public List<WayPointCluster> waypointclusters;
 
     public bool isPatrolLoop;
-    public Transform[] waypoints;
+    public Transform[] Patrolwaypoints;
     public float waypointStopDistance = 5;
     private int currentWaypoint = 0;
     public GameObject target;
     public GameObject selftarget;
     public GameObject vehicletarget;
+    public GameObject patrolTarget;
     private GameObject hitObject;
     public bool isControllingTank = false;
     public bool isControllingHuman = true;
@@ -180,6 +183,10 @@ public class AiController : Controller
         {
             case AIStates.GaurdPost:
             //work
+            if(waypointclusters !=null)
+            {
+            TargetNearestWaypointCluster();
+            }
             DoGaurdPostState();
             TargetNearestPlayer();
 
@@ -211,17 +218,17 @@ public class AiController : Controller
                 case AIStates.MoveToVehicle:
                 DoMoveToVehicleState();
                 //if were close enough to the vehicle to enter it
-                if(isDistanceLessThanTarget(vehicletarget, 1) && !isInVehicle())
+                if(isDistanceLessThanTarget(vehicletarget, 1) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
                 {
                   ChangeState(AIStates.EnterVehicle);
                 }
                 //when some else takes the target vehicle and doesnt have a target in range
-                if(!isInVehicle() && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isDistanceLessThanTarget(target, targetVisRange))
+                if(!isInVehicle() && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isDistanceLessThanTarget(target, targetVisRange) && vehicletarget.GetComponent<TankPawn>().Driver != null)
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
                 //when some else takes the target vehicle but still has a target in range
-                if(!isInVehicle() && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && isDistanceLessThanTarget(target, targetVisRange))
+                if(!isInVehicle() && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && isDistanceLessThanTarget(target, targetVisRange) && vehicletarget.GetComponent<TankPawn>().Driver != null)
                 {
                     ChangeState(AIStates.HumanChase);
                 }
@@ -238,19 +245,20 @@ public class AiController : Controller
 
                 case AIStates.HumanChase:
                 DoHumanChaseState();
+                TargetNearestVehicle();
                 
                 //When AI doesnt have a target or vehicle in range
                 if (!isDistanceLessThanTarget(target, targetVisRange) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-                //When AI doesnt have a target but found a vehicle in range
-                if (!isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
+                //When AI doesnt have a target but found an empty vehicle in range
+                if (!isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null) 
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
-                //When AI has a target but found a vehicle in range (prioritise vehicle)
-                if (!isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
+                //When AI has a target but found an empty vehicle in range (prioritise vehicle)
+                if (isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
@@ -304,7 +312,7 @@ public class AiController : Controller
     protected virtual void DoGaurdPostState()
     {
         //Do what? //patrol here!
-        if(waypoints.Length > 0)
+        if(Patrolwaypoints.Length > 0)
         {
             Patrol();
         }
@@ -370,12 +378,12 @@ public class AiController : Controller
      protected void Patrol()
     {
              // If we have a enough waypoints in our list to move to a current waypoint
-        if (waypoints.Length > currentWaypoint) 
+        if (Patrolwaypoints.Length > currentWaypoint) 
         {
             // Then chase that waypoint
-            Chase(waypoints[currentWaypoint]);
+            Chase(Patrolwaypoints[currentWaypoint]);
             // If we are close enough, move to the next point
-            if (Vector3.Distance(pawn.transform.position, waypoints[currentWaypoint].position) < waypointStopDistance) 
+            if (Vector3.Distance(pawn.transform.position, Patrolwaypoints[currentWaypoint].position) < waypointStopDistance) 
             {
                 currentWaypoint++;
             }
@@ -470,6 +478,7 @@ public class AiController : Controller
                     Vehicles = GameManager.instance.Vehicles;
                     TankPawn closestVehicle = Vehicles[0];
                     float closestVehicleDistance = Vector3.Distance(pawn.gameObject.transform.position, closestVehicle.gameObject.transform.position);
+                    
                     foreach(TankPawn Vehicles in Vehicles)
                     {
                         if (Vector3.Distance(pawn.transform.position, Vehicles.gameObject.transform.position) <= closestVehicleDistance)
@@ -479,6 +488,42 @@ public class AiController : Controller
                         }
                     } 
                     vehicletarget = closestVehicle.gameObject;
+                }
+            }
+        }
+    }
+
+    public void TargetNearestWaypointCluster()
+    {
+        //GameManager exists
+        if (GameManager.instance != null) 
+        {
+            //list of vehicles exists
+            if (GameManager.instance.Waypointcluster != null) 
+            {
+                //there are vehicles in it
+                if (GameManager.instance.Waypointcluster.Count > 0) 
+                {
+                    //target the first vehicle in the list
+                    waypointclusters = GameManager.instance.Waypointcluster;
+                    WayPointCluster closestWaypoint = waypointclusters[0];
+                    float closestWaypointDistance = Vector3.Distance(pawn.gameObject.transform.position, closestWaypoint.gameObject.transform.position);
+                    foreach(WayPointCluster wayPointCluster in waypointclusters)
+                    {
+                        if (Vector3.Distance(pawn.transform.position, wayPointCluster.gameObject.transform.position) <= closestWaypointDistance)
+                        {
+                            closestWaypoint = wayPointCluster;
+                            closestWaypointDistance = Vector3.Distance(pawn.transform.position, closestWaypoint.transform.position);
+                        }
+                    } 
+                    //set the patrol cluster target
+                    patrolTarget = closestWaypoint.gameObject;
+                    //populate the AIs patrol waypoints with the children transforms of the ClusterObject
+                    for(int i = 0; i < patrolTarget.transform.childCount; i++)
+                    {
+                        
+                       Patrolwaypoints[i] = patrolTarget.transform.GetChild(i).transform;
+                    }
                 }
             }
         }

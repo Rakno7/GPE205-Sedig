@@ -122,10 +122,12 @@ public class PlayerController : Controller
       {
           pawn.Attack();
       }
-      else
-      {
-        pawn.MakeNoise(2);
-      }
+
+      //introduced a bug when adding AI waypoints which screws this up for some reason.
+     // else
+     // {
+     //   pawn.MakeNoise(2);
+     // }
       if(Input.GetKeyDown(EnterVehicleKey))
       {
           pawn.EnterVehicle();

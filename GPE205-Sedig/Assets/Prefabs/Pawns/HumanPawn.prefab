@@ -196,7 +196,7 @@ MonoBehaviour:
   mover: {fileID: 0}
   attacker: {fileID: 0}
   noiseMaker: {fileID: 0}
-  moveSpeed: 10
+  moveSpeed: 5
   turnSpeed: 200
   AttackSpeed: 10
   Orientation: {fileID: 752801537171181274}
