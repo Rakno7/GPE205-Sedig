@@ -148,6 +148,8 @@ public class AiController : Controller
          selftarget = pawn.gameObject;
         ChangeState(AIStates.GaurdPost);
         
+
+        //TODO Populate patrol waypoints with nearest waypoints group GameObjects
         base.Start();
     }
 
@@ -170,7 +172,9 @@ public class AiController : Controller
         base.Update();
     }
 
-    public void MakeDecisions()
+
+    //Override this function to create multiple AI personalitys which inhertit from this class. 
+    public virtual void MakeDecisions()
     {   
         switch (currentState)
         {
