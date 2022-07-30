@@ -157,7 +157,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4698051839250943010}
   serializedVersion: 2
-  m_Mass: 2
+  m_Mass: 5
   m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 1
@@ -206,8 +206,8 @@ MonoBehaviour:
   mover: {fileID: 0}
   attacker: {fileID: 0}
   noiseMaker: {fileID: 0}
-  moveSpeed: 50
-  turnSpeed: 50
+  moveSpeed: 100
+  turnSpeed: 70
   AttackSpeed: 150
   Orientation: {fileID: 5617040488921979755}
   CameraSetting1: {fileID: 5617040488551147613}
