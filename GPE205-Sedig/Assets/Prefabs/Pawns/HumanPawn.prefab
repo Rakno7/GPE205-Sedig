@@ -205,8 +205,8 @@ MonoBehaviour:
   CameraSetting3: {fileID: 752801535312116345}
   canEnterVehicle: 0
   VehicleToEnter: {fileID: 0}
-  AttackVolume: 20
-  MovementVolume: 2
+  AttackVolume: 50
+  MovementVolume: 10
 --- !u!114 &752801537171181273
 MonoBehaviour:
   m_ObjectHideFlags: 0

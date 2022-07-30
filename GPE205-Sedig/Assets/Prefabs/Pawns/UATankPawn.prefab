@@ -238,8 +238,8 @@ MonoBehaviour:
   CameraSetting2: {fileID: 3917804553741929745}
   CameraSetting3: {fileID: 3917804553741929745}
   Driver: {fileID: 0}
-  CannonShotVolume: 40
-  MovementVolume: 5
+  CannonShotVolume: 100
+  MovementVolume: 20
 --- !u!114 &1295755290441495459
 MonoBehaviour:
   m_ObjectHideFlags: 0

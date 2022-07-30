@@ -17,7 +17,7 @@ public class TankPawn : Pawn
 
     public override void Update()
     {
-        base.Start();
+        base.Update();
     }
 
 
@@ -99,7 +99,9 @@ public class TankPawn : Pawn
 
     public override void MakeNoise(float Amount)
     {
-        noiseMaker.volumeDistance = Amount;
+       // Vector3 velocity = GetComponent<Rigidbody>().velocity.normalized;
+        float totalSpeed = GetComponent<Rigidbody>().velocity.magnitude;
+        noiseMaker.volumeDistance = Amount * totalSpeed;
     }
 
     public override void EnterVehicle()

@@ -19,7 +19,8 @@ public class HumanPawn : Pawn
 
     public override void Update()
     {
-        base.Start();
+        base.Update();
+       
     }
 
 

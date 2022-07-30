@@ -47,9 +47,18 @@ MonoBehaviour:
   attacker: {fileID: 0}
   players: []
   Vehicles: []
+  isPatrolLoop: 0
+  waypoints: []
+  waypointStopDistance: 5
   target: {fileID: 0}
   selftarget: {fileID: 0}
   vehicletarget: {fileID: 0}
   isControllingTank: 0
   isControllingHuman: 1
+  fleeDistance: 30
+  vehicleVisRange: 80
+  targetVisRange: 50
+  targetAttackRange: 20
+  hearingDistance: 30
+  fov: 90
   currentState: 0

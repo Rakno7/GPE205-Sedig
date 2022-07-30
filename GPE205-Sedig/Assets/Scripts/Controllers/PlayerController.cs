@@ -109,6 +109,7 @@ public class PlayerController : Controller
       {
           pawn.MoveRight();
       }  
+      
       if (Input.GetKey(rotateClockwiseKey)) 
       {
           pawn.RotateClockwise();
@@ -120,6 +121,10 @@ public class PlayerController : Controller
       if(Input.GetKey(AttackKey))
       {
           pawn.Attack();
+      }
+      else
+      {
+        pawn.MakeNoise(2);
       }
       if(Input.GetKeyDown(EnterVehicleKey))
       {

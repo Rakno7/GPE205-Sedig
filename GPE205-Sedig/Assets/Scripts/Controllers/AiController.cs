@@ -8,6 +8,9 @@ public class AiController : Controller
    {
      ChooseTarget, ChooseVehicleTarget, GaurdPost, EnterVehicle, MoveToVehicle, VehicleChase, HumanChase, Attack, TakeCover, Flee
    };
+
+   //Debug
+    Color raycolor = Color.yellow;
      //Check Transition Example
     protected bool isHasTarget()
     {
@@ -42,7 +45,7 @@ public class AiController : Controller
     }
 
    
-   public bool CanHear(GameObject target)
+   public bool isCanHear(GameObject target)
     {
         // Get target's NoiseMaker
         NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
@@ -58,6 +61,9 @@ public class AiController : Controller
         }
         // If they are making noise, add the volumeDistance to this AI's hearingDistance
         float totalDistance = noiseMaker.volumeDistance + hearingDistance;
+
+        
+
         // If the distance betweenthis AI's pawn and the target is closer then the total distance, the AI hears it. 
         if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance) 
         {
@@ -69,6 +75,43 @@ public class AiController : Controller
             return false;
         }
     }
+  
+  public bool isCanSee(GameObject target)
+    {
+        
+        // Find the vector from the controlled pawn to the target
+        Vector3 PawnToTargetVector = target.transform.position - pawn.transform.position;
+        // Find the angle between the direction AI pawn is facing and the direction to the target.
+        float angleToTarget = Vector3.Angle(PawnToTargetVector, pawn.transform.forward);
+        
+        RaycastHit hit;
+
+        
+        //Raycast the line of sight down the vector to target and output what it hits
+        if(Physics.Raycast(pawn.transform.position, PawnToTargetVector, out hit, targetVisRange))
+        {
+          hitObject = hit.transform.gameObject;
+        }
+        
+        //debug to show us what the raycast looks like and wheather it can see the target.
+        
+        Debug.DrawLine(pawn.transform.position, PawnToTargetVector * targetVisRange, raycolor);
+        
+
+        // if that angle is less than the AI's fov and line of sight hits the target
+        if (angleToTarget < fov && hitObject == target) 
+        {
+            
+            raycolor = Color.red;
+            return true;
+        }
+        else 
+        {
+            raycolor = Color.white;
+            return false;
+        }
+    }
+    
     public List<PlayerController> players;
     public List<TankPawn> Vehicles;
 
@@ -79,6 +122,7 @@ public class AiController : Controller
     public GameObject target;
     public GameObject selftarget;
     public GameObject vehicletarget;
+    private GameObject hitObject;
     public bool isControllingTank = false;
     public bool isControllingHuman = true;
     //Keep track of how long we spend in a state
@@ -88,7 +132,9 @@ public class AiController : Controller
     public float vehicleVisRange = 80;
     public float targetVisRange = 50;
     public float targetAttackRange = 20;
-    public float hearingDistance = 10;
+    public float hearingDistance = 50;
+    
+    public float fov = 90;
    public AIStates currentState;
    
    private void Awake()
@@ -111,9 +157,13 @@ public class AiController : Controller
         //for testing. be to make sure AI has a target and its pawn hasnt been destroyed.
         if(target != null && pawn != null)
         {
-           if(CanHear(target))
+           if(isCanHear(target))
            {
               Debug.Log("Heard Noise");
+           }
+           if(isCanSee(target))
+           {
+            Debug.Log("Saw Player");
            }
         }
         MakeDecisions();
@@ -121,9 +171,7 @@ public class AiController : Controller
     }
 
     public void MakeDecisions()
-    {
-        Debug.Log("Making Decisions");
-        
+    {   
         switch (currentState)
         {
             case AIStates.GaurdPost:
@@ -139,7 +187,6 @@ public class AiController : Controller
             //when AI has a target in range, and vehicle, and not currently in a vehicle..
             if (isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
-                    Debug.Log("tried to switch states");
                     ChangeState(AIStates.MoveToVehicle);
                 }
                 //When Ai has a target in range, and is in vehicle..
@@ -255,14 +302,12 @@ public class AiController : Controller
         //Do what? //patrol here!
         if(waypoints.Length > 0)
         {
-            Debug.Log("Trying to patrol");
             Patrol();
         }
     }
     protected virtual void DoMoveToVehicleState()
     {
         //Do what?
-        Debug.Log("searching for vehicle");
         Chase(vehicletarget);
         if(!isInVehicle())
         {
@@ -352,7 +397,6 @@ public class AiController : Controller
 
     public void Enter()
     {
-        Debug.Log("Tried to Enter vehicle");
         pawn.EnterVehicle();
     }
 
@@ -400,7 +444,6 @@ public class AiController : Controller
                             closestPlayerDistance = Vector3.Distance(pawn.transform.position, closestPlayer.transform.position);
                         }
                     } 
-                    Debug.Log("tried to find target");
                     target = closestPlayer.GetComponent<PlayerController>().pawn.gameObject;
                 }
             }
@@ -431,12 +474,13 @@ public class AiController : Controller
                             closestVehicleDistance = Vector3.Distance(pawn.transform.position, closestVehicle.transform.position);
                         }
                     } 
-                    Debug.Log("tried to find target");
                     vehicletarget = closestVehicle.gameObject;
                 }
             }
         }
     }
+
+    
 
 
   //FOR: testing
@@ -459,6 +503,26 @@ public class AiController : Controller
     }
 
 
+    private void OnDrawGizmos()
+    {
+         
+        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
+    
+      
+        float totalDistance = noiseMaker.volumeDistance + hearingDistance;        
+        if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance) 
+        {
+            Gizmos.color = Color.red;
+            
+        }
+        else 
+        {
+            Gizmos.color = Color.yellow;
+        }
+
+         Gizmos.DrawWireSphere(target.transform.position,noiseMaker.volumeDistance);
+         Gizmos.DrawWireSphere(pawn.transform.position,hearingDistance);
+    }
     
 }
 
