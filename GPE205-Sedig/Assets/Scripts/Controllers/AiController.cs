@@ -2,22 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AiController : Controller
+public abstract class AiController : Controller
 {
-   public enum  AIStates 
+    public enum  AIStates 
    {
      ChooseTarget, ChooseVehicleTarget, GaurdPost, EnterVehicle, MoveToVehicle, VehicleChase, HumanChase, Attack, TakeCover, Flee
    };
-
    //Debug
     Color raycolor = Color.yellow;
      //Check Transition Example
-    protected bool isHasTarget()
+    protected virtual bool isHasTarget()
     {
         // return the truth or falsity of this statement
         return (target != null);
     }
-    protected bool isDistanceLessThanTarget(GameObject thisTarget, float distance)
+    protected virtual bool isDistanceLessThanTarget(GameObject thisTarget, float distance)
     {
         
         if (Vector3.Distance (pawn.transform.position, thisTarget.transform.position) < distance ) 
@@ -29,7 +28,7 @@ public class AiController : Controller
             return false;
         }
     }
-    protected bool isInVehicle()
+    protected virtual bool isInVehicle()
     {
         // return the truth or falsity of this statement
         if(pawn.GetComponent<TankPawn>())
@@ -46,7 +45,7 @@ public class AiController : Controller
     }
 
    
-   public bool isCanHear(GameObject thistarget)
+   public virtual bool isCanHear(GameObject thistarget)
     {
         // Get target's NoiseMaker
         NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
@@ -77,7 +76,7 @@ public class AiController : Controller
         }
     }
   
-  public bool isCanSee(GameObject thistarget)
+  public virtual bool isCanSee(GameObject thistarget)
     {
         
         // Find the vector from the controlled pawn to the target
@@ -114,6 +113,8 @@ public class AiController : Controller
     }
     
     public List<PlayerController> players;
+    public List<AggressiveFSM> AggressiveaiPlayers;
+    public List<TimidFSM> TimidaiPlayers;
     public List<TankPawn> Vehicles;
     public List<WayPointCluster> waypointclusters;
 
@@ -139,50 +140,12 @@ public class AiController : Controller
     public float hearingDistance = 50;
     
     public float fov = 90;
-   public AIStates currentState;
+    public AIStates currentState;
    
-   private void Awake()
-   {
-    
-   }
-    public override void Start()
-    {
-        //TEMP:to test the state.
-        //use this later in state method:---target = GameManager.instance.players[0].pawn.gameObject;
-         selftarget = pawn.gameObject;
-        ChangeState(AIStates.GaurdPost);
-        
-
-        //TODO Populate patrol waypoints with nearest waypoints group GameObjects
-        base.Start();
-    }
-
-    
-    public override void Update()
-    {
-        
-       // if(target != null && pawn != null)
-       // {
-       //    if(isCanHear(target))
-       //    {
-       //       Debug.Log("Heard Noise");
-       //    }
-       //    if(isCanSee(target))
-       //    {
-       //     Debug.Log("Saw Player");
-       //    }
-       // }
-        MakeDecisions();
-        base.Update();
-    }
-
-
     //Override this function to create multiple AI personalitys which inhertit from this class. 
-    public virtual void MakeDecisions()
-    {   
-        
-    }
-     public virtual void ChangeState (AIStates newState)
+    public abstract void MakeDecisions();
+    
+     protected void ChangeState (AIStates newState)
     {
         
         // Change the current state
@@ -191,7 +154,9 @@ public class AiController : Controller
         timeSinceLastStateChange = Time.time;
 
     }
-    protected virtual void DoGaurdPostState()
+    
+    
+    protected void DoGaurdPostState()
     {
         //Do what? //patrol here!
         if(Patrolwaypoints.Length > 0)
@@ -199,7 +164,7 @@ public class AiController : Controller
             Patrol();
         }
     }
-    protected virtual void DoMoveToVehicleState()
+    protected void DoMoveToVehicleState()
     {
         //Do what?
         Chase(vehicletarget, true);
@@ -208,24 +173,24 @@ public class AiController : Controller
         Enter();
         }
     }
-    protected virtual void DoHumanChaseState()
+    protected void DoHumanChaseState()
     {
         //Do what?
         Chase(target, true);
     }
-    protected virtual void DoVehicleChaseState()
+    protected void DoVehicleChaseState( bool CanMove)
     {
         //Do what?
-        Chase(target, true);
+        Chase(target, CanMove);
     }
-    protected virtual void DoAttackState()
+    protected void DoAttackState(bool CanMove)
     {
         //Do what?
-        Chase(target, true);
+        Chase(target, CanMove);
         Attack();
     }
 
-    protected virtual void DoFleeState()
+    protected void DoFleeState()
     {
         //Do what?
         Flee();
@@ -235,26 +200,26 @@ public class AiController : Controller
     //overloading, different versions of the same method which take different data in the constructor
    
     //---------------------------------------------------------------------------------------------------------
-    public void Chase(Vector3 targetPosition, bool CanMove)
+    protected void Chase(Vector3 targetPosition, bool CanMove)
     {  
         pawn.RotateTowards(targetPosition);
         //When the function is called decide whether it should move and rotate, or just rotate.
         if(!CanMove) return;
         pawn.MoveForward();
     }
-    public void Chase(Transform targetTransform, bool CanMove)
+    protected void Chase(Transform targetTransform, bool CanMove)
     {  
         Chase(targetTransform.position, CanMove);
     }
-    public void Chase(GameObject targetGameObject, bool CanMove)
+    protected void Chase(GameObject targetGameObject, bool CanMove)
     {  
         Chase(targetGameObject.gameObject.transform, CanMove);
     }
-      public void Chase(Pawn targetPawn, bool CanMove)
+      protected void Chase(Pawn targetPawn, bool CanMove)
     {
         Chase(targetPawn.transform, CanMove);
     }
-     public void Chase(Controller targetController, bool CanMove)
+     protected void Chase(Controller targetController, bool CanMove)
     {
         Chase(targetController.pawn, CanMove);
     }
@@ -287,12 +252,12 @@ public class AiController : Controller
 
     
     
-    public void Attack()
+    protected void Attack()
     {
         pawn.Attack();
     }
 
-    public void Enter()
+    protected void Enter()
     {
         pawn.EnterVehicle();
     }
@@ -318,7 +283,7 @@ public class AiController : Controller
         Chase(pawn.transform.position + fleeVector, true);
     }
 
-    public void TargetNearestPlayer()
+    protected void TargetNearestPlayer()
     {
         //GameManager exists
         if (GameManager.instance != null) 
@@ -348,7 +313,7 @@ public class AiController : Controller
     }
 
 
-    public void TargetNearestVehicle()
+    protected void TargetNearestVehicle()
     {
         //GameManager exists
         if (GameManager.instance != null) 
@@ -378,7 +343,7 @@ public class AiController : Controller
         }
     }
 
-    public void TargetNearestWaypointCluster()
+    protected void TargetNearestWaypointCluster()
     {
         //GameManager exists
         if (GameManager.instance != null) 
@@ -418,7 +383,7 @@ public class AiController : Controller
 
 
   //FOR: testing
-    public void TargetPlayerOne()
+    protected void TargetPlayerOne()
     {
         //GameManager exists
         if (GameManager.instance != null) 
@@ -436,27 +401,5 @@ public class AiController : Controller
         }
     }
 
-
-    private void OnDrawGizmos()
-    {
-         
-        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
-    
-      
-        float totalDistance = noiseMaker.volumeDistance + hearingDistance;        
-        if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance) 
-        {
-            Gizmos.color = Color.red;
-            
-        }
-        else 
-        {
-            Gizmos.color = Color.yellow;
-        }
-
-         Gizmos.DrawWireSphere(target.transform.position,noiseMaker.volumeDistance);
-         Gizmos.DrawWireSphere(pawn.transform.position,hearingDistance);
-    }
-    
 }
 

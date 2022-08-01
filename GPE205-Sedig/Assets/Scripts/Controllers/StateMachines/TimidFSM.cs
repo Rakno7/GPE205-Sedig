@@ -4,21 +4,34 @@ using UnityEngine;
 
 public class TimidFSM : AiController
 {
-    public float thisAImemory;
+   private void Awake()
+   {
+    
+   }
     public override void Start()
     {
-        AIMemory = thisAImemory;
+        //TEMP:to test the state.
+        //use this later in state method:---target = GameManager.instance.players[0].pawn.gameObject;
+         selftarget = pawn.gameObject;
+        ChangeState(AIStates.GaurdPost);
+        
+
+        //TODO Populate patrol waypoints with nearest waypoints group GameObjects
+        base.Start();
     }
 
     
     public override void Update()
     {
-        base.Update();
+        MakeDecisions();
     }
-    
+
+
+    //Override this function to create multiple AI personalitys which inhertit from this class. 
     public override void MakeDecisions()
     {   
-        switch (currentState)
+         // Debug.Log("isthisworking?");
+         switch (currentState)
         {
             case AIStates.GaurdPost:
             //work
@@ -28,6 +41,8 @@ public class TimidFSM : AiController
             }
             DoGaurdPostState();
             TargetNearestPlayer();
+           
+            
 
             //TEST
             TargetNearestVehicle();
@@ -104,7 +119,7 @@ public class TimidFSM : AiController
                  //-------------------------------------------------------------------------------------------------------------------------------------------------------------
                 
                 case AIStates.VehicleChase:
-                DoVehicleChaseState();
+                DoVehicleChaseState(true);
                 TargetNearestPlayer();
                 //When AI doesnt have a target
                 if (!isDistanceLessThanTarget(target, targetVisRange)) 
@@ -128,24 +143,41 @@ public class TimidFSM : AiController
                 
                 case AIStates.Attack:
 
-                DoAttackState();
+                DoAttackState(false);
 
-                if (!isDistanceLessThanTarget(target, targetVisRange)) 
+                if (!isDistanceLessThanTarget(target, targetVisRange) && timeSinceLastStateChange > AIMemory * 2) 
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-                if (!isDistanceLessThanTarget(target, targetAttackRange)) 
+                if (!isDistanceLessThanTarget(target, targetAttackRange) && timeSinceLastStateChange > AIMemory) 
                 {
                     ChangeState(AIStates.VehicleChase);
                 }
-
-                 //When enough time has passed and the AI can no longer see or hear target 
-                if (!isCanSee(target) && !isCanHear(target) && timeSinceLastStateChange > AIMemory)
-                {
-                    ChangeState(AIStates.GaurdPost);
-                }
+                
 
                 break;
         }
     }
+
+    private void OnDrawGizmos()
+    {
+         
+      // NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
+    
+      //
+      // float totalDistance = noiseMaker.volumeDistance + hearingDistance;        
+      // if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance) 
+      // {
+      //     Gizmos.color = Color.red;
+      //     
+      // }
+      // else 
+      // {
+      //     Gizmos.color = Color.yellow;
+      // }
+
+      //  Gizmos.DrawWireSphere(target.transform.position,noiseMaker.volumeDistance);
+      //  Gizmos.DrawWireSphere(pawn.transform.position,hearingDistance);
+    }
+
 }

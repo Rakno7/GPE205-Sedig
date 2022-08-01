@@ -6,9 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public Transform PlayerSpawnPoint;
     public Transform MyTankSpawnPoint;
-
-    public Transform HumanSpawnPoint1;
-    public Transform HumanSpawnPoint2;
+    private GameObject newAiPawn;
+    public Transform[] AISpawnPoints;
+   
 
     public Transform UatTankSpawnPoint1;
     public Transform UatTankSpawnPoint2;
@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public Transform[] WayPointSpawnPoints;
     public static GameManager instance;
     public List<PlayerController> players;
+    public List<TimidFSM> TimidaiPlayers;
+    public List<AggressiveFSM> AggressiveaiPlayers;
+    public List<HumanPawn> humans;
     public List<TankPawn> Vehicles;
     public List<WayPointCluster> Waypointcluster;
     private void Awake()
@@ -36,10 +39,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //Temp: on Start Spawn for testing.
-       SpawnPlayers();
-       SpawnHumans();
-       SpawnVehicles();
        SpawnWaypoints();
+       SpawnPlayers();
+       SpawnAIPlayers();
+       SpawnVehicles();
+       
     }
 
     private void SpawnPlayers()
@@ -59,40 +63,35 @@ public class GameManager : MonoBehaviour
         newPawn.controller = newController;
     }
 
-    private void SpawnHumans()
+    private void SpawnAIPlayers()
     {
-        //TODO: in the future do a for loop to spawn each of the objects
+       for (int i = 0; i < AISpawnPoints.Length; i++) 
+         {
+              float rand = Random.Range(1,3); //Increase this as new ai personalities are added
+              
+              if (rand == 1)
+              {
+              GameObject newFSMObj = Instantiate(TimidAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;  
+              newAiPawn = Instantiate(HumanTimidAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
+              Controller newController = newFSMObj.GetComponent<Controller>();
+              TimidaiPlayers.Add(newFSMObj.GetComponent<TimidFSM>());
+              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
+              newController.pawn = newPawn;
+              newPawn.controller = newController;
+              }
+              if (rand == 2)
+              {
+              GameObject newFSMObj = Instantiate(AggressiveAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;
+              newAiPawn = Instantiate(HumanAggressiveAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
+              Controller newController = newFSMObj.GetComponent<Controller>();
+              AggressiveaiPlayers.Add(newFSMObj.GetComponent<AggressiveFSM>());
+              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
+              newController.pawn = newPawn;
+              newPawn.controller = newController;
+              }
 
-        //Spawn first human
-        GameObject AIControllerObj1 = Instantiate(AIControllerPrefab,Vector3.zero,Quaternion.identity) as GameObject;
-        
-
-        GameObject newHumanPawnObj1 = Instantiate(HumanPawnPrefab, HumanSpawnPoint1.position, HumanSpawnPoint1.rotation) as GameObject;
-        Controller newController1 = AIControllerObj1.GetComponent<Controller>();
-        Pawn newPawn1 = newHumanPawnObj1.GetComponent<Pawn>();
-
-        newController1.GetComponent<AiController>().isControllingTank = false;
-        newController1.GetComponent<AiController>().isControllingHuman = true;
-
-        newController1.pawn = newPawn1;
-        newPawn1.controller = newController1;
-
-        //Spawn Second Human
-        GameObject AIControllerObj2 = Instantiate(AIControllerPrefab,Vector3.zero,Quaternion.identity) as GameObject;
-
-        GameObject newHumanPawnObj2 = Instantiate(HumanPawnPrefab, HumanSpawnPoint2.position, HumanSpawnPoint2.rotation) as GameObject;
-        Controller newController2 = AIControllerObj2.GetComponent<Controller>();
-        Pawn newPawn2 = newHumanPawnObj2.GetComponent<Pawn>();
-
-        newController2.GetComponent<AiController>().isControllingTank = false;
-        newController2.GetComponent<AiController>().isControllingHuman = true;
-
-        newController2.pawn = newPawn2;
-        newPawn2.controller = newController2;
-        
-        
-
-        
+              humans.Add(newAiPawn.GetComponent<HumanPawn>());
+         }
     }
 
     private void SpawnVehicles()
@@ -102,8 +101,10 @@ public class GameManager : MonoBehaviour
         GameObject newUatTankPawnObj2 = Instantiate(UatTankPawnPrefab, UatTankSpawnPoint2.position, UatTankSpawnPoint2.rotation) as GameObject;
         
         //add vehicles to the list.
+        Vehicles.Add(newTankPawnObj.GetComponent<TankPawn>());
         Vehicles.Add(newUatTankPawnObj1.GetComponent<TankPawn>());
         Vehicles.Add(newUatTankPawnObj2.GetComponent<TankPawn>());
+
     }
 
     private void SpawnWaypoints()
@@ -111,17 +112,29 @@ public class GameManager : MonoBehaviour
         //spawn as many waypoint clusters as we fill the list of spawnpoints with when creating the level, to each of their respective spawn point positions.
          for (int i = 0; i < WayPointSpawnPoints.Length; i++) 
          {
-             GameObject newWaypointcluster = Instantiate(WayPointClusterPrefab, WayPointSpawnPoints[i].position, WayPointSpawnPoints[i].rotation) as GameObject;
+              GameObject newWaypointcluster = Instantiate(WayPointClusterPrefab, WayPointSpawnPoints[i].position, WayPointSpawnPoints[i].rotation) as GameObject;
               Waypointcluster.Add(newWaypointcluster.GetComponent<WayPointCluster>());
          }
     }
 
     public GameObject PlayerControllerPrefab;
-    public GameObject AIControllerPrefab;
+    public GameObject TimidAIPrefab;
+    public GameObject AggressiveAIPrefab;
+    public GameObject ExperiancedAIPrefab;
     public GameObject HumanPawnPrefab;
+
+    public GameObject HumanTimidAIPawnPrefab;
+    public GameObject HumanAggressiveAIPawnPrefab;
     public GameObject MyTankPawnPrefab;
     public GameObject UatTankPawnPrefab;
     public GameObject WayPointClusterPrefab;
+
+
+
+
+    
+
+    
 
 
 

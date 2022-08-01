@@ -16,6 +16,7 @@ public abstract class Pawn : MonoBehaviour
    public float turnSpeed;
    public float AttackSpeed;
 
+   public float AiDifficulty;
 
    public GameObject Orientation;
 
