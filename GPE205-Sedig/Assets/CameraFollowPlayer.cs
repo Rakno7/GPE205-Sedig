@@ -18,7 +18,6 @@ public class CameraFollowPlayer : MonoBehaviour
     }
     void LateUpdate()
     {
-        
         //cameraPos points to an empty gameobject on the player Pawn
         // which represents where the camera should place itself in the gameworld.
           if(Setting == 1)

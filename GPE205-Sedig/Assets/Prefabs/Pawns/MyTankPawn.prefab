@@ -206,8 +206,8 @@ MonoBehaviour:
   mover: {fileID: 0}
   attacker: {fileID: 0}
   noiseMaker: {fileID: 0}
-  moveSpeed: 100
-  turnSpeed: 50
+  moveSpeed: 70
+  turnSpeed: 25
   AttackSpeed: 150
   AiDifficulty: 0
   Orientation: {fileID: 5617040488921979755}
@@ -216,7 +216,7 @@ MonoBehaviour:
   CameraSetting3: {fileID: 5617040487872634615}
   Driver: {fileID: 0}
   CannonShotVolume: 120
-  MovementVolume: 20
+  MovementVolume: 40
 --- !u!114 &5195087459479384968
 MonoBehaviour:
   m_ObjectHideFlags: 0

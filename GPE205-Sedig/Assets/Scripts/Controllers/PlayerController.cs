@@ -124,10 +124,11 @@ public class PlayerController : Controller
       }
 
       //introduced a bug when adding AI waypoints which screws this up for some reason.
-     // else
-     // {
-     //   pawn.MakeNoise(2);
-     // }
+      else
+      {
+        if(pawn != null)
+        pawn.MakeNoise(2);
+      }
       if(Input.GetKeyDown(EnterVehicleKey))
       {
           pawn.EnterVehicle();
@@ -150,6 +151,9 @@ public class PlayerController : Controller
             if (GameManager.instance.players != null) 
             {
                 GameManager.instance.players.Remove(this);
+                Destroy(CurrentCamera);
+                //later on this should temporarily spawn a new camera following the ai which killed the player until the player respawns.
+                Destroy(gameObject);
             }
         }
     }

@@ -23,7 +23,7 @@ public class CameraMovement1 : PlayerController
     }
     public void LateUpdate()
     {
-         
+        
          RotationX = Mathf.Clamp(RotationX, -30f, 15f); //restrict cam rotaton angle
          Quaternion from = orientation.rotation;
          Quaternion to = camFollowerTransform.rotation;

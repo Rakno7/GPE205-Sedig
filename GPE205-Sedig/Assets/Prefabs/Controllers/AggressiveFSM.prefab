@@ -59,7 +59,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   waypointStopDistance: 5
-  AIMemory: 500
+  AIMemory: 15
   target: {fileID: 0}
   selftarget: {fileID: 0}
   vehicletarget: {fileID: 0}
@@ -67,10 +67,11 @@ MonoBehaviour:
   isControllingTank: 0
   isControllingHuman: 1
   timeSinceLastStateChange: 0
+  TimePassedSinceLastChange: 0
   fleeDistance: 30
   vehicleVisRange: 80
   targetVisRange: 50
   targetAttackRange: 20
-  hearingDistance: 50
+  hearingDistance: 20
   fov: 90
   currentState: 0

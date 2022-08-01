@@ -6,7 +6,7 @@ public abstract class AiController : Controller
 {
     public enum  AIStates 
    {
-     ChooseTarget, ChooseVehicleTarget, GaurdPost, EnterVehicle, MoveToVehicle, VehicleChase, HumanChase, Attack, TakeCover, Flee
+     GaurdPost, EnterVehicle, MoveToVehicle, VehicleChase, HumanChase, Attack, TakeCover, Flee, turnTowards
    };
    //Debug
     Color raycolor = Color.yellow;
@@ -17,8 +17,7 @@ public abstract class AiController : Controller
         return (target != null);
     }
     protected virtual bool isDistanceLessThanTarget(GameObject thisTarget, float distance)
-    {
-        
+    { 
         if (Vector3.Distance (pawn.transform.position, thisTarget.transform.position) < distance ) 
         {
             return true;
@@ -45,7 +44,7 @@ public abstract class AiController : Controller
     }
 
    
-   public virtual bool isCanHear(GameObject thistarget)
+   protected virtual bool isCanHear(GameObject thistarget)
     {
         // Get target's NoiseMaker
         NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
@@ -76,7 +75,7 @@ public abstract class AiController : Controller
         }
     }
   
-  public virtual bool isCanSee(GameObject thistarget)
+  protected virtual bool isCanSee(GameObject thistarget)
     {
         
         // Find the vector from the controlled pawn to the target
@@ -132,6 +131,7 @@ public abstract class AiController : Controller
     public bool isControllingHuman = true;
     //Keep track of how long we spend in a state
     public float timeSinceLastStateChange;
+    public float TimePassedSinceLastChange;
 
     public float fleeDistance = 30;
     public float vehicleVisRange = 80;
@@ -152,6 +152,7 @@ public abstract class AiController : Controller
         currentState = newState;
         // Keep track of when this state change happened
         timeSinceLastStateChange = Time.time;
+        TimePassedSinceLastChange = 0;
 
     }
     
@@ -178,6 +179,11 @@ public abstract class AiController : Controller
         //Do what?
         Chase(target, true);
     }
+    protected void DoTurnTowardsState()
+    {
+        //Do what?
+        Chase(target, false);
+    }
     protected void DoVehicleChaseState( bool CanMove)
     {
         //Do what?
@@ -202,6 +208,7 @@ public abstract class AiController : Controller
     //---------------------------------------------------------------------------------------------------------
     protected void Chase(Vector3 targetPosition, bool CanMove)
     {  
+        if(target!=null)
         pawn.RotateTowards(targetPosition);
         //When the function is called decide whether it should move and rotate, or just rotate.
         if(!CanMove) return;
@@ -209,18 +216,22 @@ public abstract class AiController : Controller
     }
     protected void Chase(Transform targetTransform, bool CanMove)
     {  
+        if(target!=null)
         Chase(targetTransform.position, CanMove);
     }
     protected void Chase(GameObject targetGameObject, bool CanMove)
     {  
+        if(target!=null)
         Chase(targetGameObject.gameObject.transform, CanMove);
     }
       protected void Chase(Pawn targetPawn, bool CanMove)
     {
+        if(target!=null)
         Chase(targetPawn.transform, CanMove);
     }
      protected void Chase(Controller targetController, bool CanMove)
     {
+        if(target!=null)
         Chase(targetController.pawn, CanMove);
     }
    
@@ -306,7 +317,9 @@ public abstract class AiController : Controller
                             closestPlayerDistance = Vector3.Distance(pawn.transform.position, closestPlayer.transform.position);
                         }
                     } 
+                   
                     target = closestPlayer.GetComponent<PlayerController>().pawn.gameObject;
+                    
                 }
             }
         }
@@ -337,7 +350,9 @@ public abstract class AiController : Controller
                             closestVehicleDistance = Vector3.Distance(pawn.transform.position, closestVehicle.transform.position);
                         }
                     } 
+                    
                     vehicletarget = closestVehicle.gameObject;
+                    
                 }
             }
         }

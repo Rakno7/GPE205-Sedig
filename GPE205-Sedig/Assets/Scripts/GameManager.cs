@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public float RespawnTime;
+    public float RespawnTimer;
+    public List<TankPawn> Destroyedtanks;
+    
+    public List<HumanPawn> DeadPlayers;
+    public List<HumanPawn> DeadAIPlayers;
     public Transform PlayerSpawnPoint;
-    public Transform MyTankSpawnPoint;
     private GameObject newAiPawn;
     public Transform[] AISpawnPoints;
-   
 
-    public Transform UatTankSpawnPoint1;
-    public Transform UatTankSpawnPoint2;
+
+    public Transform[] TankType1SpawnPoints;
+    public Transform[] TankType2SpawnPoints;
     
     public Transform[] WayPointSpawnPoints;
     public static GameManager instance;
@@ -38,27 +43,27 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //Temp: on Start Spawn for testing.
-       SpawnWaypoints();
-       SpawnPlayers();
-       SpawnAIPlayers();
-       SpawnVehicles();
-       
+        
+        SpawnWaypoints();
+        SpawnPlayers();
+        SpawnAIPlayers();
+        SpawnVehicles();
+        //RespawnTimer = RespawnTime;
+    }
+   
+    private void Update()
+    {
+       RespawnCountdown(); 
     }
 
     private void SpawnPlayers()
     {
         GameObject PlayerControllerObj = Instantiate(PlayerControllerPrefab,Vector3.zero,Quaternion.identity) as GameObject;
-
         GameObject newHumanPawnObj = Instantiate(HumanPawnPrefab, PlayerSpawnPoint.position, PlayerSpawnPoint.rotation) as GameObject;
         Controller newController = PlayerControllerObj.GetComponent<Controller>();
         Pawn newPawn = newHumanPawnObj.GetComponent<Pawn>();
-
-        newController.GetComponent<PlayerController>().isControllingTank = false;
-        newController.GetComponent<PlayerController>().isControllingHuman = true;
         newController.GetComponent<PlayerController>().orientation = newHumanPawnObj.GetComponent<Pawn>().Orientation.transform;
         
-
         newController.pawn = newPawn;
         newPawn.controller = newController;
     }
@@ -96,15 +101,16 @@ public class GameManager : MonoBehaviour
 
     private void SpawnVehicles()
     {
-        GameObject newTankPawnObj = Instantiate(MyTankPawnPrefab, MyTankSpawnPoint.position, MyTankSpawnPoint.rotation) as GameObject;
-        GameObject newUatTankPawnObj1 = Instantiate(UatTankPawnPrefab, UatTankSpawnPoint1.position, UatTankSpawnPoint1.rotation) as GameObject;
-        GameObject newUatTankPawnObj2 = Instantiate(UatTankPawnPrefab, UatTankSpawnPoint2.position, UatTankSpawnPoint2.rotation) as GameObject;
-        
-        //add vehicles to the list.
-        Vehicles.Add(newTankPawnObj.GetComponent<TankPawn>());
-        Vehicles.Add(newUatTankPawnObj1.GetComponent<TankPawn>());
-        Vehicles.Add(newUatTankPawnObj2.GetComponent<TankPawn>());
-
+        for (int i = 0; i < TankType1SpawnPoints.Length; i++) 
+        {
+           GameObject newTankPawn = Instantiate(UatTankPawnPrefab, TankType1SpawnPoints[i].position, TankType1SpawnPoints[i].rotation) as GameObject;
+           Vehicles.Add(newTankPawn.GetComponent<TankPawn>());
+        }
+        for (int i = 0; i < TankType2SpawnPoints.Length; i++) 
+        {
+           GameObject newTankPawn = Instantiate(MyTankPawnPrefab, TankType2SpawnPoints[i].position, TankType2SpawnPoints[i].rotation) as GameObject;
+           Vehicles.Add(newTankPawn.GetComponent<TankPawn>());
+        } 
     }
 
     private void SpawnWaypoints()
@@ -128,10 +134,68 @@ public class GameManager : MonoBehaviour
     public GameObject MyTankPawnPrefab;
     public GameObject UatTankPawnPrefab;
     public GameObject WayPointClusterPrefab;
+    
 
 
+   private void RespawnCountdown()
+   {
+      if(RespawnTimer > 0)
+      {
+       RespawnTimer -= Time.deltaTime;
+      }
 
+      if(RespawnTimer <= 0)
+      {
+        RespawnDeadObjects();
+      }
+   }
 
+   private void RespawnDeadObjects()
+   {
+    if(Destroyedtanks.Count > 0)
+
+    {
+         for (int i = 0; i < Destroyedtanks.Count; i++) 
+         {
+           GameObject newTankPawn = Instantiate(UatTankPawnPrefab, TankType1SpawnPoints[i].position, TankType1SpawnPoints[i].rotation) as GameObject;
+           Vehicles.Add(newTankPawn.GetComponent<TankPawn>());
+           Destroyedtanks.Clear();
+         }
+    }
+    if(DeadAIPlayers.Count > 0)
+    {
+         for (int i = 0; i < DeadAIPlayers.Count; i++) 
+         {
+              float rand = Random.Range(1,3); //Increase this as new ai personalities are added
+              
+              if (rand == 1)
+              {
+              GameObject newFSMObj = Instantiate(TimidAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;  
+              newAiPawn = Instantiate(HumanTimidAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
+              Controller newController = newFSMObj.GetComponent<Controller>();
+              TimidaiPlayers.Add(newFSMObj.GetComponent<TimidFSM>());
+              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
+              newController.pawn = newPawn;
+              newPawn.controller = newController;
+              }
+              if (rand == 2)
+              {
+              GameObject newFSMObj = Instantiate(AggressiveAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;
+              newAiPawn = Instantiate(HumanAggressiveAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
+              Controller newController = newFSMObj.GetComponent<Controller>();
+              AggressiveaiPlayers.Add(newFSMObj.GetComponent<AggressiveFSM>());
+              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
+              newController.pawn = newPawn;
+              newPawn.controller = newController;
+              }
+              DeadAIPlayers.Clear();
+              humans.Add(newAiPawn.GetComponent<HumanPawn>());
+         }
+    }
+
+         RespawnTimer = RespawnTime;
+       
+   }
     
 
     

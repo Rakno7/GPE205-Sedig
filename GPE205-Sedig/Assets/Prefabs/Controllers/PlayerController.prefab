@@ -57,7 +57,7 @@ MonoBehaviour:
   RotationY: 0
   rotationSpeed: 1
   PlayerCamera: {fileID: 4041748430851388800, guid: f353ed23666320343aad4a04f2f8788c, type: 3}
-  isControllingHuman: 0
+  isControllingHuman: 1
   isControllingTank: 0
   moveForwardKey: 119
   moveBackwardKey: 115

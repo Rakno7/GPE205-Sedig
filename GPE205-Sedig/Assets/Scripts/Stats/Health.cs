@@ -11,5 +11,6 @@ public abstract class Health : MonoBehaviour
    }
    public abstract void ReduceHealth(float Amount);
    public abstract void RestoreHealth(float Amount);
+   public abstract void Die();
    
 }

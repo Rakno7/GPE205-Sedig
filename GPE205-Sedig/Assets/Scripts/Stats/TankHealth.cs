@@ -17,17 +17,7 @@ public class TankHealth : Health
         currentHealth -= Amount;
         if(currentHealth < 0)
         {
-            //TODO add a respawn function in the gamemanager and que up destroyed pawns in a list to be respawned in after an amount of time.
-            
-            TankPawn thisPawn = gameObject.GetComponent<TankPawn>();
-            GameManager.instance.Vehicles.Remove(thisPawn);
-            if(thisPawn.Driver != null)
-            {
-                Destroy(thisPawn.Driver.gameObject);
-            }
-            
-            Destroy(gameObject.GetComponentInParent<TankPawn>().controller.gameObject);
-            Destroy(gameObject);
+            Die();
         }
     }
     public override void RestoreHealth(float Amount)
@@ -42,9 +32,27 @@ public class TankHealth : Health
             ReduceHealth(50);
         }
        
-        else if(rb.velocity.magnitude > 2) //To Do: figure out why wall collisions only work if the collision is on angle.
+        else if(rb.velocity.magnitude > 2) //To Do: figure out why wall collision damage only works if the collision is on angle.
         {
            ReduceHealth(wallCollisionDamage);
         }
+    }
+
+    public override void Die()
+    {
+            TankPawn thisPawn = gameObject.GetComponent<TankPawn>();
+            GameManager.instance.Vehicles.Remove(thisPawn);
+            GameManager.instance.Destroyedtanks.Add(thisPawn);
+            if(thisPawn.Driver != null)
+            {
+                Destroy(thisPawn.Driver.gameObject);
+                GameManager.instance.humans.Remove(thisPawn.Driver.GetComponent<HumanPawn>());
+                GameManager.instance.DeadAIPlayers.Add(thisPawn.Driver.GetComponent<HumanPawn>());
+            }
+            if(gameObject.GetComponentInParent<TankPawn>().controller !=null)
+            {
+            Destroy(gameObject.GetComponentInParent<TankPawn>().controller.gameObject);
+            }
+            Destroy(gameObject);
     }
 }
