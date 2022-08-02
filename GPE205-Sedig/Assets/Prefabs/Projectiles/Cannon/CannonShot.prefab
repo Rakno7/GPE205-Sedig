@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7021a87742d0794e95f70dcdfb2ae8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0.2
 --- !u!114 &-4249911741599414847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +156,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplosionParticles: {fileID: 2549862742370318761, guid: 3885d7e7c448b754c85593c90db6d350, type: 3}
   ExplosionSmokeParticles: {fileID: 3957579645356005949, guid: 6e0872bff4fc0aa40a69fe1f0976c4a9, type: 3}
+  ProjectileDamage: 10

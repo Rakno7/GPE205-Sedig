@@ -133,7 +133,7 @@ public class ExperiancedFSM : AiController
                 }
                 
                 //When AI has a target but found an empty vehicle in range (prioritise vehicle)
-                if (isDistanceLessThanTarget(target, targetVisRange) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
+                if (isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }

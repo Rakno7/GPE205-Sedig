@@ -28,7 +28,8 @@ public class TankHealth : Health
     {
         if(other.transform.tag == "Projectile")
         {
-            ReduceHealth(10);
+            float DamageTaken = other.transform.gameObject.GetComponent<ProjectileExplode>().ProjectileDamage;
+            ReduceHealth(DamageTaken);
         }
        
         else if(rb.velocity.magnitude > 2) //To Do: figure out why wall collision damage only works if the collision is on angle.
