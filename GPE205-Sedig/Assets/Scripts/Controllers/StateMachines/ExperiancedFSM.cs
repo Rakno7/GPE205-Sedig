@@ -2,58 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimidFSM : AiController
+public class ExperiancedFSM : AiController
 {
-   private void Awake()
-   {
-    
-   }
     public override void Start()
     {
-        //TEMP:to test the state.
-        //use this later in state method:---target = GameManager.instance.players[0].pawn.gameObject;
          selftarget = pawn.gameObject;
         ChangeState(AIStates.GaurdPost);
-        
-
-        //TODO Populate patrol waypoints with nearest waypoints group GameObjects
         base.Start();
     }
 
     
     public override void Update()
     {
-        MakeDecisions();
+     MakeDecisions();
     }
-
-
-    //Override this function to create multiple AI personalitys which inhertit from this class. 
     public override void MakeDecisions()
     {   
          // Debug.Log("isthisworking?");
          switch (currentState)
         {
             case AIStates.GaurdPost:
-            TimePassedSinceLastChange += Time.deltaTime;
             //work
             if(waypointclusters !=null)
             {
             TargetNearestWaypointCluster();
             }
+            TimePassedSinceLastChange += Time.deltaTime;
             DoGaurdPostState();
             TargetNearestPlayer();
             TargetNearestVehicle();
-            if(target != null)
-             {
-            //Transition
 
-            if(isCanHear(target))
+            //Transition
+             if(target != null)
+            {
+                if(isCanHear(target))
                 {
                     ChangeState(AIStates.turnTowards);
                 }
 
-            //when AI has a target in range, and vehicle, and not currently in a vehicle..
-            if (isDistanceLessThanTarget(target, targetVisRange) && isCanSee(target) && isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
+            //when experianced AI is not currently in a vehicle, it already knows where its at.
+            if (!isInVehicle()) 
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
@@ -67,15 +55,17 @@ public class TimidFSM : AiController
                 {
                     ChangeState(AIStates.HumanChase);
                 }   
-             }
+                 if(target == null)
+                {
+                    ChangeState(AIStates.GaurdPost);
+                }
+            }
                 break;
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-                
+            
                 case AIStates.turnTowards:
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoTurnTowardsState();
-
                 //when AI can no longer hear target and forgets about them
                 if(target == null || !isCanHear(target) && TimePassedSinceLastChange > AIMemory)
                 {
@@ -91,11 +81,6 @@ public class TimidFSM : AiController
                     ChangeState(AIStates.VehicleChase);
                 }
 
-                if(isHealthLessThan(30) && isCanSee(target))
-                {
-                   ChangeState(AIStates.Flee);
-                }
-
 
                 break;
 
@@ -105,19 +90,26 @@ public class TimidFSM : AiController
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoMoveToVehicleState();
                 TargetNearestVehicle();
-                if(target == null)
-                {
-                    ChangeState(AIStates.GaurdPost);
-                }
-                //when some else takes the target vehicle and doesnt have a target in range
+                //when some else takes the target vehicle
                 if(!isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver != null)
                 {
                     ChangeState(AIStates.HumanChase);
                 }
-                //when AI gets in vehicle
-                if(isInVehicle())
+                
+                //when AI gets in vehicle and can see a target
+                if(isInVehicle() && isCanSee(target))
                 {
                     ChangeState(AIStates.VehicleChase);
+                }
+                //when AI gets in vehicle and can see a target
+                if(isInVehicle() && !isCanSee(target))
+                {
+                    ChangeState(AIStates.GaurdPost);
+                }
+                
+                 if(target == null)
+                {
+                    ChangeState(AIStates.GaurdPost);
                 }
 
                 
@@ -135,7 +127,7 @@ public class TimidFSM : AiController
                     ChangeState(AIStates.GaurdPost);
                 }
                 //When AI doesnt have a target or vehicle in range
-                if (TimePassedSinceLastChange > AIMemory && !isCanSee(target) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
+                if (TimePassedSinceLastChange > AIMemory &&  ! isCanSee(target) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
@@ -145,13 +137,7 @@ public class TimidFSM : AiController
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
-
-                if(isHealthLessThan(30) && isCanSee(target))
-                {
-                   ChangeState(AIStates.Flee);
-                }
-                
-                
+               
                 break;
 
                  //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -159,58 +145,63 @@ public class TimidFSM : AiController
                 case AIStates.VehicleChase:
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoVehicleChaseState(true);
-                TargetNearestPlayer();
-                if(target == null)
+                 if(target == null)
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-                //when the target is in range to attack 
-                // Maybe I can put the range on the tank pawn being controlled, as the other tank can aim up and shoot farther.
-                if (isDistanceLessThanTarget(target, targetAttackRange) && isCanSee(target)) 
+                //when experianced ai detects incoming shot
+                if(isShotIncoming())
+                {
+                    ChangeState(AIStates.Flee);
+                }
+
+                //When AI doesnt have a target in range and they forget about the player
+                if (!isCanSee(target) && TimePassedSinceLastChange > AIMemory) 
+                {
+                    ChangeState(AIStates.GaurdPost);
+                }
+                //when the target is in range to attack// Maybe I can put the range on the tank pawn being controlled, as the other tank can aim up and shoot farther.
+                if (isDistanceLessThanTarget(target, targetAttackRange)) 
                 {
                     ChangeState(AIStates.Attack);
                 }
 
-                 //When AI can no longer see or hear target and they forget about them.
-                if (!isCanSee(target) && TimePassedSinceLastChange > AIMemory)
+                 //When AI can no longer see or hear target
+                if (isDistanceLessThanTarget(target, targetVisRange) && !isCanSee(target) && !isCanHear(target))
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-                if(isHealthLessThan(30))
-                {
-                   ChangeState(AIStates.Flee);
-                }
+                
 
                 break;
                  //-------------------------------------------------------------------------------------------------------------------------------------------------------------
                 
                 case AIStates.Attack:
                 TimePassedSinceLastChange += Time.deltaTime;
+
                 DoAttackState(false);
                 if(target == null)
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
-
+                //when experianced ai detects incoming shot
+                if(isShotIncoming())
+                {
+                    ChangeState(AIStates.Flee);
+                }
                 if (!isDistanceLessThanTarget(target, targetAttackRange)) 
                 {
                     ChangeState(AIStates.VehicleChase);
                 }
-                if(isHealthLessThan(30))
-                {
-                   ChangeState(AIStates.Flee);
-                }
-                
-
                 break;
-                //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+                 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
                 case AIStates.Flee:
                 TimePassedSinceLastChange += Time.deltaTime;
-                DoFleeState(fleeDistance);
-                if(target == null || TimePassedSinceLastChange > AIMemory)
+                DoFleeState(5);
+                if(target == null || TimePassedSinceLastChange > 3)
                 {
-                    ChangeState(AIStates.GaurdPost);
+                    ChangeState(AIStates.VehicleChase);
                 }                
                 break;
         }
@@ -236,5 +227,4 @@ public class TimidFSM : AiController
             Gizmos.DrawWireSphere(pawn.transform.position,hearingDistance);
           }
     }
-
 }

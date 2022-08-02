@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public List<PlayerController> players;
     public List<TimidFSM> TimidaiPlayers;
+    public List<ExperiancedFSM> ExperiancedaiPlayers;
     public List<AggressiveFSM> AggressiveaiPlayers;
     public List<HumanPawn> humans;
     public List<TankPawn> Vehicles;
@@ -53,7 +54,8 @@ public class GameManager : MonoBehaviour
    
     private void Update()
     {
-       RespawnCountdown(); 
+        //this needs some work first
+       //RespawnCountdown(); 
     }
 
     private void SpawnPlayers()
@@ -72,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
        for (int i = 0; i < AISpawnPoints.Length; i++) 
          {
-              float rand = Random.Range(1,3); //Increase this as new ai personalities are added
+              float rand = Random.Range(1,4); //Increase this as new ai personalities are added
               
               if (rand == 1)
               {
@@ -90,6 +92,16 @@ public class GameManager : MonoBehaviour
               newAiPawn = Instantiate(HumanAggressiveAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
               Controller newController = newFSMObj.GetComponent<Controller>();
               AggressiveaiPlayers.Add(newFSMObj.GetComponent<AggressiveFSM>());
+              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
+              newController.pawn = newPawn;
+              newPawn.controller = newController;
+              }
+              if (rand == 3)
+              {
+              GameObject newFSMObj = Instantiate(ExperiancedAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;
+              newAiPawn = Instantiate(HumanExperiancedAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
+              Controller newController = newFSMObj.GetComponent<Controller>();
+              ExperiancedaiPlayers.Add(newFSMObj.GetComponent<ExperiancedFSM>());
               Pawn newPawn = newAiPawn.GetComponent<Pawn>();
               newController.pawn = newPawn;
               newPawn.controller = newController;
@@ -131,6 +143,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject HumanTimidAIPawnPrefab;
     public GameObject HumanAggressiveAIPawnPrefab;
+    public GameObject HumanExperiancedAIPawnPrefab;
     public GameObject MyTankPawnPrefab;
     public GameObject UatTankPawnPrefab;
     public GameObject WayPointClusterPrefab;

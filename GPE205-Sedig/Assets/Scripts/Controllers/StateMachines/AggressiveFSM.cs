@@ -10,25 +10,18 @@ public class AggressiveFSM : AiController
    }
     public override void Start()
     {
-        //TEMP:to test the state.
-        //use this later in state method:---target = GameManager.instance.players[0].pawn.gameObject;
+
          selftarget = pawn.gameObject;
         ChangeState(AIStates.GaurdPost);
-        
-
-        //TODO Populate patrol waypoints with nearest waypoints group GameObjects
         base.Start();
     }
 
     
     public override void Update()
     {
-
      MakeDecisions();
     }
 
-
-    //Override this function to create multiple AI personalitys which inhertit from this class. 
     public override void MakeDecisions()
     {   
          // Debug.Log("isthisworking?");
@@ -188,7 +181,6 @@ public class AggressiveFSM : AiController
                 {
                     ChangeState(AIStates.VehicleChase);
                 }
-
 
                 break;
         }

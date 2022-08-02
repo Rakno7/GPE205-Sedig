@@ -27,6 +27,17 @@ public abstract class AiController : Controller
             return false;
         }
     }
+    protected virtual bool isShotIncoming()
+    {
+        if(pawn.GetComponentInChildren<Attacker>().isTookShot)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     protected virtual bool isInVehicle()
     {
         // return the truth or falsity of this statement
@@ -42,8 +53,19 @@ public abstract class AiController : Controller
         }
         
     }
+   protected virtual bool isHealthLessThan(float amount)
+    {
+        TankHealth HealthComponant = pawn.GetComponent<TankHealth>();
 
-   
+        if(HealthComponant.currentHealth < amount)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
    protected virtual bool isCanHear(GameObject thistarget)
     {
         // Get target's NoiseMaker
@@ -196,10 +218,10 @@ public abstract class AiController : Controller
         Attack();
     }
 
-    protected void DoFleeState()
+    protected void DoFleeState(float Amount)
     {
         //Do what?
-        Flee();
+        Flee(Amount);
     }
     
 
@@ -273,12 +295,12 @@ public abstract class AiController : Controller
         pawn.EnterVehicle();
     }
 
-    protected void Flee()
+    protected void Flee(float Amount)
     {
         //Get the distance from the target
         float targetDistance = Vector3.Distance( target.transform.position, pawn.transform.position );
         //get the percentage from target
-        float percentOfFleeDistance = targetDistance / fleeDistance;
+        float percentOfFleeDistance = targetDistance / Amount;
         //clamp the distance to flee
          percentOfFleeDistance = Mathf.Clamp01(percentOfFleeDistance);
         //invert so the farther AI is from target the less they will flee.

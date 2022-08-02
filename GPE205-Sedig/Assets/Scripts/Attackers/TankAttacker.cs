@@ -31,11 +31,13 @@ public class TankAttacker : Attacker
         //Debug.Log("attacked");
 
         Invoke("Cooldown", AttackCooldown);
+        isTookShot = true;
         isShotDelay = true;
         }
     }
     public override void Cooldown()
     {
+        isTookShot = false;
         isShotDelay = false;
     }
 }
