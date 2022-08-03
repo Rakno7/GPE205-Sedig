@@ -10,18 +10,31 @@ public class TankHealth : Health
     {
         rb = gameObject.GetComponent<Rigidbody>();
         currentHealth = maxHealth;
+        isCanTakeDamage = true;
     }
-    public override void ReduceHealth(float Amount)
+    public override void ReduceHealth(float Amount, Pawn playerPawn)
     {
+        if(!isCanTakeDamage) return;
+        
+        
+        playerPawn = GetComponent<Pawn>();
+        
         currentHealth -= Amount;
-        if(currentHealth < 0)
+        currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
+        
+        if(currentHealth <= 0)
         {
             Die();
         }
     }
-    public override void RestoreHealth(float Amount)
+    public override void RestoreHealth(float Amount, Pawn playerPawn)
     {
+        
+        playerPawn = GetComponent<Pawn>();
+        
         currentHealth += Amount;
+        currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
+        
     }
     
     private void OnCollisionEnter(Collision other)
@@ -29,13 +42,13 @@ public class TankHealth : Health
         if(other.transform.tag == "Projectile")
         {
             float DamageTaken = other.transform.gameObject.GetComponent<ProjectileExplode>().ProjectileDamage;
-            ReduceHealth(DamageTaken);
+            ReduceHealth(DamageTaken,GetComponent<Pawn>());
         }
        
-        else if(rb.velocity.magnitude > 2) //To Do: figure out why wall collision damage only works if the collision is on angle.
-        {
-           ReduceHealth(wallCollisionDamage);
-        }
+        //else if(rb.velocity.magnitude > 2) //To Do: figure out why wall collision damage only works if the collision is on angle.
+        //{
+        //   ReduceHealth(wallCollisionDamage,GetComponent<Pawn>());
+        //}
     }
 
     public override void Die()

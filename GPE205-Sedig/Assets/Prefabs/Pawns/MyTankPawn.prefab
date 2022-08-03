@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7abd17dd1545a3e4993793a368a17e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTookShot: 0
   Firepoint: {fileID: 5617040488831272711}
   ParentRb: {fileID: 5617040487720330767}
   CannonShot: {fileID: 6985912786797455113, guid: 27a716b65c4dc8f429259c79b0be849c, type: 3}
@@ -119,6 +120,8 @@ GameObject:
   - component: {fileID: 5617040487720330761}
   - component: {fileID: 5617040487720330766}
   - component: {fileID: 5195087459479384968}
+  - component: {fileID: -5506487645022006305}
+  - component: {fileID: -6798469562666255923}
   m_Layer: 0
   m_Name: MyTankPawn
   m_TagString: Tank
@@ -134,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4698051839250943010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.764604, y: 0.45, z: -7.703319}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 7175890620367799038}
@@ -230,6 +233,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeDistance: 0
+--- !u!114 &-5506487645022006305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698051839250943010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb159bcca67fbe44a196b1bedbe5807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 400
+  currentHealth: 0
+  wallCollisionDamage: 5
+--- !u!114 &-6798469562666255923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698051839250943010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d49d73bebb156f479c9d77128a5b02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5617040487128429291
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +866,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5617040488831272710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3}
+  m_LocalPosition: {x: 0, y: 0.12, z: 3.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4594834428493693212}
@@ -933,8 +963,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.567389, y: 3.6117864, z: 9.266744}
-  m_Center: {x: -0.037176132, y: 1.3058932, z: 1.9369502}
+  m_Size: {x: 10.567389, y: 2.949493, z: 7.2465215}
+  m_Center: {x: -0.037176132, y: 0.97474647, z: 1.7841556}
 --- !u!114 &6159731648684901457
 MonoBehaviour:
   m_ObjectHideFlags: 0

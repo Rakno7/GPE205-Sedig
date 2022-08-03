@@ -220,7 +220,10 @@ public class TimidFSM : AiController
     {
          if(Application.isPlaying)
          {
+            if(target==null) return;
+            
            NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
+
           
            float totalDistance = noiseMaker.volumeDistance + hearingDistance;        
            if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance) 

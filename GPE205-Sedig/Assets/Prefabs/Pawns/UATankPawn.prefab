@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295755291209904458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.595, z: 1.003}
+  m_LocalPosition: {x: 0, y: 0.595, z: 1.323}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1617297969478697954}
@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 1295755290441495457}
   - component: {fileID: 2106274083510903090}
   - component: {fileID: 4693869361469023048}
+  - component: {fileID: -1954614491281471697}
   m_Layer: 0
   m_Name: UATankPawn
   m_TagString: Untagged
@@ -125,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 2106025753212442968}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.094, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1295755291209904459}
   - {fileID: 2922260032819591659}
@@ -233,6 +234,7 @@ MonoBehaviour:
   moveSpeed: 100
   turnSpeed: 100
   AttackSpeed: 150
+  AiDifficulty: 0
   Orientation: {fileID: 1977670361529521395}
   CameraSetting1: {fileID: 3917804553741929745}
   CameraSetting2: {fileID: 3917804553741929745}
@@ -279,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7abd17dd1545a3e4993793a368a17e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTookShot: 0
   Firepoint: {fileID: 1295755291209904459}
   ParentRb: {fileID: 1295755290441495456}
   CannonShot: {fileID: 6985912786797455113, guid: 27a716b65c4dc8f429259c79b0be849c, type: 3}
@@ -298,6 +301,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeDistance: 0
+--- !u!114 &-1954614491281471697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106025753212442968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d49d73bebb156f479c9d77128a5b02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3219946341085702006
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,8 +356,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.3350685, y: 1.2164509, z: 2.5720472}
-  m_Center: {x: 0.005209287, y: 0.6054307, z: -0.031342827}
+  m_Size: {x: 2.3350685, y: 1.2164509, z: 2.056375}
+  m_Center: {x: 0.005209287, y: 0.6054307, z: -0.28918153}
 --- !u!114 &694512832547132628
 MonoBehaviour:
   m_ObjectHideFlags: 0

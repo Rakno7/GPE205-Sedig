@@ -199,6 +199,7 @@ MonoBehaviour:
   moveSpeed: 5
   turnSpeed: 200
   AttackSpeed: 10
+  AiDifficulty: 0
   Orientation: {fileID: 752801537171181274}
   CameraSetting1: {fileID: 752801535312116345}
   CameraSetting2: {fileID: 752801535312116345}

@@ -104,6 +104,7 @@ public class HumanPawn : Pawn
 
     public override void EnterVehicle()
     {   //only do this if pawn is actually in range.
+    if(VehicleToEnter==null) return;
         if(!canEnterVehicle || VehicleToEnter.GetComponentInParent<TankPawn>().Driver !=null)
         {
             return;

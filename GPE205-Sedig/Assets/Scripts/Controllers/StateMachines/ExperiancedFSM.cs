@@ -211,6 +211,7 @@ public class ExperiancedFSM : AiController
     {
          if(Application.isPlaying)
          {
+            if(target==null) return;
            NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
           
            float totalDistance = noiseMaker.volumeDistance + hearingDistance;        

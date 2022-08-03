@@ -55,16 +55,20 @@ public abstract class AiController : Controller
     }
    protected virtual bool isHealthLessThan(float amount)
     {
-        TankHealth HealthComponant = pawn.GetComponent<TankHealth>();
-
-        if(HealthComponant.currentHealth < amount)
+        if(pawn.GetComponent<TankHealth>())
         {
-            return true;
+            TankHealth HealthComponant = pawn.GetComponent<TankHealth>();
+    
+            if(HealthComponant.currentHealth < amount)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
-        {
-            return false;
-        }
+        else return false;
     }
    protected virtual bool isCanHear(GameObject thistarget)
     {
