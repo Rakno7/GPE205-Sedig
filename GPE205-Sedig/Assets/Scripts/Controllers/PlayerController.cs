@@ -5,14 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerController : Controller
 {
+    public GameObject PawnPrefab;
+
     //CAMERASTUFF-------------------------
-    public GameObject CurrentCamera;
+    private GameObject CurrentCamera;
     public  CameraFollowPlayer cameraFollowerScript;
     public Transform camFollowerTransform; 
     public Transform orientation;
-   // public CameraController camController;
    
-    public float horizontalInput,verticalInput;
+   
+    private float horizontalInput,verticalInput;
     public float SensitivityX, SensitivityY;
     public float RotationX, RotationY;
     public float rotationSpeed = 1f;
@@ -37,13 +39,21 @@ public class PlayerController : Controller
     }
     public override void Start()
     {
+       pawn = Instantiate(PawnPrefab, transform.position,Quaternion.identity).GetComponent<HumanPawn>();
+       pawn.controller = this;
+       pawn.controller.GetComponent<PlayerController>().orientation = pawn.Orientation.transform;
+        
+
        if (GameManager.instance != null)
         {
 
          if (GameManager.instance.players != null)
-          {
-             
+          {  
              GameManager.instance.players.Add(this);
+          }
+          if (GameManager.instance.humans != null)
+          {  
+             GameManager.instance.humans.Add(pawn.GetComponent<HumanPawn>());
           }
         }
 

@@ -12,13 +12,13 @@ public class GameManager : MonoBehaviour
     public List<HumanPawn> DeadAIPlayers;
     public Transform PlayerSpawnPoint;
     private GameObject newAiPawn;
-    public Transform[] AISpawnPoints;
+    private Transform[] AISpawnPoints;
 
 
-    public Transform[] TankType1SpawnPoints;
-    public Transform[] TankType2SpawnPoints;
+    private Transform[] TankType1SpawnPoints;
+    private Transform[] TankType2SpawnPoints;
     
-    public Transform[] WayPointSpawnPoints;
+    private Transform[] WayPointSpawnPoints;
     public static GameManager instance;
     public List<PlayerController> players;
     public List<TimidFSM> TimidaiPlayers;
@@ -44,11 +44,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
-        SpawnWaypoints();
-        SpawnPlayers();
-        SpawnAIPlayers();
-        SpawnVehicles();
+        //just for testing, on start, objects will add themselves to the lists.
+           //SpawnWaypoints();
+           //SpawnPlayers();
+           //SpawnAIPlayers();
+           //SpawnVehicles();
         //RespawnTimer = RespawnTime;
     }
    

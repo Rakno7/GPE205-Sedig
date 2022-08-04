@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class TimidFSM : AiController
 {
-   private void Awake()
-   {
-    
-   }
+   public GameObject PawnPrefab;
+   
     public override void Start()
-    {
-        //TEMP:to test the state.
-        //use this later in state method:---target = GameManager.instance.players[0].pawn.gameObject;
-         selftarget = pawn.gameObject;
-        ChangeState(AIStates.GaurdPost);
-        
+    {   
+        pawn = Instantiate(PawnPrefab, transform.position,Quaternion.identity).GetComponent<HumanPawn>();
+        pawn.controller = this;
 
-        //TODO Populate patrol waypoints with nearest waypoints group GameObjects
-        base.Start();
+       if (GameManager.instance != null)
+        {
+
+         if (GameManager.instance.TimidaiPlayers != null)
+          {  
+             GameManager.instance.TimidaiPlayers.Add(this);
+          }
+          if (GameManager.instance.humans != null)
+          {  
+             GameManager.instance.humans.Add(pawn.GetComponent<HumanPawn>());
+          }
+        }
+        selftarget = pawn.gameObject;
+        ChangeState(AIStates.GaurdPost);
     }
 
     

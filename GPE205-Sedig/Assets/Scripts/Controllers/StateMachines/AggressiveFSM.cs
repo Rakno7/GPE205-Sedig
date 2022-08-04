@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class AggressiveFSM : AiController
 {
-   private void Awake()
-   {
-    
-   }
+   public GameObject PawnPrefab;
     public override void Start()
     {
+        pawn = Instantiate(PawnPrefab, transform.position,Quaternion.identity).GetComponent<HumanPawn>();
+        pawn.controller = this;
 
-         selftarget = pawn.gameObject;
+       if (GameManager.instance != null)
+        {
+
+         if (GameManager.instance.TimidaiPlayers != null)
+          {  
+             GameManager.instance.AggressiveaiPlayers.Add(this);
+          }
+          if (GameManager.instance.humans != null)
+          {  
+             GameManager.instance.humans.Add(pawn.GetComponent<HumanPawn>());
+          }
+        }
+        selftarget = pawn.gameObject;
         ChangeState(AIStates.GaurdPost);
-        base.Start();
     }
-
     
     public override void Update()
     {

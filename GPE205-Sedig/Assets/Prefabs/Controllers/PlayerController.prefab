@@ -45,12 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pawn: {fileID: 0}
   attacker: {fileID: 0}
-  CurrentCamera: {fileID: 0}
+  PawnPrefab: {fileID: 752801537171181274, guid: 4685f9d13f72b75499e1971947f9fa92, type: 3}
   cameraFollowerScript: {fileID: 0}
   camFollowerTransform: {fileID: 0}
   orientation: {fileID: 0}
-  horizontalInput: 0
-  verticalInput: 0
   SensitivityX: 0
   SensitivityY: 0
   RotationX: 0

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupSpawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
-    public GameObject pickupPrefab;
-    private GameObject spawnedPickup;
+    public GameObject prefabToSpawn;
+    private GameObject spawnedPrefab;
     public float spawnDelay;
     private float nextSpawnTime;
     private Transform Spawntransform;
@@ -18,15 +18,15 @@ public class PickupSpawner : MonoBehaviour
     
     void Update()
     { 
-        //make sure there isnt already a pickup on the spawner
-      if(spawnedPickup == null)
+        //make sure Prefab no longer exists before spawning
+      if(spawnedPrefab == null)
       {
 
       
         //check if the current time is greater then the next spawn time
         if(Time.time > nextSpawnTime)
         {
-            spawnedPickup = Instantiate(pickupPrefab, transform.position, Quaternion.identity);
+            spawnedPrefab = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
             nextSpawnTime = Time.time + spawnDelay;
         }
       }

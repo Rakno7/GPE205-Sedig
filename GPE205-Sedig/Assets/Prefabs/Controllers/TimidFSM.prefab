@@ -75,3 +75,4 @@ MonoBehaviour:
   hearingDistance: 20
   fov: 60
   currentState: 0
+  PawnPrefab: {fileID: 6553555791578618542, guid: 1f4116d045b933c4dbd3a59cbe56d444, type: 3}

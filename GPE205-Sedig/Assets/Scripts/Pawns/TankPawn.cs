@@ -10,9 +10,16 @@ public class TankPawn : Pawn
     //Movement volume could be multiplied by velocity of the pawn
     public float MovementVolume = 5;
     public override void Start()
-    {
-        //base refers to the base class, this will run the start function on the base class.
+    {   
         base.Start();
+        if (GameManager.instance != null)
+        {
+
+         if (GameManager.instance.Vehicles != null)
+          {
+            GameManager.instance.Vehicles.Add(this);
+          }
+        }
     }
 
     public override void Update()
@@ -130,6 +137,19 @@ public class TankPawn : Pawn
            controller.GetComponent<PlayerController>().isControllingHuman = true;
            controller.GetComponent<PlayerController>().SetCameraSettings();
            Driver = null;
+    }
+
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance != null)
+        {
+
+         if (GameManager.instance.Vehicles != null)
+          {
+            GameManager.instance.Vehicles.Remove(this);
+          }
+        }
     }
 
 }

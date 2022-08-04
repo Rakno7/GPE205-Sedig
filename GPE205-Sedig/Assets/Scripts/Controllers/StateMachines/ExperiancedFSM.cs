@@ -4,11 +4,26 @@ using UnityEngine;
 
 public class ExperiancedFSM : AiController
 {
+    public GameObject PawnPrefab;
     public override void Start()
     {
-         selftarget = pawn.gameObject;
+        pawn = Instantiate(PawnPrefab, transform.position,Quaternion.identity).GetComponent<HumanPawn>();
+        pawn.controller = this;
+
+       if (GameManager.instance != null)
+        {
+
+         if (GameManager.instance.TimidaiPlayers != null)
+          {  
+             GameManager.instance.ExperiancedaiPlayers.Add(this);
+          }
+          if (GameManager.instance.humans != null)
+          {  
+             GameManager.instance.humans.Add(pawn.GetComponent<HumanPawn>());
+          }
+        }
+        selftarget = pawn.gameObject;
         ChangeState(AIStates.GaurdPost);
-        base.Start();
     }
 
     

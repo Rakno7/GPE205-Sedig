@@ -18,6 +18,8 @@ public abstract class AiController : Controller
     }
     protected virtual bool isDistanceLessThanTarget(GameObject thisTarget, float distance)
     { 
+        if(vehicletarget == null) return false;
+        
         if (Vector3.Distance (pawn.transform.position, thisTarget.transform.position) < distance ) 
         {
             return true;
@@ -186,46 +188,67 @@ public abstract class AiController : Controller
     protected void DoGaurdPostState()
     {
         //Do what? //patrol here!
-        if(Patrolwaypoints.Length > 0)
+        if (GameManager.instance.Waypointcluster.Count > 0) 
         {
-            Patrol();
+          if(Patrolwaypoints.Length > 0)
+          {
+              Patrol();
+          }
         }
     }
     protected void DoMoveToVehicleState()
     {
         //Do what?
-        Chase(vehicletarget, true);
-        if(!isInVehicle())
+        if (GameManager.instance.Vehicles.Count > 0) 
         {
-        Enter();
+            Chase(vehicletarget, true);
+            if(!isInVehicle())
+            {
+            Enter();
+            }
         }
     }
     protected void DoHumanChaseState()
     {
+         if (GameManager.instance.players.Count > 0) 
+        {
         //Do what?
         Chase(target, true);
+        }
     }
     protected void DoTurnTowardsState()
     {
+         if (GameManager.instance.players.Count > 0) 
+        {
         //Do what?
-        Chase(target, false);
+          Chase(target, false);
+        }
     }
     protected void DoVehicleChaseState( bool CanMove)
     {
-        //Do what?
-        Chase(target, CanMove);
+         if (GameManager.instance.players.Count > 0) 
+        {
+          //Do what?
+          Chase(target, CanMove);
+        }
     }
     protected void DoAttackState(bool CanMove)
     {
-        //Do what?
-        Chase(target, CanMove);
-        Attack();
+         if (GameManager.instance.players.Count > 0) 
+        {
+          //Do what?
+          Chase(target, CanMove);
+          Attack();
+        }
     }
 
     protected void DoFleeState(float Amount)
     {
-        //Do what?
-        Flee(Amount);
+         if (GameManager.instance.players.Count > 0) 
+        {
+           //Do what?
+           Flee(Amount);
+        }
     }
     
 
@@ -234,11 +257,14 @@ public abstract class AiController : Controller
     //---------------------------------------------------------------------------------------------------------
     protected void Chase(Vector3 targetPosition, bool CanMove)
     {  
+       if (GameManager.instance.players.Count > 0) 
+      {
         if(target!=null)
         pawn.RotateTowards(targetPosition);
         //When the function is called decide whether it should move and rotate, or just rotate.
         if(!CanMove) return;
         pawn.MoveForward();
+      }
     }
     protected void Chase(Transform targetTransform, bool CanMove)
     {  
