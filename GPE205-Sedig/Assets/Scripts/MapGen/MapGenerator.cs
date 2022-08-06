@@ -29,6 +29,19 @@ public class MapGenerator : MonoBehaviour
     }
     void GenerateMap()
     {
+        if(GameManager.instance!=null)
+        {
+            if(GameManager.instance.isUseSeed)
+            {
+             GameManager.instance.SetStringSeed();
+             //set use date seed false if already useing a seed, to avoid conflicts.
+             GameManager.instance.isUseDateSeed = false;
+            }
+            if(GameManager.instance.isUseDateSeed)
+            {
+             GameManager.instance.SetMapOfTheDaySeed();
+            }
+        }
         grid = new Room[cols,rows];
             //for each Row in the array,
         for(int currentRow = 0; currentRow < rows; currentRow ++)
@@ -59,7 +72,10 @@ public class MapGenerator : MonoBehaviour
 
             }
         }
-         
+         //Must reset the seed to random after generation completes to avoid
+         //all random numbers used for gameplay following the same seed.
+         GameManager.instance.RerandomizeSeed();
+
     }
 
     public void CheckRowOpenings(int row, Room room)

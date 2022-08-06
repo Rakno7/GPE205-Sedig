@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private float RespawnTime;
-    public float RespawnTimer;
+    public bool isUseSeed;
+    public string mapStringSeed;
+    public bool isUseDateSeed;
+    private int seed;
     public float MaxPlayers;
     public float MaxAIPlayers;
     
@@ -35,6 +38,10 @@ public class GameManager : MonoBehaviour
     public List<WayPointCluster> Waypointcluster;
     private void Awake()
     {
+        if(isUseSeed && isUseDateSeed)
+        {
+            Debug.LogWarning("WARNING: date seed and string seed are both set in the Game manager. Only select one or the other. Jerk");
+        }
         //if there isnt already a gamemanager, 
         //create an instance that wont be destroyed when a new scene is loaded
         if(instance == null)
@@ -68,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetPlayerSpawns()
     {
-        float spawnPointToEnable = Random.Range(0,PlayerSpawners.Count);
+        float spawnPointToEnable = UnityEngine.Random.Range(0,PlayerSpawners.Count);
         for(int i = 0; i < PlayerSpawners.Count; i++)
         {
            
@@ -85,7 +92,7 @@ public class GameManager : MonoBehaviour
     }
     public void ResetAiSpawns()
     {
-        float AispawnPointToEnable = Random.Range(0,AiSpawners.Count);
+        float AispawnPointToEnable = UnityEngine.Random.Range(0,AiSpawners.Count);
         for(int i = 0; i < AiSpawners.Count; i++)
         {
            
@@ -99,6 +106,30 @@ public class GameManager : MonoBehaviour
            }
 
         }
+    }
+     public void SetStringSeed()
+    {
+         seed = mapStringSeed.GetHashCode();
+         UnityEngine.Random.InitState(seed);
+    }
+    public void SetMapOfTheDaySeed()
+    {
+         UnityEngine.Random.InitState(DateToInt(DateTime.Now.Date));
+    }
+     public void RerandomizeSeed()
+    { 
+         UnityEngine.Random.InitState(DateToInt(DateTime.Now));
+    }
+    public int DateToInt(DateTime dateToUse)
+    {
+        return 
+        dateToUse.Year
+         + dateToUse.Month
+          + dateToUse.Day
+           + dateToUse.Hour
+            + dateToUse.Minute
+             + dateToUse.Second
+              + dateToUse.Millisecond;
     }
 
     private void SpawnPlayers()
@@ -117,7 +148,7 @@ public class GameManager : MonoBehaviour
     {
        for (int i = 0; i < AISpawnPoints.Length; i++) 
          {
-              float rand = Random.Range(1,4); //Increase this as new ai personalities are added
+              float rand = UnityEngine.Random.Range(1,4); //Increase this as new ai personalities are added
               
               if (rand == 1)
               {
@@ -167,6 +198,7 @@ public class GameManager : MonoBehaviour
            Vehicles.Add(newTankPawn.GetComponent<TankPawn>());
         } 
     }
+   
 
     private void SpawnWaypoints()
     {
@@ -190,73 +222,4 @@ public class GameManager : MonoBehaviour
     public GameObject MyTankPawnPrefab;
     public GameObject UatTankPawnPrefab;
     public GameObject WayPointClusterPrefab;
-    
-
-    
-
-   private void RespawnCountdown()
-   {
-      if(RespawnTimer > 0)
-      {
-       RespawnTimer -= Time.deltaTime;
-      }
-
-      if(RespawnTimer <= 0)
-      {
-        RespawnDeadObjects();
-      }
-   }
-
-   private void RespawnDeadObjects()
-   {
-    if(Destroyedtanks.Count > 0)
-
-    {
-         for (int i = 0; i < Destroyedtanks.Count; i++) 
-         {
-           GameObject newTankPawn = Instantiate(UatTankPawnPrefab, TankType1SpawnPoints[i].position, TankType1SpawnPoints[i].rotation) as GameObject;
-           Vehicles.Add(newTankPawn.GetComponent<TankPawn>());
-           Destroyedtanks.Clear();
-         }
-    }
-    if(DeadAIPlayers.Count > 0)
-    {
-         for (int i = 0; i < DeadAIPlayers.Count; i++) 
-         {
-              float rand = Random.Range(1,3); //Increase this as new ai personalities are added
-              
-              if (rand == 1)
-              {
-              GameObject newFSMObj = Instantiate(TimidAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;  
-              newAiPawn = Instantiate(HumanTimidAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
-              Controller newController = newFSMObj.GetComponent<Controller>();
-              TimidaiPlayers.Add(newFSMObj.GetComponent<TimidFSM>());
-              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
-              newController.pawn = newPawn;
-              newPawn.controller = newController;
-              }
-              if (rand == 2)
-              {
-              GameObject newFSMObj = Instantiate(AggressiveAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;
-              newAiPawn = Instantiate(HumanAggressiveAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
-              Controller newController = newFSMObj.GetComponent<Controller>();
-              AggressiveaiPlayers.Add(newFSMObj.GetComponent<AggressiveFSM>());
-              Pawn newPawn = newAiPawn.GetComponent<Pawn>();
-              newController.pawn = newPawn;
-              newPawn.controller = newController;
-              }
-              DeadAIPlayers.Clear();
-              humans.Add(newAiPawn.GetComponent<HumanPawn>());
-         }
-    }
-
-         RespawnTimer = RespawnTime;
-       
-   }
-    
-
-    
-
-
-
 }
