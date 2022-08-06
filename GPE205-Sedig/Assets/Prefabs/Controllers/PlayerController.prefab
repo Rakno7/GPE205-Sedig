@@ -65,5 +65,5 @@ MonoBehaviour:
   moveRightKey: 100
   rotateClockwiseKey: 100
   rotateCounterClockwiseKey: 97
-  AttackKey: 32
+  AttackKey: 323
   EnterVehicleKey: 101

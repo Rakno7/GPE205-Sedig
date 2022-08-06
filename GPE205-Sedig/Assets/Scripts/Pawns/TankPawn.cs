@@ -123,7 +123,7 @@ public class TankPawn : Pawn
     public override void EnterVehicle()
     {
          //for vehicles this command will exit the vehicle and reactivate the human.
-           Vector3 ExitLocation = new Vector3(transform.position.x - 3,transform.position.y,transform.position.z);
+           Vector3 ExitLocation = new Vector3(transform.position.x - 3,transform.position.y + 3,transform.position.z);
            
            Driver.transform.position = ExitLocation;
 

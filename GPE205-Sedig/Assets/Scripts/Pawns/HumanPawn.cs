@@ -15,6 +15,9 @@ public class HumanPawn : Pawn
     public float MovementVolume = 2;
        public override void Start()
     {
+        //turn off the Ragdoll until death
+        SetRagdollRigidbodyState(true);
+        SetRagdollColliderState(false);
         //base refers to the base class, this will run the start function on the base class.
         base.Start();
     }
@@ -135,6 +138,25 @@ public class HumanPawn : Pawn
         controller.GetComponent<AiController>().isControllingHuman = false;
         controller.GetComponent<AiController>().isControllingTank = true;
         gameObject.SetActive(false);
-        }
+        } 
     }
+        public void SetRagdollRigidbodyState(bool state) 
+        {
+            Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+            foreach(Rigidbody rigidbody in rigidbodies)
+            {
+                rigidbody.isKinematic = state;
+            }
+            GetComponent<Rigidbody>().isKinematic = !state;
+        }
+        public void SetRagdollColliderState(bool state) 
+        {
+            Collider[] colliders = GetComponentsInChildren<Collider>();
+            foreach(Collider collider in colliders)
+            {
+                collider.enabled = state;
+            }
+            GetComponent<Collider>().enabled = !state;
+        }
+        
 }

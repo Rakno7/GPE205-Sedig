@@ -51,5 +51,5 @@ MonoBehaviour:
   - {fileID: 7296591121700075200, guid: ae02c26afe851534091f8ad960bdcd00, type: 3}
   rows: 3
   cols: 3
-  roomWidth: 50
-  roomHeight: 50
+  roomWidth: 195
+  roomHeight: 195

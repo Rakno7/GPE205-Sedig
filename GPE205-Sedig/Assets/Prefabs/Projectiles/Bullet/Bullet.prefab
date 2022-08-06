@@ -97,7 +97,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 1.28
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7928023745702416815
 Rigidbody:
@@ -142,4 +142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplosionParticles: {fileID: 5703460682789230588, guid: f0f84ddfdf6fa1e4d9761610c7109796, type: 3}
   ExplosionSmokeParticles: {fileID: 7349107947364545477, guid: 66d555b1ec78e7746b87269b113f0c0e, type: 3}
+  explosiveForce: 500
+  explosionRadius: 1
   ProjectileDamage: 5
