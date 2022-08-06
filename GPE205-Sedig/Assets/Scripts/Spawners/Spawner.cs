@@ -11,8 +11,42 @@ public class Spawner : MonoBehaviour
     private Transform Spawntransform;
     void Start()
     {
-        //Get the current time on start plus our spawn delay
-        nextSpawnTime = Time.time + spawnDelay;
+      if(prefabToSpawn !=null)
+      {
+        if(prefabToSpawn.GetComponent<AiController>())
+        {
+            if(GameManager.instance != null)
+            {
+              if(GameManager.instance.AiSpawners.Count > GameManager.instance.MaxAIPlayers)
+              {
+                Destroy(gameObject);
+              }
+              else
+              {
+                GameManager.instance.AiSpawners.Add(this);
+              }
+            }
+        }
+        if(prefabToSpawn !=null)
+        {
+          if(prefabToSpawn.GetComponent<PlayerController>())
+          {
+            if(GameManager.instance != null)
+            {
+              if(GameManager.instance.PlayerSpawners.Count > GameManager.instance.MaxPlayers)
+              {
+                Destroy(gameObject);
+              }
+              else
+              {
+                 GameManager.instance.PlayerSpawners.Add(this);
+              }
+            }
+          }
+        }
+      }
+          //Get the current time on start plus our spawn delay
+          nextSpawnTime = Time.time + spawnDelay;
     }
 
     
@@ -21,8 +55,6 @@ public class Spawner : MonoBehaviour
         //make sure Prefab no longer exists before spawning
       if(spawnedPrefab == null)
       {
-
-      
         //check if the current time is greater then the next spawn time
         if(Time.time > nextSpawnTime)
         {

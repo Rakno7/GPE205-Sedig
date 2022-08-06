@@ -31,8 +31,8 @@ public class TankAttacker : Attacker
         GameObject Cannonball = Instantiate(CannonShot,pos,rotation);
         //add force upon the movement vector
         Cannonball.GetComponent<Rigidbody>().AddForce(movementVector, ForceMode.Impulse);
-        //gameObject.GetComponent<Rigidbody>().AddForceAtPosition(-transform.forward,Firepoint.transform.position,ForceMode.Impulse);
-        ParentRb.AddForce(-transform.forward * speed / 10 ,ForceMode.Impulse);
+        
+        ParentRb.AddForce(-transform.forward * speed / 100 ,ForceMode.Impulse);
 
         //Debug.Log("attacked");
         

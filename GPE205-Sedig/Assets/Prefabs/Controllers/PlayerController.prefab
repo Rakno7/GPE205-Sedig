@@ -46,17 +46,19 @@ MonoBehaviour:
   pawn: {fileID: 0}
   attacker: {fileID: 0}
   PawnPrefab: {fileID: 752801537171181274, guid: 4685f9d13f72b75499e1971947f9fa92, type: 3}
-  cameraFollowerScript: {fileID: 0}
+  anim: {fileID: 0}
   camFollowerTransform: {fileID: 0}
   orientation: {fileID: 0}
-  SensitivityX: 0
-  SensitivityY: 0
+  SensitivityX: 100
+  SensitivityY: 100
   RotationX: 0
   RotationY: 0
-  rotationSpeed: 1
+  rotationSpeed: 10
   PlayerCamera: {fileID: 4041748430851388800, guid: f353ed23666320343aad4a04f2f8788c, type: 3}
   isControllingHuman: 1
   isControllingTank: 0
+  AimKey: 324
+  walkKey: 304
   moveForwardKey: 119
   moveBackwardKey: 115
   moveLeftKey: 97

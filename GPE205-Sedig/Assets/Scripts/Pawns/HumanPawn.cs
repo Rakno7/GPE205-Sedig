@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class HumanPawn : Pawn
 {
+    public Animator anim;
     public bool canEnterVehicle = false;
     public GameObject VehicleToEnter;
+    public Transform spineToRotate;
 
     public float AttackVolume = 20;
 
@@ -28,7 +30,7 @@ public class HumanPawn : Pawn
     public override void MoveForward()
     {
        if(mover == null)
-        {
+        {  
             Debug.LogWarning("Warning: No Mover in HumanPawn()!");
             return;
         }

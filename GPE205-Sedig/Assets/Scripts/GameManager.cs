@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public float RespawnTime;
+    private float RespawnTime;
     public float RespawnTimer;
+    public float MaxPlayers;
+    public float MaxAIPlayers;
+    
+    public List<Spawner> PlayerSpawners;
+    public List<Spawner> AiSpawners;
+
     public List<TankPawn> Destroyedtanks;
     
     public List<HumanPawn> DeadPlayers;

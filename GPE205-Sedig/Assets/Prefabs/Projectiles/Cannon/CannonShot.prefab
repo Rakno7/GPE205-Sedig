@@ -142,4 +142,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplosionParticles: {fileID: 2549862742370318761, guid: 3885d7e7c448b754c85593c90db6d350, type: 3}
   ExplosionSmokeParticles: {fileID: 3957579645356005949, guid: 6e0872bff4fc0aa40a69fe1f0976c4a9, type: 3}
-  ProjectileDamage: 10
+  ProjectileDamage: 50

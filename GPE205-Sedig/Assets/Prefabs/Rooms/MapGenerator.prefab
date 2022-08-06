@@ -49,8 +49,7 @@ MonoBehaviour:
   - {fileID: 2540215589391001977, guid: 5f71cd15a7c6de0449c76f453e09a386, type: 3}
   - {fileID: 7939652807170067774, guid: 60dec4f508b389d40a3d5b7ca7ce9863, type: 3}
   - {fileID: 7296591121700075200, guid: ae02c26afe851534091f8ad960bdcd00, type: 3}
-  - {fileID: 3050791633443778554, guid: 45b444355e7370f489675e0a09fd8961, type: 3}
-  rows: 10
-  cols: 10
+  rows: 3
+  cols: 3
   roomWidth: 50
   roomHeight: 50

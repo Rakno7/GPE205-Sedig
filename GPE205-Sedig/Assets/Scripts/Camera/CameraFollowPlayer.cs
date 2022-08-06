@@ -10,6 +10,7 @@ public class CameraFollowPlayer : MonoBehaviour
     public Transform CameraSetting1;
     public Transform CameraSetting2;
     public Transform CameraSetting3;
+    public Camera PlayerCam;
     
    
     private void Start()

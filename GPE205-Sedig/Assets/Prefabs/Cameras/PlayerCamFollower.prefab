@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &12761433289514857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1280700500994565516}
+  m_Layer: 0
+  m_Name: ThirdPersonPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1280700500994565516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12761433289514857}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.73, z: -4.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4041748430851388806}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1753924493423260461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5749217250069185781}
+  m_Layer: 0
+  m_Name: AimPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5749217250069185781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753924493423260461}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.81, y: 0.59, z: -2.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4041748430851388806}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4041748430851388800
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,6 +89,8 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4041748431875940800}
+  - {fileID: 5749217250069185781}
+  - {fileID: 1280700500994565516}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,6 +111,7 @@ MonoBehaviour:
   CameraSetting1: {fileID: 0}
   CameraSetting2: {fileID: 0}
   CameraSetting3: {fileID: 0}
+  PlayerCam: {fileID: 0}
 --- !u!1 &4041748431875940801
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,27 +200,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916090ef6fce61141aa783d520fb3d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawn: {fileID: 0}
-  attacker: {fileID: 0}
-  cameraFollowerScript: {fileID: 4041748430851388807}
-  camFollowerTransform: {fileID: 4041748430851388806}
+  AimPosition: {fileID: 5749217250069185781}
+  ThirdPersonPosition: {fileID: 1280700500994565516}
+  PlayerSpine: {fileID: 0}
   orientation: {fileID: 0}
-  horizontalInput: 0
-  verticalInput: 0
-  SensitivityX: 200
-  SensitivityY: 200
+  camFollowerTransform: {fileID: 4041748430851388806}
   RotationX: 0
   RotationY: 0
+  isControllingTank: 0
+  isControllingHuman: 0
   rotationSpeed: 1
-  playerCamera: {fileID: 4041748431875940801}
-  moveForwardKey: 0
-  moveBackwardKey: 0
-  moveLeftKey: 0
-  moveRightKey: 0
-  rotateClockwiseKey: 0
-  rotateCounterClockwiseKey: 0
-  AttackKey: 0
+  PlayerCamera: {fileID: 0}
+  CurrentCamera: {fileID: 0}
+  cameraFollowerScript: {fileID: 4041748430851388807}
   ChangeCamPositionKey: 0
+  RotateSpine: 0
 --- !u!81 &4041748431875940807
 AudioListener:
   m_ObjectHideFlags: 0

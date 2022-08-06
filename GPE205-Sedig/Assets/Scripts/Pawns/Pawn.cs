@@ -12,6 +12,8 @@ public abstract class Pawn : MonoBehaviour
    public Mover mover;
    public Attacker attacker;
    public NoiseMaker noiseMaker;
+   public float walkSpeed;
+   public float runSpeed;
    public float moveSpeed;
    public float turnSpeed;
    public float AttackSpeed;

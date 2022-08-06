@@ -6,6 +6,7 @@ public class TimidFSM : AiController
 {
    public GameObject PawnPrefab;
    
+   
     public override void Start()
     {   
         pawn = Instantiate(PawnPrefab, transform.position,Quaternion.identity).GetComponent<HumanPawn>();
@@ -152,6 +153,15 @@ public class TimidFSM : AiController
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
+                if (isDistanceLessThanTarget(target, targetAttackRange) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && isCanSee(target))
+                {
+                    ChangeState(AIStates.Attack);
+                }
+                if (isDistanceLessThanTarget(target, targetAttackRange) && vehicletarget.GetComponent<TankPawn>().Driver != null && !isInVehicle() && isCanSee(target))
+                {
+                    ChangeState(AIStates.Attack);
+                }
+                
 
                 if(isHealthLessThan(30) && isCanSee(target))
                 {
@@ -199,9 +209,17 @@ public class TimidFSM : AiController
                     ChangeState(AIStates.GaurdPost);
                 }
 
-                if (!isDistanceLessThanTarget(target, targetAttackRange)) 
+                if (!isDistanceLessThanTarget(target, targetAttackRange) && isInVehicle() && isCanSee(target)) 
                 {
                     ChangeState(AIStates.VehicleChase);
+                }
+                if (!isDistanceLessThanTarget(target, targetAttackRange) && !isInVehicle() && isCanSee(target)) 
+                {
+                    ChangeState(AIStates.HumanChase);
+                }
+                if(!isCanSee(target))
+                {
+                    ChangeState(AIStates.turnTowards);
                 }
                 if(isHealthLessThan(30))
                 {

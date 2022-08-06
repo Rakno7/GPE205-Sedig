@@ -245,7 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb159bcca67fbe44a196b1bedbe5807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 400
+  isCanTakeDamage: 0
+  maxHealth: 100
   currentHealth: 0
   wallCollisionDamage: 5
 --- !u!114 &-6798469562666255923
