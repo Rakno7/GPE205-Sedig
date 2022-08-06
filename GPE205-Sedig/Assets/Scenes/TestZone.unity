@@ -684,7 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RespawnTimer: 0
   MaxPlayers: 0
-  MaxAIPlayers: 10
+  MaxAIPlayers: 2
   PlayerSpawners: []
   AiSpawners: []
   Destroyedtanks: []

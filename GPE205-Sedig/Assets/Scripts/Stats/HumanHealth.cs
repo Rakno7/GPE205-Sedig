@@ -47,15 +47,23 @@ public class HumanHealth : Health
 
     public override void Die()
     {
+          if(GetComponent<HumanPawn>().controller.GetComponent<AiController>())
+          {
+            GameManager.instance.ResetAiSpawns();
+            Debug.Log("Killed AI");
+          }
+          else
+          {
+            GameManager.instance.ResetPlayerSpawns();
+          }
                 HumanPawn thisPawn = gameObject.GetComponent<HumanPawn>();
-                Destroy(thisPawn.controller.gameObject);
                 GameManager.instance.humans.Remove(thisPawn);
-                GameManager.instance.DeadAIPlayers.Add(thisPawn.GetComponent<HumanPawn>());
-                //Instantiate(thisPawn.Ragdoll,transform.position,Quaternion.identity);
-                //Destroy(gameObject);
+                
+                Destroy(thisPawn.controller.gameObject);
                 Destroy(thisPawn.anim);
                 thisPawn.SetRagdollColliderState(true);
                 thisPawn.SetRagdollRigidbodyState(false);
+               
                 Destroy(thisPawn);
             
     }

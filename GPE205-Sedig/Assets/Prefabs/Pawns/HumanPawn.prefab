@@ -208,7 +208,6 @@ MonoBehaviour:
   CameraSetting2: {fileID: 752801535312116345}
   CameraSetting3: {fileID: 752801535312116345}
   anim: {fileID: 6930931590331312077}
-  Ragdoll: {fileID: 1384626862236522299, guid: 1f806cee6bfcda64e9676de54a79aa3d, type: 3}
   canEnterVehicle: 0
   VehicleToEnter: {fileID: 0}
   spineToRotate: {fileID: 6930931590338824213}
@@ -253,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCanTakeDamage: 1
-  maxHealth: 25
+  maxHealth: 15
   currentHealth: 0
 --- !u!1 &3983752369420368585
 GameObject:

@@ -9,7 +9,9 @@ public class Spawner : MonoBehaviour
     public float spawnDelay;
     private float nextSpawnTime;
     private Transform Spawntransform;
-    void Start()
+    //gamemanager will randomly enable the number of max player spawners, and disable the rest, each time a player dies.
+    //(in GameManager, called from the Health die function) 
+    void Awake()
     {
       if(prefabToSpawn !=null)
       {
@@ -17,11 +19,6 @@ public class Spawner : MonoBehaviour
         {
             if(GameManager.instance != null)
             {
-              if(GameManager.instance.AiSpawners.Count > GameManager.instance.MaxAIPlayers)
-              {
-                Destroy(gameObject);
-              }
-              else
               {
                 GameManager.instance.AiSpawners.Add(this);
               }
@@ -33,18 +30,12 @@ public class Spawner : MonoBehaviour
           {
             if(GameManager.instance != null)
             {
-              if(GameManager.instance.PlayerSpawners.Count > GameManager.instance.MaxPlayers)
-              {
-                Destroy(gameObject);
-              }
-              else
-              {
                  GameManager.instance.PlayerSpawners.Add(this);
-              }
+            }
             }
           }
         }
-      }
+      
           //Get the current time on start plus our spawn delay
           nextSpawnTime = Time.time + spawnDelay;
     }

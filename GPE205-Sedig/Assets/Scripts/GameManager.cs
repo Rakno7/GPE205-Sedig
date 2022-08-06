@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        ResetPlayerSpawns();
+        ResetAiSpawns();
         //just for testing, on start, objects will add themselves to the lists.
            //SpawnWaypoints();
            //SpawnPlayers();
@@ -62,6 +64,41 @@ public class GameManager : MonoBehaviour
     {
         //this needs some work first
        //RespawnCountdown(); 
+    }
+
+    public void ResetPlayerSpawns()
+    {
+        float spawnPointToEnable = Random.Range(0,PlayerSpawners.Count);
+        for(int i = 0; i < PlayerSpawners.Count; i++)
+        {
+           
+           if(i == spawnPointToEnable)
+           {
+            PlayerSpawners[i].gameObject.SetActive(true);
+           }
+           else
+           {
+            PlayerSpawners[i].gameObject.SetActive(false);
+           }
+
+        } 
+    }
+    public void ResetAiSpawns()
+    {
+        float AispawnPointToEnable = Random.Range(0,AiSpawners.Count);
+        for(int i = 0; i < AiSpawners.Count; i++)
+        {
+           
+           if(i == AispawnPointToEnable)
+           {
+            AiSpawners[i].gameObject.SetActive(true);
+           }
+           else
+           {
+            AiSpawners[i].gameObject.SetActive(false);
+           }
+
+        }
     }
 
     private void SpawnPlayers()
@@ -155,6 +192,7 @@ public class GameManager : MonoBehaviour
     public GameObject WayPointClusterPrefab;
     
 
+    
 
    private void RespawnCountdown()
    {

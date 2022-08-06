@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pawn: {fileID: 0}
   attacker: {fileID: 0}
+  anim: {fileID: 0}
   players: []
   AggressiveaiPlayers: []
   TimidaiPlayers: []
@@ -69,7 +70,7 @@ MonoBehaviour:
   timeSinceLastStateChange: 0
   TimePassedSinceLastChange: 0
   fleeDistance: 60
-  vehicleVisRange: 80
+  vehicleVisRange: 20
   targetVisRange: 50
   targetAttackRange: 20
   hearingDistance: 20

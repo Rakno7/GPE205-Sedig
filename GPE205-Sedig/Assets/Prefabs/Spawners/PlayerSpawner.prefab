@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 1550728075878128562, guid: b32760d355cbbd343b7968069de2eb2e, type: 3}
   spawnDelay: 1
+  isDisabled: 1
 --- !u!1 &5947761810537156578
 GameObject:
   m_ObjectHideFlags: 0
