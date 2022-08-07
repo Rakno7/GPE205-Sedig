@@ -11,7 +11,7 @@ public class TankPawn : Pawn
     public float MovementVolume = 5;
     public override void Start()
     {   
-        base.Start();
+        
         if (GameManager.instance != null)
         {
 
@@ -20,6 +20,7 @@ public class TankPawn : Pawn
             GameManager.instance.Vehicles.Add(this);
           }
         }
+        base.Start();
     }
 
     public override void Update()

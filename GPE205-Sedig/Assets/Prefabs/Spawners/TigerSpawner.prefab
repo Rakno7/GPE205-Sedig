@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 8936223037303212322, guid: 1516a0e56856c56438bed49c5b40a742, type: 3}
-  spawnDelay: 1
+  spawnDelay: 5
 --- !u!1 &1194945081840386705
 GameObject:
   m_ObjectHideFlags: 0

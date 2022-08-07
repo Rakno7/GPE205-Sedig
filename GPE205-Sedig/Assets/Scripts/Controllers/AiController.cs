@@ -194,11 +194,14 @@ public abstract class AiController : Controller
         {
           if(Patrolwaypoints.Length > 0)
           {
+            if(isControllingHuman)
+          {
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",false);
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
-             pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
-           pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+          }
             Patrol();
           }
           else{anim.SetBool("isMoving",true);}
@@ -210,12 +213,14 @@ public abstract class AiController : Controller
         if (GameManager.instance.Vehicles.Count > 0) 
         {
             Chase(vehicletarget, true);
-            
+              if(isControllingHuman)
+          {
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",true);
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
-             pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
-           pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
-            
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+          }
             if(!isInVehicle())
             {
             Enter();
@@ -226,12 +231,14 @@ public abstract class AiController : Controller
     {
          if (GameManager.instance.players.Count > 0) 
         {
-            
+               if(isControllingHuman)
+          {
            pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
            pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",true);
            pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
            pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
            pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+          }
             
         //Do what?
         Chase(target, true);
@@ -241,11 +248,13 @@ public abstract class AiController : Controller
     {
          if (GameManager.instance.players.Count > 0) 
         {
-            
+              if(isControllingHuman)
+          { 
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",false);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",false);
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",0);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
+          }
         //Do what?
           Chase(target, false);
         }
@@ -262,13 +271,15 @@ public abstract class AiController : Controller
     {
          if (GameManager.instance.players.Count > 0) 
         {
-            
+               if(isControllingHuman)
+          {
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",false);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",false);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",true);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",true);
 
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",0);
+          }
             
           //Do what?
           Chase(target, CanMove);
@@ -280,10 +291,12 @@ public abstract class AiController : Controller
     {
          if (GameManager.instance.players.Count > 0) 
         {
-            
+               if(isControllingHuman)
+          {
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",true);
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
+          }
             
            //Do what?
            Flee(Amount);

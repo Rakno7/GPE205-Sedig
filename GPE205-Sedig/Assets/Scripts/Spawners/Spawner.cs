@@ -19,22 +19,25 @@ public class Spawner : MonoBehaviour
         {
             if(GameManager.instance != null)
             {
-              {
                 GameManager.instance.AiSpawners.Add(this);
-              }
             }
         }
-        if(prefabToSpawn !=null)
-        {
           if(prefabToSpawn.GetComponent<PlayerController>())
           {
             if(GameManager.instance != null)
             {
                  GameManager.instance.PlayerSpawners.Add(this);
             }
-            }
           }
-        }
+
+         // if(prefabToSpawn.GetComponent<TankPawn>())
+         // {
+         //   if(GameManager.instance != null)
+         //   {
+         //        GameManager.instance.VehiclesSpawners.Add(this);
+         //   }
+         // }
+      }
       
           //Get the current time on start plus our spawn delay
           nextSpawnTime = Time.time + spawnDelay;
@@ -55,7 +58,7 @@ public class Spawner : MonoBehaviour
                nextSpawnTime = Time.time + spawnDelay;
            }
         }
-        if(prefabToSpawn.GetComponent<AiController>())
+        else if(prefabToSpawn.GetComponent<AiController>())
            {
            //check if the current time is greater then the next spawn time
            if(Time.time > nextSpawnTime && GameManager.instance.aiPlayers.Count < GameManager.instance.MaxAIPlayers)
@@ -64,9 +67,14 @@ public class Spawner : MonoBehaviour
                nextSpawnTime = Time.time + spawnDelay;
            }
         }
+        else if(Time.time > nextSpawnTime)
+        {//everything else
+               spawnedPrefab = Instantiate(prefabToSpawn, transform.position, Quaternion.identity) as GameObject;
+               nextSpawnTime = Time.time + spawnDelay;
+        }
       }
-      //if there is, reset the timer, so multiple do not keep spawning on top of eachother.
-      else
+      
+      else//if it is, reset the timer, so multiple do not keep spawning on top of eachother.
       {
          nextSpawnTime = Time.time + spawnDelay;
       }

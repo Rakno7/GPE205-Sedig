@@ -146,6 +146,14 @@ public class AggressiveFSM : AiController
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
+                 if (isDistanceLessThanTarget(target, targetAttackRange) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && isCanSee(target))
+                {
+                    ChangeState(AIStates.Attack);
+                }
+                if (isDistanceLessThanTarget(target, targetAttackRange) && vehicletarget.GetComponent<TankPawn>().Driver != null && !isInVehicle() && isCanSee(target))
+                {
+                    ChangeState(AIStates.Attack);
+                }
                
                 break;
 
@@ -189,6 +197,14 @@ public class AggressiveFSM : AiController
                 if (!isDistanceLessThanTarget(target, targetAttackRange)) 
                 {
                     ChangeState(AIStates.VehicleChase);
+                }
+                if (!isDistanceLessThanTarget(target, targetAttackRange) && !isInVehicle() && isCanSee(target)) 
+                {
+                    ChangeState(AIStates.HumanChase);
+                }
+                if(!isCanSee(target))
+                {
+                    ChangeState(AIStates.turnTowards);
                 }
 
                 break;

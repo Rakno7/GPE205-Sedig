@@ -56,7 +56,7 @@ public class ExperiancedFSM : AiController
                 }
 
             //when experianced AI is not currently in a vehicle, it already knows where its at.
-            if (!isInVehicle()) 
+            if (!isInVehicle() && vehicletarget !=null) 
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
@@ -106,9 +106,12 @@ public class ExperiancedFSM : AiController
                 DoMoveToVehicleState();
                 TargetNearestVehicle();
                 //when some else takes the target vehicle
+                if(vehicletarget!=null)
+                {
                 if(!isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver != null)
                 {
                     ChangeState(AIStates.HumanChase);
+                }
                 }
                 
                 //when AI gets in vehicle and can see a target
@@ -142,7 +145,7 @@ public class ExperiancedFSM : AiController
                     ChangeState(AIStates.GaurdPost);
                 }
                 //When AI doesnt have a target or vehicle in range
-                if (TimePassedSinceLastChange > AIMemory &&  ! isCanSee(target) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
+                if (TimePassedSinceLastChange > AIMemory &&  !isCanSee(target) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle()) 
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
@@ -151,6 +154,14 @@ public class ExperiancedFSM : AiController
                 if (isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
                 {
                     ChangeState(AIStates.MoveToVehicle);
+                }
+                 if (isDistanceLessThanTarget(target, targetAttackRange) && !isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && isCanSee(target))
+                {
+                    ChangeState(AIStates.Attack);
+                }
+                if (isDistanceLessThanTarget(target, targetAttackRange) && vehicletarget.GetComponent<TankPawn>().Driver != null && !isInVehicle() && isCanSee(target))
+                {
+                    ChangeState(AIStates.Attack);
                 }
                
                 break;
@@ -207,6 +218,14 @@ public class ExperiancedFSM : AiController
                 if (!isDistanceLessThanTarget(target, targetAttackRange)) 
                 {
                     ChangeState(AIStates.VehicleChase);
+                }
+                if (!isDistanceLessThanTarget(target, targetAttackRange) && !isInVehicle() && isCanSee(target)) 
+                {
+                    ChangeState(AIStates.HumanChase);
+                }
+                if(!isCanSee(target))
+                {
+                    ChangeState(AIStates.turnTowards);
                 }
                 break;
                  //-------------------------------------------------------------------------------------------------------------------------------------------------------------
