@@ -5,6 +5,15 @@ using UnityEngine;
 public class HumanHealth : Health
 {
     private Rigidbody rb;
+   
+    private void Update()
+    {
+        //for testing!//for testing!//for testing!
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            Die();
+        }
+    }
     public override void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -47,24 +56,39 @@ public class HumanHealth : Health
 
     public override void Die()
     {
+        if(GetComponent<HumanPawn>().controller !=null)
+        {
           if(GetComponent<HumanPawn>().controller.GetComponent<AiController>())
           {
             GameManager.instance.ResetAiSpawns();
-            Debug.Log("Killed AI");
-          }
-          else
-          {
-            GameManager.instance.ResetPlayerSpawns();
-          }
+
+                GameManager.instance.ResetPlayerSpawns();
                 HumanPawn thisPawn = gameObject.GetComponent<HumanPawn>();
                 GameManager.instance.humans.Remove(thisPawn);
-                
+                GameManager.instance.aiPlayers.Remove(GetComponent<HumanPawn>().controller.GetComponent<AiController>());
                 Destroy(thisPawn.controller.gameObject);
                 Destroy(thisPawn.anim);
                 thisPawn.SetRagdollColliderState(true);
                 thisPawn.SetRagdollRigidbodyState(false);
-               
+                
                 Destroy(thisPawn);
-            
+                Destroy(this);
+          }
+          if(GetComponent<HumanPawn>().controller.GetComponent<PlayerController>())
+          {
+                GameManager.instance.ResetPlayerSpawns();
+
+                HumanPawn thisPawn = gameObject.GetComponent<HumanPawn>();
+                GameManager.instance.humans.Remove(thisPawn);
+                GameManager.instance.players.Remove(GetComponent<HumanPawn>().controller.GetComponent<PlayerController>());
+                Destroy(thisPawn.controller.gameObject);
+                Destroy(thisPawn.anim);
+                thisPawn.SetRagdollColliderState(true);
+                thisPawn.SetRagdollRigidbodyState(false);
+                
+                Destroy(thisPawn);
+                Destroy(this);
+          }
+        }   
     }
 }

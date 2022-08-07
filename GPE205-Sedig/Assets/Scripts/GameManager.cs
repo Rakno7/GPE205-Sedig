@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     public string mapStringSeed;
     public bool isUseDateSeed;
     private int seed;
-    public float MaxPlayers;
-    public float MaxAIPlayers;
+    public int MaxPlayers;
+    public int MaxAIPlayers;
     
     public List<Spawner> PlayerSpawners;
     public List<Spawner> AiSpawners;
@@ -30,9 +30,7 @@ public class GameManager : MonoBehaviour
     private Transform[] WayPointSpawnPoints;
     public static GameManager instance;
     public List<PlayerController> players;
-    public List<TimidFSM> TimidaiPlayers;
-    public List<ExperiancedFSM> ExperiancedaiPlayers;
-    public List<AggressiveFSM> AggressiveaiPlayers;
+    public List<AiController> aiPlayers;
     public List<HumanPawn> humans;
     public List<TankPawn> Vehicles;
     public List<WayPointCluster> Waypointcluster;
@@ -75,37 +73,87 @@ public class GameManager : MonoBehaviour
 
     public void ResetPlayerSpawns()
     {
-        float spawnPointToEnable = UnityEngine.Random.Range(0,PlayerSpawners.Count);
-        for(int i = 0; i < PlayerSpawners.Count; i++)
+        //create an array of ints the same size of the number of spawners in the world.
+        int[] spawnPointsToEnable = new int[PlayerSpawners.Count];
+        //first set all items of the array to -1, because they default to 0, which will cause an extra spawn point to be enabled when iterating through later
+         for(int x = 0; x < spawnPointsToEnable.Length; x++)
         {
-           
-           if(i == spawnPointToEnable)
-           {
-            PlayerSpawners[i].gameObject.SetActive(true);
-           }
-           else
-           {
-            PlayerSpawners[i].gameObject.SetActive(false);
-           }
-
-        } 
+            //create amount of random numbers equal to the max players
+            spawnPointsToEnable[x] = -1;
+            
+        }
+        
+        for(int x = 0; x < MaxPlayers; x++)
+        {
+            //create amount of random numbers equal to the max players
+            spawnPointsToEnable[x] = UnityEngine.Random.Range(0,PlayerSpawners.Count);
+            Debug.Log(spawnPointsToEnable[x]);
+        }
+          
+            //loop for the number equal to the amount of spawners for this item
+            for(int i = 0; i < PlayerSpawners.Count; i++)
+            {  
+            bool isEqual = false;
+            //iterate through the random numbers and see which ones match the current index
+                for(int x = 0; x < spawnPointsToEnable.Length; x++)
+                {
+                   if(spawnPointsToEnable[x] == i)
+                   {
+                    isEqual = true;
+                   }
+                }
+                //if the current index matches one of the random numbers set it active. 
+             if(isEqual)
+                {
+                    PlayerSpawners[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                   PlayerSpawners[i].gameObject.SetActive(false);
+                }
+            }   
     }
     public void ResetAiSpawns()
     {
-        float AispawnPointToEnable = UnityEngine.Random.Range(0,AiSpawners.Count);
-        for(int i = 0; i < AiSpawners.Count; i++)
+        //create an array of ints the same size of the number of spawners in the world.
+        int[] AispawnPointsToEnable = new int[AiSpawners.Count];
+        
+        //first set all items of the array to -1, because they default to 0, which will cause an extra spawn point to be enabled when iterating through later
+         for(int x = 0; x < AispawnPointsToEnable.Length; x++)
         {
-           
-           if(i == AispawnPointToEnable)
-           {
-            AiSpawners[i].gameObject.SetActive(true);
-           }
-           else
-           {
-            AiSpawners[i].gameObject.SetActive(false);
-           }
-
+            //create amount of random numbers equal to the max players
+            AispawnPointsToEnable[x] = -1;
+            
         }
+        for(int x = 0; x < MaxAIPlayers; x++)
+        {
+            //create amount of random numbers equal to the max players
+            AispawnPointsToEnable[x] = UnityEngine.Random.Range(0,AiSpawners.Count + 1);
+            
+        }
+          
+            //loop for the number equal to the amount of spawners for this item
+            for(int i = 0; i < AiSpawners.Count; i++)
+            {  
+                bool isEqual = false;
+                    //iterate through the random numbers and see which ones match the current index
+                    for(int x = 0; x < AispawnPointsToEnable.Length; x++)
+                    {
+                       if(AispawnPointsToEnable[x] == i)
+                       {
+                        isEqual = true;
+                       }
+                    }
+                //if the current index matches one of the random numbers set it active. 
+                if(isEqual)
+                {
+                    AiSpawners[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                   AiSpawners[i].gameObject.SetActive(false);
+                }
+            }   
     }
      public void SetStringSeed()
     {
@@ -155,7 +203,7 @@ public class GameManager : MonoBehaviour
               GameObject newFSMObj = Instantiate(TimidAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;  
               newAiPawn = Instantiate(HumanTimidAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
               Controller newController = newFSMObj.GetComponent<Controller>();
-              TimidaiPlayers.Add(newFSMObj.GetComponent<TimidFSM>());
+              aiPlayers.Add(newFSMObj.GetComponent<TimidFSM>());
               Pawn newPawn = newAiPawn.GetComponent<Pawn>();
               newController.pawn = newPawn;
               newPawn.controller = newController;
@@ -165,7 +213,7 @@ public class GameManager : MonoBehaviour
               GameObject newFSMObj = Instantiate(AggressiveAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;
               newAiPawn = Instantiate(HumanAggressiveAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
               Controller newController = newFSMObj.GetComponent<Controller>();
-              AggressiveaiPlayers.Add(newFSMObj.GetComponent<AggressiveFSM>());
+              aiPlayers.Add(newFSMObj.GetComponent<AggressiveFSM>());
               Pawn newPawn = newAiPawn.GetComponent<Pawn>();
               newController.pawn = newPawn;
               newPawn.controller = newController;
@@ -175,7 +223,7 @@ public class GameManager : MonoBehaviour
               GameObject newFSMObj = Instantiate(ExperiancedAIPrefab,Vector3.zero,Quaternion.identity) as GameObject;
               newAiPawn = Instantiate(HumanExperiancedAIPawnPrefab, AISpawnPoints[i].position, AISpawnPoints[i].rotation) as GameObject;
               Controller newController = newFSMObj.GetComponent<Controller>();
-              ExperiancedaiPlayers.Add(newFSMObj.GetComponent<ExperiancedFSM>());
+              aiPlayers.Add(newFSMObj.GetComponent<ExperiancedFSM>());
               Pawn newPawn = newAiPawn.GetComponent<Pawn>();
               newController.pawn = newPawn;
               newPawn.controller = newController;

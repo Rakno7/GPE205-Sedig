@@ -14,8 +14,8 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.35537556, g: 0.5136424, b: 0.6226415, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a759352d9ada0dd4fa70997bef560602, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -682,9 +682,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d774643734e1745ad72f1bd6265f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnTimer: 0
-  MaxPlayers: 0
-  MaxAIPlayers: 2
+  isUseSeed: 0
+  mapStringSeed: fdhkhdfjshifdhfo
+  isUseDateSeed: 0
+  MaxPlayers: 1
+  MaxAIPlayers: 5
   PlayerSpawners: []
   AiSpawners: []
   Destroyedtanks: []
@@ -692,9 +694,7 @@ MonoBehaviour:
   DeadAIPlayers: []
   PlayerSpawnPoint: {fileID: 571087970}
   players: []
-  TimidaiPlayers: []
-  ExperiancedaiPlayers: []
-  AggressiveaiPlayers: []
+  aiPlayers: []
   humans: []
   Vehicles: []
   Waypointcluster: []
@@ -717,7 +717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138765775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2338327, y: 0.56556463, z: 0.45562446}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -743,34 +743,6 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661157046624666982, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -783,24 +755,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: gridPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 6571541639183280139, guid: 8c92f793c8836e940b66339daee17930, type: 3}
+      propertyPath: cols
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: gridPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 6571541639183280139, guid: 8c92f793c8836e940b66339daee17930, type: 3}
-    - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: gridPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 6571541639183280139, guid: 8c92f793c8836e940b66339daee17930, type: 3}
-    - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: gridPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 6571541639183280139, guid: 8c92f793c8836e940b66339daee17930, type: 3}
-    - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
-      propertyPath: gridPrefabs.Array.data[4]
-      value: 
-      objectReference: {fileID: 6571541639183280139, guid: 8c92f793c8836e940b66339daee17930, type: 3}
+      propertyPath: rows
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}

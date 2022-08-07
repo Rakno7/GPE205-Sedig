@@ -44,12 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridPrefabs:
-  - {fileID: 256622689684461317, guid: 9efe1c897b248674a9894a97f8446ced, type: 3}
-  - {fileID: 8088260615146424119, guid: f2795809238c976498297a43107bc363, type: 3}
-  - {fileID: 2540215589391001977, guid: 5f71cd15a7c6de0449c76f453e09a386, type: 3}
-  - {fileID: 7939652807170067774, guid: 60dec4f508b389d40a3d5b7ca7ce9863, type: 3}
-  - {fileID: 7296591121700075200, guid: ae02c26afe851534091f8ad960bdcd00, type: 3}
-  rows: 3
-  cols: 3
+  - {fileID: 6571541639183280139, guid: 8c92f793c8836e940b66339daee17930, type: 3}
+  - {fileID: 7954322857560081147, guid: 34caaa8ca75a6674a8c0e3559c096845, type: 3}
+  - {fileID: 6977082631303054086, guid: e7f422f4dc54c9c469d9b26273e2ace5, type: 3}
+  - {fileID: 3768934549551272404, guid: f00a27cf1659aa54e84c45b81023a497, type: 3}
+  rows: 6
+  cols: 6
   roomWidth: 195
   roomHeight: 195

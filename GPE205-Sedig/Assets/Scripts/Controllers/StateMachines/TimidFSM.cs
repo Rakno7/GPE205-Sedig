@@ -15,9 +15,9 @@ public class TimidFSM : AiController
        if (GameManager.instance != null)
         {
 
-         if (GameManager.instance.TimidaiPlayers != null)
+         if (GameManager.instance.aiPlayers != null)
           {  
-             GameManager.instance.TimidaiPlayers.Add(this);
+             GameManager.instance.aiPlayers.Add(this);
           }
           if (GameManager.instance.humans != null)
           {  

@@ -46,11 +46,23 @@ public class Spawner : MonoBehaviour
         //make sure Prefab no longer exists before spawning
       if(spawnedPrefab == null)
       {
-        //check if the current time is greater then the next spawn time
-        if(Time.time > nextSpawnTime)
-        {
-            spawnedPrefab = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
-            nextSpawnTime = Time.time + spawnDelay;
+        if(prefabToSpawn.GetComponent<PlayerController>())
+           {
+           //check if the current time is greater then the next spawn time
+           if(Time.time > nextSpawnTime && GameManager.instance.players.Count < GameManager.instance.MaxPlayers)
+           {
+               spawnedPrefab = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+               nextSpawnTime = Time.time + spawnDelay;
+           }
+        }
+        if(prefabToSpawn.GetComponent<AiController>())
+           {
+           //check if the current time is greater then the next spawn time
+           if(Time.time > nextSpawnTime && GameManager.instance.aiPlayers.Count < GameManager.instance.MaxAIPlayers)
+           {
+               spawnedPrefab = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+               nextSpawnTime = Time.time + spawnDelay;
+           }
         }
       }
       //if there is, reset the timer, so multiple do not keep spawning on top of eachother.
