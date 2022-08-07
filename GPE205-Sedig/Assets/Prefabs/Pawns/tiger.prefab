@@ -1235,10 +1235,10 @@ MonoBehaviour:
   mover: {fileID: 3717824224451675136}
   attacker: {fileID: 3853329640197421658}
   noiseMaker: {fileID: 5393797223914192390}
-  walkSpeed: 20
-  runSpeed: 35
-  moveSpeed: 20
-  turnSpeed: 40
+  walkSpeed: 10
+  runSpeed: 20
+  moveSpeed: 10
+  turnSpeed: 60
   AttackSpeed: 200
   AiDifficulty: 0
   Orientation: {fileID: 1806486174190211140}

@@ -124,6 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerup:
-    duration: 2
+    duration: 6
     isPermanate: 0
-    SpeedToAdd: 100
+    SpeedToAdd: 20

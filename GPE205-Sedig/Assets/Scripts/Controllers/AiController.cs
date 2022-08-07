@@ -31,11 +31,19 @@ public abstract class AiController : Controller
     }
     protected virtual bool isShotIncoming()
     {
-        if(pawn.GetComponentInChildren<Attacker>().isTookShot)
+        if(target!=null && target.GetComponent<Pawn>()!=null)
         {
-            return true;
+        
+           if(target.GetComponent<Pawn>().attacker.isTookShot)
+           {
+               return true;
+           }
+           else
+           {
+               return false;
+           }
         }
-        else
+        else 
         {
             return false;
         }
@@ -194,17 +202,19 @@ public abstract class AiController : Controller
         {
           if(Patrolwaypoints.Length > 0)
           {
-            if(isControllingHuman)
-          {
-            pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
-            pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",false);
-            pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
-            pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
-            pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+              if(isControllingHuman)
+            {
+              pawn.GetComponent<HumanPawn>().moveSpeed = pawn.GetComponent<HumanPawn>().walkSpeed;
+
+              pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
+              pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",false);
+              pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
+              pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
+              pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+            }
+           Patrol();
           }
-            Patrol();
-          }
-          else{anim.SetBool("isMoving",true);}
+          
         }
     }
     protected void DoMoveToVehicleState()
@@ -215,6 +225,8 @@ public abstract class AiController : Controller
             Chase(vehicletarget, true);
               if(isControllingHuman)
           {
+            pawn.GetComponent<HumanPawn>().moveSpeed = pawn.GetComponent<HumanPawn>().runSpeed;
+
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",true);
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
@@ -233,6 +245,7 @@ public abstract class AiController : Controller
         {
                if(isControllingHuman)
           {
+            pawn.GetComponent<HumanPawn>().moveSpeed = pawn.GetComponent<HumanPawn>().runSpeed;
            pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
            pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",true);
            pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);
@@ -273,6 +286,7 @@ public abstract class AiController : Controller
         {
                if(isControllingHuman)
           {
+            pawn.GetComponent<HumanPawn>().moveSpeed = pawn.GetComponent<HumanPawn>().walkSpeed;
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",false);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",false);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",true);
@@ -293,6 +307,9 @@ public abstract class AiController : Controller
         {
                if(isControllingHuman)
           {
+            pawn.GetComponent<HumanPawn>().moveSpeed = pawn.GetComponent<HumanPawn>().runSpeed;
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isAiming",false);
+            pawn.GetComponent<HumanPawn>().anim.SetBool("isShooting",false);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isMoving",true);
             pawn.GetComponent<HumanPawn>().anim.SetBool("isRunning",true);
             pawn.GetComponent<HumanPawn>().anim.SetFloat("moveDirY",1);

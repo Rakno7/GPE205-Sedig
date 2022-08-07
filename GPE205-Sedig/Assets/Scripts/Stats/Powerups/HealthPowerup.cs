@@ -9,12 +9,13 @@ public class HealthPowerup : Powerup
 
     public override void Apply(PowerupManager target)
     {
-        TankHealth targetHealth = target.GetComponent<TankHealth>();
-        if(targetHealth !=null)
+        Health health = target.GetComponent<Health>();
+        if(health !=null)
         {
-          targetHealth.RestoreHealth(healthToAdd, target.GetComponent<Pawn>());
+          health.RestoreHealth(healthToAdd, target.GetComponent<Pawn>());
           Debug.Log("Applied Health");
         }
+      
         
     }
     public override void Remove(PowerupManager target)

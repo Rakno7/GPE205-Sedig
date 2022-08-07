@@ -9,10 +9,10 @@ public class ShieldPowerup : Powerup
 
     public override void Apply(PowerupManager target)
     {
-        TankPawn targetPawn = target.GetComponent<TankPawn>();
+        Pawn pawn = target.GetComponent<Pawn>();
         Transform targetTransform = target.GetComponent<Transform>();
-        TankHealth targetHealth = target.GetComponent<TankHealth>();
-        if(targetPawn !=null)
+        Health targetHealth = target.GetComponent<Health>();
+        if(pawn !=null)
         {
           targetHealth.isCanTakeDamage = false;  
           ShieldToRemove = GameObject.Instantiate(ShieldPrefabToAdd,targetTransform.position,Quaternion.identity);
@@ -22,7 +22,7 @@ public class ShieldPowerup : Powerup
     }
     public override void Remove(PowerupManager target)
     { 
-        TankHealth targetHealth = target.GetComponent<TankHealth>();
+        Health targetHealth = target.GetComponent<Health>();
         targetHealth.isCanTakeDamage = true;
         GameObject.Destroy(ShieldToRemove);  
     }

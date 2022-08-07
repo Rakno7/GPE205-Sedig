@@ -81,6 +81,8 @@ public class AggressiveFSM : AiController
                 case AIStates.turnTowards:
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoTurnTowardsState();
+                TargetNearestPlayer();
+                TargetNearestWaypointCluster();
                 //when AI can no longer hear target and forgets about them
                 if(target == null || !isCanHear(target) && TimePassedSinceLastChange > AIMemory)
                 {

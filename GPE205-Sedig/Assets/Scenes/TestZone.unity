@@ -682,11 +682,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d774643734e1745ad72f1bd6265f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUseSeed: 0
+  isUseSeed: 1
   mapStringSeed: fdhkhdfjshifdhfo
   isUseDateSeed: 0
   MaxPlayers: 1
-  MaxAIPlayers: 5
+  MaxAIPlayers: 10
   PlayerSpawners: []
   AiSpawners: []
   Destroyedtanks: []
@@ -756,11 +756,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
       propertyPath: cols
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
       propertyPath: rows
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}

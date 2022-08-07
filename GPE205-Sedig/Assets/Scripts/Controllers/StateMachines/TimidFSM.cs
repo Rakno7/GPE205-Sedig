@@ -83,6 +83,8 @@ public class TimidFSM : AiController
                 case AIStates.turnTowards:
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoTurnTowardsState();
+                TargetNearestWaypointCluster();
+                TargetNearestPlayer();
 
                 //when AI can no longer hear target and forgets about them
                 if(target == null || !isCanHear(target) && TimePassedSinceLastChange > AIMemory)
@@ -99,7 +101,7 @@ public class TimidFSM : AiController
                     ChangeState(AIStates.VehicleChase);
                 }
 
-                if(isHealthLessThan(30) && isCanSee(target))
+                if(isHealthLessThan(30))
                 {
                    ChangeState(AIStates.Flee);
                 }

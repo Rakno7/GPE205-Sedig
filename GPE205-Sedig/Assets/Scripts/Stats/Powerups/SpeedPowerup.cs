@@ -8,18 +8,33 @@ public class SpeedPowerup : Powerup
 
     public override void Apply(PowerupManager target)
     {
-        TankPawn targetSpeed = target.GetComponent<TankPawn>();
-        if(targetSpeed !=null)
+        Pawn Speed = target.GetComponent<Pawn>();
+        
+        if(Speed !=null)
         {
-          targetSpeed.moveSpeed += SpeedToAdd;
+          if(Speed.GetComponent<HumanPawn>())
+          {
+            Speed.runSpeed += SpeedToAdd;
+          }
+          else
+          {
+            Speed.moveSpeed += SpeedToAdd;
+          }
+          
           Debug.Log("Applied Speed");
         }
-        
     }
     public override void Remove(PowerupManager target)
     {
-        TankPawn targetSpeed = target.GetComponent<TankPawn>();
-        targetSpeed.moveSpeed -= SpeedToAdd;
-         Debug.Log("Removed Speed");
+        Pawn Speed = target.GetComponent<Pawn>();
+        if(Speed.GetComponent<HumanPawn>())
+          {
+            Speed.runSpeed -= SpeedToAdd;
+          }
+          else
+          {
+            Speed.moveSpeed -= SpeedToAdd;
+          }
+        Debug.Log("Removed Speed");
     }
 }

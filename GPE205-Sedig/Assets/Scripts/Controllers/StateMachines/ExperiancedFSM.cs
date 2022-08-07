@@ -56,7 +56,7 @@ public class ExperiancedFSM : AiController
                 }
 
             //when experianced AI is not currently in a vehicle, it already knows where its at.
-            if (!isInVehicle() && vehicletarget !=null) 
+            if (!isInVehicle() && vehicletarget !=null && !isDistanceLessThanTarget(target,targetVisRange)) 
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
@@ -81,6 +81,8 @@ public class ExperiancedFSM : AiController
                 case AIStates.turnTowards:
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoTurnTowardsState();
+                TargetNearestPlayer();
+                TargetNearestWaypointCluster();
                 //when AI can no longer hear target and forgets about them
                 if(target == null || !isCanHear(target) && TimePassedSinceLastChange > AIMemory)
                 {
@@ -151,7 +153,7 @@ public class ExperiancedFSM : AiController
                 }
                 
                 //When AI has a target but found an empty vehicle in range (prioritise vehicle)
-                if (isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null)
+                if (isDistanceLessThanTarget(vehicletarget, vehicleVisRange) && !isInVehicle() && vehicletarget.GetComponent<TankPawn>().Driver == null && isDistanceLessThanTarget(target,targetVisRange))
                 {
                     ChangeState(AIStates.MoveToVehicle);
                 }
@@ -176,9 +178,12 @@ public class ExperiancedFSM : AiController
                     ChangeState(AIStates.GaurdPost);
                 }
                 //when experianced ai detects incoming shot
-                if(isShotIncoming())
+                if(target!=null)
                 {
-                    ChangeState(AIStates.Flee);
+                   if(isShotIncoming())
+                   {
+                       ChangeState(AIStates.Flee);
+                   }
                 }
 
                 //When AI doesnt have a target in range and they forget about the player
@@ -204,16 +209,19 @@ public class ExperiancedFSM : AiController
                 
                 case AIStates.Attack:
                 TimePassedSinceLastChange += Time.deltaTime;
-
+                TargetNearestPlayer();
                 DoAttackState(false);
-                if(target == null)
+                if(!isHasTarget())
                 {
                     ChangeState(AIStates.GaurdPost);
                 }
                 //when experianced ai detects incoming shot
-                if(isShotIncoming())
+                if(isHasTarget())
                 {
-                    ChangeState(AIStates.Flee);
+                   if(isShotIncoming())
+                   {
+                       ChangeState(AIStates.Flee);
+                   }
                 }
                 if (!isDistanceLessThanTarget(target, targetAttackRange)) 
                 {
@@ -233,9 +241,13 @@ public class ExperiancedFSM : AiController
                 case AIStates.Flee:
                 TimePassedSinceLastChange += Time.deltaTime;
                 DoFleeState(5);
-                if(target == null || TimePassedSinceLastChange > 3)
+                if(isHasTarget() && TimePassedSinceLastChange > 3)
                 {
                     ChangeState(AIStates.VehicleChase);
+                }
+                if(!isHasTarget())
+                {
+                    ChangeState(AIStates.GaurdPost);
                 }                
                 break;
         }
