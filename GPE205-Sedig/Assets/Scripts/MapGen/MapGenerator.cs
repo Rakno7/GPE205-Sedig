@@ -13,8 +13,8 @@ public class MapGenerator : MonoBehaviour
     
     public int rows;
     public int cols;
-    public float roomWidth = 50.0f;
-    public float roomHeight = 50.0f;
+    public float roomWidth  = 195.0f;
+    public float roomHeight = 195.0f;
     private Room[,] grid;
 
     void Start()
@@ -66,9 +66,10 @@ public class MapGenerator : MonoBehaviour
                //set the room at the coordinates of the array we are looking at to this room.
                grid[currentCol,currentRow] = TempRoom; 
                
-               //check which doors shoulkd be open.
+               //check which doors should be open.
                CheckRowOpenings(currentRow, TempRoom);
                CheckCollumnOpenings(currentCol,TempRoom);
+               GameManager.instance.LevelZones.Add(TempRoomObj);
 
             }
         }
