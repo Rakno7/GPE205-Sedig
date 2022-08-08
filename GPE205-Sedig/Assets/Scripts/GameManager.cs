@@ -156,6 +156,8 @@ public class GameManager : MonoBehaviour
     public void SetMapOfTheDaySeed()
     {
          UnityEngine.Random.InitState(DateToInt(DateTime.Now.Date));
+         int thisDate = (DateToInt(DateTime.Now.Date));
+         Debug.Log("This is the date:" + thisDate);
     }
      public void RerandomizeSeed()
     { 
@@ -163,13 +165,14 @@ public class GameManager : MonoBehaviour
     }
     public int DateToInt(DateTime dateToUse)
     {
-        return 
-        dateToUse.Year
-         + dateToUse.Month
-          + dateToUse.Day
-           + dateToUse.Hour
-            + dateToUse.Minute
-             + dateToUse.Second
-              + dateToUse.Millisecond;
+        return (int)dateToUse.ToBinary();
+        // return 
+        // dateToUse.Year
+        //  + dateToUse.Month
+        //   + dateToUse.Day
+        //    + dateToUse.Hour
+        //     + dateToUse.Minute
+        //      + dateToUse.Second
+        //       + dateToUse.Millisecond;
     }
 }

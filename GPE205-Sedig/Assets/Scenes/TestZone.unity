@@ -682,13 +682,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d774643734e1745ad72f1bd6265f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUseSeed: 1
-  mapStringSeed: fdhkhdfjshifdhfo
-  isUseDateSeed: 0
+  isUseSeed: 0
+  mapStringSeed: sdhsuhgndshjids
+  isUseDateSeed: 1
   MaxPlayers: 1
-  MaxAIPlayers: 10
+  MaxAIPlayers: 15
   PlayerSpawners: []
   AiSpawners: []
+  LevelZones: []
   Destroyedtanks: []
   DeadPlayers: []
   DeadAIPlayers: []
@@ -698,17 +699,6 @@ MonoBehaviour:
   humans: []
   Vehicles: []
   Waypointcluster: []
-  PlayerControllerPrefab: {fileID: 1550728075878128562, guid: b32760d355cbbd343b7968069de2eb2e, type: 3}
-  TimidAIPrefab: {fileID: 5925029206875148644, guid: c6a55388acaf89c4bbc7443198be9cea, type: 3}
-  AggressiveAIPrefab: {fileID: 2337957996942579860, guid: 58139633c9ac9bf4ca604b817280e8a8, type: 3}
-  ExperiancedAIPrefab: {fileID: 7345469039969529695, guid: c06c3d0a0b425e941aacf00297d5be9b, type: 3}
-  HumanPawnPrefab: {fileID: 752801537171181274, guid: 4685f9d13f72b75499e1971947f9fa92, type: 3}
-  HumanTimidAIPawnPrefab: {fileID: 6553555791578618542, guid: 1f4116d045b933c4dbd3a59cbe56d444, type: 3}
-  HumanAggressiveAIPawnPrefab: {fileID: 5573113496438726978, guid: 3da862dd65da7de4997f6dab6cdedfdf, type: 3}
-  HumanExperiancedAIPawnPrefab: {fileID: 1978183816458824025, guid: 9cdd72d79e0c26842b6c333eaeaf0a1c, type: 3}
-  MyTankPawnPrefab: {fileID: 4698051839250943010, guid: 5b551aec3f365494594a1b405dcb2bc4, type: 3}
-  UatTankPawnPrefab: {fileID: 2106025753212442968, guid: d909e0adde5b4fa40b4f299160b623e4, type: 3}
-  WayPointClusterPrefab: {fileID: 6430755043935326432, guid: cd7faeb41c1198c4da7939859ac12353, type: 3}
 --- !u!4 &2138765777
 Transform:
   m_ObjectHideFlags: 0
@@ -760,7 +750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6745794236769466862, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
       propertyPath: rows
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55de89fd1a476df43ac5de8f2a8609ac, type: 3}
