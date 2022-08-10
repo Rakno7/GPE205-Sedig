@@ -41,7 +41,9 @@ public class TankHealth : Health
     {
         if(other.transform.tag == "Projectile")
         {
-            float DamageTaken = other.transform.gameObject.GetComponent<ProjectileExplode>().ProjectileDamage;
+             ProjectileExplode thisProjectile = other.transform.gameObject.GetComponent<ProjectileExplode>();
+            float DamageTaken = thisProjectile.ProjectileDamage;
+            whoHitme = thisProjectile.whoTookThisShot;    
             ReduceHealth(DamageTaken,GetComponent<Pawn>());
         }
        
@@ -53,6 +55,11 @@ public class TankHealth : Health
 
     public override void Die()
     {
+         if(whoHitme !=null)
+        {
+        whoHitme.AddScore(1);
+        Debug.Log(whoHitme.Score);
+        }
             TankPawn thisPawn = gameObject.GetComponent<TankPawn>();
             GameManager.instance.Vehicles.Remove(thisPawn);
             GameManager.instance.Destroyedtanks.Add(thisPawn);

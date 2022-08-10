@@ -822,6 +822,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7abd17dd1545a3e4993793a368a17e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisController: {fileID: 0}
+  pawn: {fileID: 8936223037303212322}
   isTookShot: 0
   Firepoint: {fileID: 760322531821897144}
   ParentRb: {fileID: 8307700171656528200}
@@ -1275,6 +1277,7 @@ MonoBehaviour:
   isCanTakeDamage: 0
   maxHealth: 150
   currentHealth: 0
+  whoHitme: {fileID: 0}
   wallCollisionDamage: 5
 --- !u!114 &5393797223914192390
 MonoBehaviour:

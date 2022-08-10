@@ -255,6 +255,7 @@ MonoBehaviour:
   isCanTakeDamage: 1
   maxHealth: 15
   currentHealth: 0
+  whoHitme: {fileID: 0}
 --- !u!114 &1631678744783784670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2242,6 +2243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3801bcd5f79d354f93cf9b967d9f117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisController: {fileID: 0}
+  pawn: {fileID: 752801537171181274}
   isTookShot: 0
   Firepoint: {fileID: 2603551876780698960}
   Bullet: {fileID: 4831615732124406742, guid: 5a9c768cbe6e31f428fabb31ce52be1c, type: 3}

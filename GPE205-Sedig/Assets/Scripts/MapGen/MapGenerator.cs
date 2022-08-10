@@ -19,15 +19,16 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        GenerateMap();
+        if(GameManager.instance !=null)
+        {
+            GameManager.instance.levelGen = this;
+        }
     }
-
-   
     void Update()
     {
         
     }
-    void GenerateMap()
+    public void GenerateMap()
     {
         if(GameManager.instance!=null)
         {

@@ -8,8 +8,10 @@ public GameObject ExplosionParticles;
 public GameObject ExplosionSmokeParticles;
 public float explosiveForce;
 public float explosionRadius;
+public Controller whoTookThisShot;
 
 public float ProjectileDamage;   
+
 
     private void OnCollisionEnter(Collision other)
     {

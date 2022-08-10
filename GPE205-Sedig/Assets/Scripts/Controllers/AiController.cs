@@ -147,7 +147,8 @@ public abstract class AiController : Controller
         }
     }
 
-
+    public AIStates currentState;
+    
     public Animator anim;
     public List<PlayerController> players;
     public List<AggressiveFSM> AggressiveaiPlayers;
@@ -178,7 +179,7 @@ public abstract class AiController : Controller
     public float hearingDistance = 50;
     
     public float fov = 90;
-    public AIStates currentState;
+    
    
     //Override this function to create multiple AI personalitys which inhertit from this class. 
     public abstract void MakeDecisions();

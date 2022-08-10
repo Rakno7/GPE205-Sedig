@@ -7,6 +7,7 @@ public abstract class Health : MonoBehaviour
    public bool isCanTakeDamage;
    public float maxHealth;
    public float currentHealth;
+   public Controller whoHitme;
    public virtual void Start()
    {
     

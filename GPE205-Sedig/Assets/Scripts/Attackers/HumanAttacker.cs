@@ -15,10 +15,11 @@ public class HumanAttacker : Attacker
     }
     public override void Attack(Vector3 direction, float speed)
     {
+       
          //dont fire while shot delay is act active
         if(!isShotDelay)
         {
-            
+            thisController = pawn.GetComponent<Pawn>().controller; 
         //create a new movement vector forward * speed
         Vector3 movementVector = transform.forward * speed;
            //create a position vector to fire from
@@ -29,6 +30,8 @@ public class HumanAttacker : Attacker
         GameObject Particles = Instantiate(ShotParticles,pos,rotation);
         //spawn the bullet at the position and rotation of the vectors 
         GameObject bullet = Instantiate(Bullet,pos,rotation);
+        ProjectileExplode projectile = bullet.GetComponent<ProjectileExplode>();
+        projectile.whoTookThisShot = thisController;
         //add force upon the movement vector
         bullet.GetComponent<Rigidbody>().AddForce(movementVector, ForceMode.Impulse);
         

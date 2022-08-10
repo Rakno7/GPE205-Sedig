@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerController : Controller
 {
+    public int playerNumber = 0;
     public GameObject PawnPrefab;
     public Animator anim;
     //CAMERASTUFF-------------------------

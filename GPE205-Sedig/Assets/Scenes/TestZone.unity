@@ -682,23 +682,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d774643734e1745ad72f1bd6265f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUseSeed: 0
+  isUseSeed: 1
   mapStringSeed: sdhsuhgndshjids
-  isUseDateSeed: 1
+  isUseDateSeed: 0
   MaxPlayers: 1
   MaxAIPlayers: 15
+  levelGen: {fileID: 0}
+  gameFSM: {fileID: 0}
   PlayerSpawners: []
   AiSpawners: []
   LevelZones: []
   Destroyedtanks: []
   DeadPlayers: []
   DeadAIPlayers: []
-  PlayerSpawnPoint: {fileID: 571087970}
   players: []
   aiPlayers: []
   humans: []
   Vehicles: []
   Waypointcluster: []
+  isMapGenerated: 0
 --- !u!4 &2138765777
 Transform:
   m_ObjectHideFlags: 0

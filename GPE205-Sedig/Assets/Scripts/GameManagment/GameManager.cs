@@ -11,15 +11,21 @@ public class GameManager : MonoBehaviour
     private int seed;
     public int MaxPlayers;
     public int MaxAIPlayers;
-    
+
+    //store each players number (player one, Player two)
+    public int[] playerNumberTracker;
+    //keep track of the score for player one and player two
+    public int[] playerScores;
+
+
+    public MapGenerator levelGen;
+    public GameFSM gameFSM;
     public List<Spawner> PlayerSpawners;
     public List<Spawner> AiSpawners;
     public List<GameObject> LevelZones;
-
     public List<TankPawn> Destroyedtanks;
     public List<HumanPawn> DeadPlayers;
     public List<HumanPawn> DeadAIPlayers;
-    public Transform PlayerSpawnPoint;
     private GameObject newAiPawn;
     public static GameManager instance;
     public List<PlayerController> players;
@@ -27,6 +33,7 @@ public class GameManager : MonoBehaviour
     public List<HumanPawn> humans;
     public List<TankPawn> Vehicles;
     public List<WayPointCluster> Waypointcluster;
+    public bool isMapGenerated = false;
     private void Awake()
     {
         if(isUseSeed && isUseDateSeed)
@@ -48,20 +55,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //This is how we will change and set states in the game state machine. Except via buttons and keypresses.
+        gameFSM.currentState = GameStates.gameStates.MainMenu;
+        gameFSM.SetStates();
+    }
+    public void GenerateMap()
+    {
+        levelGen.GenerateMap();
         ResetPlayerSpawns();
         ResetAiSpawns();
-        //just for testing, on start, objects will add themselves to the lists.
-           //SpawnWaypoints();
-           //SpawnPlayers();
-           //SpawnAIPlayers();
-           //SpawnVehicles();
-        //RespawnTimer = RespawnTime;
-    }
-   
-    private void Update()
-    {
-        //this needs some work first
-       //RespawnCountdown(); 
+        isMapGenerated = true;
     }
 
     public void ResetPlayerSpawns()
@@ -69,6 +72,7 @@ public class GameManager : MonoBehaviour
         //create an array of ints the same size of the number of spawners in the world.
         int[] spawnPointsToEnable = new int[PlayerSpawners.Count];
         //first set all items of the array to -1, because they default to 0, which will cause an extra spawn point to be enabled when iterating through later
+        //because indexes in an array or list start at 0.
          for(int x = 0; x < spawnPointsToEnable.Length; x++)
         {
             //create amount of random numbers equal to the max players

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Attacker : MonoBehaviour
 {
+    public Controller thisController;
+    public GameObject pawn;
     public bool isTookShot;
     public abstract void Start();
     
